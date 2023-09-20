@@ -70,6 +70,14 @@
       .bd-mode-toggle {
           z-index: 1500;
       }
+footer {
+    vertical-align: bottom;
+}
 footer p {
     text-align: center;
+}
+
+.btn:hover {
+    background-color: darkblue!important;
+    
 }
