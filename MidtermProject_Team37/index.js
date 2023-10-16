@@ -1,4 +1,4 @@
-const numPokemon = 151;
+const numPokemon = 4 ;
 const shinyProb = 100;
 
 
@@ -12,9 +12,30 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+function generateCarousel(){
+    carousel1 = document.getElementById("bulbasaurPicture");
+    carousel2 = document.getElementById("squirtlePicture");
+    carousel3 = document.getElementById("charmanderPicture");
+
+    carousel1 = document.createElement("div");
+    carousel2 = document.createElement("div");
+    carousel2 = document.createElement("div");
+
+    let bulbasaurImg = pokemonList[0].img;
+    let charmanderImg = pokemonList[3].img;
+    let squirtleImg = pokemonList[6].img;
+
+    carousel1.innerHTML = `<img src="${bulbasaurImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+    carousel2.innerHTML = `<img src="${charmanderImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+    carousel3.innerHTML = `<img src="${squirtleImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+
+
+
+}
+
 //Populates an Img and Text for each pokemon
-function pokemonToHtml(){
-    allPokemonCard = document.getElementById("addPokemon");
+function generatePokemart(){
+    allPokemonCard = document.getElementById("pokemartListParent");
 
     for(let i = 0; i<pokemonList.length;i++){
 
@@ -96,8 +117,6 @@ function pokemonToHtml(){
 
 
     }
-    console.log(allPokemonCard);
-
     
 }
 
@@ -152,7 +171,7 @@ async function main(){
         
     } 
 
-    pokemonToHtml();
+    generatePokemart();
 
 
 
