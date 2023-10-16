@@ -1,4 +1,4 @@
-const numPokemon = 4 ;
+const numPokemon = 900 ;
 const shinyProb = 100;
 
 
@@ -17,8 +17,8 @@ function getRandomInt(max) {
 
 //Populates an Img and Text for each pokemon
 function pokemonToHtml(){
-    allPokemonCard = document.getElementById("addPokemon");
-
+    allPokemonCard = document.getElementById("pokemartListParent");
+    console.log(pokemonList.length);
     for(let i = 0; i<pokemonList.length;i++){
         // htmlCard[i] = document.getElementById("pokemonCard" + (i+1));
 
@@ -50,17 +50,16 @@ function pokemonToHtml(){
             //   </div>
             // </div>`
 
-            pokeCard.innerHTML = `<div class="col">
+            pokeCard.innerHTML = 
+            `<div class="col">
             <div class="card shadow-sm">
                 <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
                 <div class="card-body">
                     <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-primary">View</button>
                   </div>
-                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
@@ -105,13 +104,11 @@ function pokemonToHtml(){
             <div class="card shadow-sm">
                 <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
                 <div class="card-body">
-                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
+                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-primary">View</button>
                   </div>
-                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
