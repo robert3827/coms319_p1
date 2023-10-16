@@ -1,12 +1,9 @@
-const numPokemon = 4 ;
+const numPokemon = 151;
 const shinyProb = 100;
 
 
 var pokemonList =[];
 
-var htmlImage = [];
-
-var htmlTxt = [];
 
 var htmlCard = [];
 
@@ -20,7 +17,6 @@ function pokemonToHtml(){
     allPokemonCard = document.getElementById("addPokemon");
 
     for(let i = 0; i<pokemonList.length;i++){
-        // htmlCard[i] = document.getElementById("pokemonCard" + (i+1));
 
         if(pokemonList[i].type2 != null){
             let pokemonName = pokemonList[i].name;
@@ -39,16 +35,6 @@ function pokemonToHtml(){
 
 
             let pokeCard = document.createElement("div");
-            // pokeCard.innerHTML = `<div class="col">
-            //   <div id="card1" class="card collapse show shadow-sm">
-            //     <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>
-            //     <div class="card-body">
-            //         <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
-            //         <div class="d-flex justify-content-between align-items-center">
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>`
 
             pokeCard.innerHTML = `<div class="col">
             <div class="card shadow-sm">
@@ -57,8 +43,7 @@ function pokemonToHtml(){
                     <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
                   <small class="text-body-secondary">9 mins</small>
                 </div>
@@ -67,7 +52,6 @@ function pokemonToHtml(){
           </div>`
 
 
-            // htmlCard[i].appendChild(pokeCard);
             allPokemonCard.appendChild(pokeCard);
 
 
@@ -89,34 +73,21 @@ function pokemonToHtml(){
 
 
             let pokeCard = document.createElement("div");
-            // pokeCard.innerHTML = `<div class="col">
-            // <button id="toggleCardButton1" type="button" class="btn btn-primary mb-2">Toggle Card</button>
-            //   <div id="card1" class="card collapse show shadow-sm">
-            //     <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>
-            //     <div class="card-body">
-            //         <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
-            //         <div class="d-flex justify-content-between align-items-center">
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>`
 
             pokeCard.innerHTML = `<div class="col">
             <div class="card shadow-sm">
                 <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
                 <div class="card-body">
-                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
+                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
                   <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
           </div>`
-            // htmlCard[i].appendChild(pokeCard);
             allPokemonCard.appendChild(pokeCard);
 
 
