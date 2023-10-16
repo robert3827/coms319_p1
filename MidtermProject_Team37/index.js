@@ -17,18 +17,21 @@ function generateCarousel(){
     carousel2 = document.getElementById("squirtlePicture");
     carousel3 = document.getElementById("charmanderPicture");
 
-    carousel1 = document.createElement("div");
-    carousel2 = document.createElement("div");
-    carousel2 = document.createElement("div");
+    let car1 = document.createElement("div");
+    let car2 = document.createElement("div");
+    let car3 = document.createElement("div");
 
     let bulbasaurImg = pokemonList[0].img;
     let charmanderImg = pokemonList[3].img;
     let squirtleImg = pokemonList[6].img;
 
-    carousel1.innerHTML = `<img src="${bulbasaurImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
-    carousel2.innerHTML = `<img src="${charmanderImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
-    carousel3.innerHTML = `<img src="${squirtleImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+    car1.innerHTML = `<img src="${bulbasaurImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+    car2.innerHTML = `<img src="${charmanderImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
+    car3.innerHTML = `<img src="${squirtleImg}" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>`
 
+    carousel1.appendChild(car1);
+    carousel2.appendChild(car2);
+    carousel3.appendChild(car3);
 
 
 }
@@ -173,7 +176,7 @@ async function main(){
 
     generatePokemart();
     generateCarousel();
-        
+
 }
 
 //Runs the program
