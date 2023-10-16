@@ -1,4 +1,4 @@
-const numPokemon = 4 ;
+const numPokemon = 9;
 const shinyProb = 100;
 
 
@@ -172,11 +172,8 @@ async function main(){
     } 
 
     generatePokemart();
-
-
-
-    console.log(pokemonList);
-    
+    generateCarousel();
+        
 }
 
 //Runs the program
