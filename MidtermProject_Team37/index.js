@@ -1,21 +1,95 @@
-const numPokemon = 9;
+const numPokemon = 151;
 const shinyProb = 100;
+const xBound = 1500;
+const yBound = 750;
 
+var collectionSize;
 
 var pokemonList =[];
 
+let timerIds = [];
 
-var htmlCard = [];
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+function startAnimation() {  
+    for(let i =0;i<=collectionSize;i++){
+        let randX = getRandomInt(xBound);
+        let randY = getRandomInt(yBound);
+        if(timerIds[i] !== null){
+            clearInterval(timerIds[i]);
+        }
+        timerIds[i] = setInterval(()=>{moveImg(randX, randY, i)},10);
+    }
+ }
+
+function moveImg(x, y, id){
+
+    let pokemonCollection = document.getElementById("collectionPokemon"+id);
+
+    //determine x,and y of the image
+    let imgX = parseInt(pokemonCollection.style.left);
+    let imgY = parseInt(pokemonCollection.style.top);
+
+
+    const centerX = Math.round(x - (pokemonCollection.width / 2));
+    const centerY = Math.round(y - (pokemonCollection.height / 2));
+
+    if (imgX === centerX && imgY === centerY){
+         clearInterval(timerIds[id-1]);
+         timerIds[id-1] = null;
+    }
+    // Move 1 pixel in both directions toward the click
+    if (imgX < centerX) {
+        imgX++;
+    }
+    else if (imgX > centerX) {
+        imgX--;
+    }
+    if (imgY < centerY) {
+        imgY++;
+    }
+    else if (imgY > centerY) {
+        imgY--;
+    }
+
+    pokemonCollection.style.left = imgX + "px";
+    pokemonCollection.style.top = imgY + "px";
+        
+}
+
+
+function generateCollection(collection){
+
+    let yourCollection = document.getElementById("yourCollectionListParent");
+
+    for(let i =0;i<collectionSize;i++){
+        const moveId = "collectionPokemon"+ i;
+        let collectionCard = document.createElement("div");
+        collectionCard.innerHTML = `<div class="container">
+
+        <img id=${moveId} src=${pokemonList[collection[i]-1].img} alt="heart" style="position:absolute;
+            left:200px; top:200px; width:200px">
+        </div>`  
+        yourCollection.appendChild(collectionCard);
+    }
+
+}
+
+async function animateForever(){
+    while(1){
+        startAnimation();
+        await sleep(5000);
+    }
+}
 
 //Populates an Img and Text for each pokemon
 function generatePokemart(){
-    console.log(pokemonList);
     allPokemonCard = document.getElementById("pokemartListParent");
 
     for(let i = 0; i<pokemonList.length;i++){
@@ -30,7 +104,7 @@ function generatePokemart(){
             let randNum = getRandomInt(shinyProb);
             let shiny = false;
             //Shiny
-            if(randNum === 1){
+            if(randNum === 31){
                 pokemonImg = pokemonList[i].imgShiny;
                 shiny = true;
             }
@@ -47,7 +121,6 @@ function generatePokemart(){
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
-                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
@@ -85,7 +158,6 @@ function generatePokemart(){
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
-                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
@@ -144,16 +216,26 @@ function loadPokemon(poke){
 
 //Fetches pokemon id, name and img
 async function main(){
-    console.log("running main");
+
     for(let i=1;i<=numPokemon;i++){
         const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + i);
         const data = await response.json();
         loadPokemon(data);
-        console.log("fetched a pokemon from POKEAPI");
+        
     } 
-    console.log("fetched all pokemon from API")
-    generatePokemart();
-    console.log("generated pokemart")
+
+    if(window.location.href.endsWith("pokemart.html")){
+        console.log("WooHoo");
+        generatePokemart();
+    }
+    else if(window.location.href.endsWith("yourCollection.html")){
+        let test = [151,136,3,60,46,6,85,43,9];
+
+        collectionSize = test.length;
+        generateCollection(test);
+     
+        animateForever();
+    }
 
 }
 
