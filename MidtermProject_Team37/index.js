@@ -12,6 +12,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+<<<<<<< HEAD
 function generateCarousel(){
     carousel1 = document.getElementById("bulbPic");
     carousel2 = document.getElementById("squirtPic");
@@ -30,6 +31,9 @@ function generateCarousel(){
     
 
 }
+=======
+
+>>>>>>> c6851afa2801bcb406987626c5ac3b0548966884
 
 //Populates an Img and Text for each pokemon
 function generatePokemart(){
