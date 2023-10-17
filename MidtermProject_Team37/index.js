@@ -12,31 +12,10 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-<<<<<<< HEAD
-function generateCarousel(){
-    carousel1 = document.getElementById("bulbPic");
-    carousel2 = document.getElementById("squirtPic");
-    carousel3 = document.getElementById("charPic");
-
-
-
-    let bulbasaurImg = pokemonList[0].img;
-    let charmanderImg = pokemonList[3].img;
-    let squirtleImg = pokemonList[6].img;
-
-    carousel1.src = bulbasaurImg;
-    carousel2.src = charmanderImg;
-    carousel3.src = squirtleImg;
-
-    
-
-}
-=======
-
->>>>>>> c6851afa2801bcb406987626c5ac3b0548966884
 
 //Populates an Img and Text for each pokemon
 function generatePokemart(){
+    console.log(pokemonList);
     allPokemonCard = document.getElementById("pokemartListParent");
 
     for(let i = 0; i<pokemonList.length;i++){
@@ -165,16 +144,16 @@ function loadPokemon(poke){
 
 //Fetches pokemon id, name and img
 async function main(){
-
+    console.log("running main");
     for(let i=1;i<=numPokemon;i++){
         const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + i);
         const data = await response.json();
         loadPokemon(data);
-        
+        console.log("fetched a pokemon from POKEAPI");
     } 
-
+    console.log("fetched all pokemon from API")
     generatePokemart();
-    generateCarousel();
+    console.log("generated pokemart")
 
 }
 
