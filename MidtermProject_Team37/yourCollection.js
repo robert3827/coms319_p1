@@ -4,8 +4,7 @@ const xBound = 1500;
 const yBound = 750;
 
 var collectionSize;
-var pokemonList = [];
-
+var pokemonList =[];
 
 //This is used for bouncing animation
 let timerIds = [];
