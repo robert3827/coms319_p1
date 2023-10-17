@@ -1,12 +1,9 @@
-const numPokemon = 900 ;
+const numPokemon = 9;
 const shinyProb = 100;
 
 
 var pokemonList =[];
 
-var htmlImage = [];
-
-var htmlTxt = [];
 
 var htmlCard = [];
 
@@ -15,12 +12,30 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+function generateCarousel(){
+    carousel1 = document.getElementById("bulbPic");
+    carousel2 = document.getElementById("squirtPic");
+    carousel3 = document.getElementById("charPic");
+
+
+
+    let bulbasaurImg = pokemonList[0].img;
+    let charmanderImg = pokemonList[3].img;
+    let squirtleImg = pokemonList[6].img;
+
+    carousel1.src = bulbasaurImg;
+    carousel2.src = charmanderImg;
+    carousel3.src = squirtleImg;
+
+    
+
+}
+
 //Populates an Img and Text for each pokemon
-function pokemonToHtml(){
+function generatePokemart(){
     allPokemonCard = document.getElementById("pokemartListParent");
-    console.log(pokemonList.length);
+
     for(let i = 0; i<pokemonList.length;i++){
-        // htmlCard[i] = document.getElementById("pokemonCard" + (i+1));
 
         if(pokemonList[i].type2 != null){
             let pokemonName = pokemonList[i].name;
@@ -39,34 +54,23 @@ function pokemonToHtml(){
 
 
             let pokeCard = document.createElement("div");
-            // pokeCard.innerHTML = `<div class="col">
-            //   <div id="card1" class="card collapse show shadow-sm">
-            //     <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>
-            //     <div class="card-body">
-            //         <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
-            //         <div class="d-flex justify-content-between align-items-center">
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>`
 
-            pokeCard.innerHTML = 
-            `<div class="col">
+            pokeCard.innerHTML = `<div class="col">
             <div class="card shadow-sm">
                 <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
                 <div class="card-body">
                     <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary">View</button>
+                    <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
+                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
           </div>`
 
 
-            // htmlCard[i].appendChild(pokeCard);
             allPokemonCard.appendChild(pokeCard);
 
 
@@ -88,17 +92,6 @@ function pokemonToHtml(){
 
 
             let pokeCard = document.createElement("div");
-            // pokeCard.innerHTML = `<div class="col">
-            // <button id="toggleCardButton1" type="button" class="btn btn-primary mb-2">Toggle Card</button>
-            //   <div id="card1" class="card collapse show shadow-sm">
-            //     <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>
-            //     <div class="card-body">
-            //         <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
-            //         <div class="d-flex justify-content-between align-items-center">
-            //       </div>
-            //     </div>
-            //   </div>
-            // </div>`
 
             pokeCard.innerHTML = `<div class="col">
             <div class="card shadow-sm">
@@ -107,13 +100,13 @@ function pokemonToHtml(){
                     <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary">View</button>
+                    <button type="button" class="btn btn-sm btn-primary">Buy</button>
                   </div>
+                  <small class="text-body-secondary">9 mins</small>
                 </div>
               </div>
             </div>
           </div>`
-            // htmlCard[i].appendChild(pokeCard);
             allPokemonCard.appendChild(pokeCard);
 
 
@@ -122,8 +115,6 @@ function pokemonToHtml(){
 
 
     }
-    console.log(allPokemonCard);
-
     
 }
 
@@ -178,12 +169,9 @@ async function main(){
         
     } 
 
-    pokemonToHtml();
+    generatePokemart();
+    generateCarousel();
 
-
-
-    console.log(pokemonList);
-    
 }
 
 //Runs the program
