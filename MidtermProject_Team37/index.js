@@ -20,6 +20,7 @@ function getRandomInt(max) {
 }
 
 function startAnimation() {  
+    console.log("startAnimationCalled");
     for(let i =0;i<=collectionSize;i++){
         let randX = getRandomInt(xBound);
         let randY = getRandomInt(yBound);
@@ -31,6 +32,7 @@ function startAnimation() {
  }
 
 function moveImg(x, y, id){
+    console.log("moveImg called");
 
     let pokemonCollection = document.getElementById("collectionPokemon"+id);
 
@@ -67,10 +69,11 @@ function moveImg(x, y, id){
 
 
 function generateCollection(collection){
+    console.log("generate collection called");
 
     let yourCollection = document.getElementById("yourCollectionListParent");
 
-    for(let i =0;i<collectionSize;i++){
+    for(let i =0;i<collectionSize;i++){                         
         const moveId = "collectionPokemon"+ i;
         let collectionCard = document.createElement("div");
         collectionCard.innerHTML = `<div class="container">
@@ -98,13 +101,22 @@ function generatePokemart(){
     allPokemonCard = document.getElementById("pokemartListParent");
 
     for (let i = 0; i < pokemonList.length; i++) {
-
-        if (pokemonList[i].type2 != null) {
+            
             let pokemonName = pokemonList[i].name;
             let pokemonId = pokemonList[i].id;
-            let pokemonType1 = pokemonList[i].type1;
-            let pokemonType2 = pokemonList[i].type2;
             let pokemonImg = pokemonList[i].img;
+            let pokemonType1 = pokemonList[i].type1;
+            let pokemonType2 = null;
+            var typeString = `<strong>Type:</strong>  ${pokemonType1}`
+            if(pokemonList[i].type2 != null) {
+               pokemonType2 = pokemonList[i].type2;
+               typeString = `<strong>Type(s):</strong>  ${pokemonType1}, ${pokemonType2}`
+
+            }
+
+
+
+            
             //Decides if the pokemon is shiny or not
             let randNum = getRandomInt(shinyProb);
             let shiny = false;
@@ -121,7 +133,9 @@ function generatePokemart(){
             <div class="card shadow-sm">
                 <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
                 <div class="card-body">
-                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}, ${pokemonType2}</p></p>
+                    <p class="card-text"><p class="card-text"> 
+                    <br><strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} 
+                    <br>${typeString} </p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button id=buy_${pokemonId} onClick="reply_click(this.id, ${pokemonId})" type="button" class="btn btn-sm btn-primary">Buy</button>
@@ -133,45 +147,7 @@ function generatePokemart(){
 
 
             allPokemonCard.appendChild(pokeCard);
-
-
-
-        }
-        else {
-            let pokemonName = pokemonList[i].name;
-            let pokemonId = pokemonList[i].id;
-            let pokemonType1 = pokemonList[i].type1;
-            let pokemonImg = pokemonList[i].img;
-            //Decides if the pokemon is shiny or not
-            let randNum = getRandomInt(shinyProb);
-            let shiny = false;
-            //Shiny
-            if (randNum === 1) {
-                pokemonImg = pokemonList[i].imgShiny;
-                shiny = true;
-            }
-
-
-            let pokeCard = document.createElement("div");
-
-            pokeCard.innerHTML = `<div class="col">
-            <div class="card shadow-sm">
-                <div><img src=${pokemonImg} class="card-img-top" alt="..."></img></div>              
-                <div class="card-body">
-                    <p class="card-text"><p class="card-text"> <strong>Id:</strong> ${pokemonId} <strong>Name:</strong> ${pokemonName} <strong>Types:</strong> ${pokemonType1}</p></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button id=buy_${pokemonId} onClick="reply_click(this.id, ${pokemonId})" type="button" class="btn btn-sm btn-primary">Buy</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>`
-            allPokemonCard.appendChild(pokeCard);
-
-
-
-        }
+        
 
 
     }
@@ -223,6 +199,7 @@ function loadPokemon(poke) {
 
 //Fetches pokemon id, name and img
 async function main(){
+    console.log("main called");
 
     for(let i=1;i<=numPokemon;i++){
         const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + i);
@@ -232,13 +209,16 @@ async function main(){
     } 
 
     if(window.location.href.endsWith("pokemart.html")){
-        console.log("WooHoo");
         generatePokemart();
     }
     else if(window.location.href.endsWith("yourCollection.html")){
-        console.log(ownedPokemon);
-        collectionSize = ownedPokemon.length;
-        generateCollection(ownedPokemon);
+        console.log("on page yourCollection.html");
+
+        let test = [136,3,60,46,6,85,43,9];
+        console.log(test);
+
+        collectionSize = test.length;
+        generateCollection(test);
      
         animateForever();
     }
@@ -253,32 +233,39 @@ async function main(){
 //Runs the program
 main();
 
-if (document.addEventListener) {
-    document.addEventListener("click", handleClick, false);
-}
-else if (document.attachEvent) {
-    document.attachEvent("onclick", handleClick);
-}
+// if (document.addEventListener) {
+//     document.addEventListener("click", handleClick, false);
+// }
+// else if (document.attachEvent) {
+//     document.attachEvent("onclick", handleClick);
+// }
 
 
 
 function reply_click(button_id, pokemonNumber) {
+
     //Make sure there is a list
-    JSON.parse(sessionStorage.getItem('deletedItems'));
+    if(localStorage.getItem('pokemonList') != undefined) {
+        //Update Owned Pokemon to whatever is stored in the browser
+        ownedPokemon = JSON.parse(localStorage.getItem('pokemonList'));
+    }
 
+    //Log the click for debugging purposes
+    console.log("ReplyClick: " + pokemonNumber);
 
-    console.log("ReplyClick " + pokemonNumber);
-
+    //handle the click
     if(!ownedPokemon.includes(pokemonNumber)) {
+
         ownedPokemon.push(pokemonNumber);
 
         //Read the list then append your thing to it
-        JSON.parse(sessionStorage.getItem('deletedItems'));
-        sessionStorage.setItem('deletedItems', JSON.stringify(array)) ;
+        localStorage.setItem('pokemonList', JSON.stringify(ownedPokemon));
 
 
 
-        console.log(ownedPokemon);
+        console.log("JS list: " + ownedPokemon);
+        console.log("Local Storage Pokemon List: "+localStorage.getItem('pokemonList'));
+        
         document.getElementById(button_id).setAttribute("value", "Owned");
         document.getElementById(button_id).setAttribute("content", "Owned");
         document.getElementById(button_id).setAttribute("style", "background-color:red");
@@ -295,4 +282,8 @@ function reply_click(button_id, pokemonNumber) {
     }
 
 
+}
+
+function getButton() {
+    console.log("HELLO THERE!!!!");
 }
