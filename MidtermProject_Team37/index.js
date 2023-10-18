@@ -236,10 +236,9 @@ async function main(){
         generatePokemart();
     }
     else if(window.location.href.endsWith("yourCollection.html")){
-        let test = [151,136,3,60,46,6,85,43,9];
-
-        collectionSize = test.length;
-        generateCollection(test);
+        console.log(ownedPokemon);
+        collectionSize = ownedPokemon.length;
+        generateCollection(ownedPokemon);
      
         animateForever();
     }
