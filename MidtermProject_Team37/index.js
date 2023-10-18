@@ -70,6 +70,7 @@ function moveImg(x, y, id){
 
 function generateCollection(collection){
     console.log("generate collection called");
+    ownedPokemon = JSON.parse(localStorage.getItem('pokemonList'));
 
     let yourCollection = document.getElementById("yourCollectionListParent");
 
@@ -214,11 +215,12 @@ async function main(){
     else if(window.location.href.endsWith("yourCollection.html")){
         console.log("on page yourCollection.html");
 
-        let test = [136,3,60,46,6,85,43,9];
-        console.log(test);
+        ownedPokemon = JSON.parse(localStorage.getItem('pokemonList'));
 
-        collectionSize = test.length;
-        generateCollection(test);
+        console.log(ownedPokemon);
+
+        collectionSize = ownedPokemon.length;
+        generateCollection(ownedPokemon);
      
         animateForever();
     }
