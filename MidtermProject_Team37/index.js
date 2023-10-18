@@ -92,6 +92,9 @@ async function animateForever(){
 
 //Populates an Img and Text for each pokemon
 function generatePokemart(){
+    
+
+
     allPokemonCard = document.getElementById("pokemartListParent");
 
     for (let i = 0; i < pokemonList.length; i++) {
@@ -172,7 +175,7 @@ function generatePokemart(){
 
 
     }
-
+    
 
 
 }
@@ -261,11 +264,21 @@ else if (document.attachEvent) {
 
 
 function reply_click(button_id, pokemonNumber) {
+    //Make sure there is a list
+    JSON.parse(sessionStorage.getItem('deletedItems'));
+
+
     console.log("ReplyClick " + pokemonNumber);
 
     if(!ownedPokemon.includes(pokemonNumber)) {
         ownedPokemon.push(pokemonNumber);
-        ownedPokemon
+
+        //Read the list then append your thing to it
+        JSON.parse(sessionStorage.getItem('deletedItems'));
+        sessionStorage.setItem('deletedItems', JSON.stringify(array)) ;
+
+
+
         console.log(ownedPokemon);
         document.getElementById(button_id).setAttribute("value", "Owned");
         document.getElementById(button_id).setAttribute("content", "Owned");
@@ -283,8 +296,4 @@ function reply_click(button_id, pokemonNumber) {
     }
 
 
-}
-
-function myFunction() {
-    console.log("SOlved all problems!");
 }
