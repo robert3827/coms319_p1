@@ -96,7 +96,8 @@ async function animateForever(){
 
 //Populates an Img and Text for each pokemon
 function generatePokemart(){
-    
+    ownedPokemon = JSON.parse(localStorage.getItem('pokemonList'));
+    console.log(ownedPokemon);
 
 
     allPokemonCard = document.getElementById("pokemartListParent");
@@ -109,6 +110,18 @@ function generatePokemart(){
             let pokemonType1 = pokemonList[i].type1;
             let pokemonType2 = null;
             var typeString = `<strong>Type:</strong>  ${pokemonType1}`
+            var buttonToBuy =  `<button id=buy_${pokemonId} onClick="reply_click(this.id, ${pokemonId})" type="button" class="btn btn-sm btn-primary">Buy</button>`
+
+            if(!ownedPokemon.includes(pokemonId)) {
+                //    buttonToBuy = ``;           
+                //Blue Buy Button
+            } else if(ownedPokemon.includes(pokemonId)) {
+                console.log("Pokemon with id " + pokemonId + " already owned");
+                buttonToBuy = `<button id=buy_${pokemonId} onClick="reply_click(this.id, ${pokemonId})" type="button" class="btn btn-sm btn-danger">Owned</button>`;           
+                //Red Owned Button
+            }
+          
+
             if(pokemonList[i].type2 != null) {
                pokemonType2 = pokemonList[i].type2;
                typeString = `<strong>Type(s):</strong>  ${pokemonType1}, ${pokemonType2}`
@@ -139,7 +152,7 @@ function generatePokemart(){
                     <br>${typeString} </p></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button id=buy_${pokemonId} onClick="reply_click(this.id, ${pokemonId})" type="button" class="btn btn-sm btn-primary">Buy</button>
+                   ${buttonToBuy}
                   </div>
                 </div>
               </div>
@@ -268,9 +281,8 @@ function reply_click(button_id, pokemonNumber) {
         console.log("JS list: " + ownedPokemon);
         console.log("Local Storage Pokemon List: "+localStorage.getItem('pokemonList'));
         
-        document.getElementById(button_id).setAttribute("value", "Owned");
-        document.getElementById(button_id).setAttribute("content", "Owned");
-        document.getElementById(button_id).setAttribute("style", "background-color:red");
+
+        document.getElementById(button_id).setAttribute("class", "btn btn-sm btn-danger");
         document.getElementById(button_id).innerHTML = "Owned";
         // button_id.innerHTML = "Owned";
 
@@ -281,6 +293,15 @@ function reply_click(button_id, pokemonNumber) {
         
 
         
+    } else if(ownedPokemon.includes(pokemonNumber)) {
+        console.log("Removing Pokemon with ID: " + pokemonNumber);
+        document.getElementById(button_id).setAttribute("class", "btn btn-sm btn-primary");
+        document.getElementById(button_id).innerHTML = "Buy";
+
+        ownedPokemon.splice(ownedPokemon.indexOf(pokemonNumber));
+        localStorage.setItem('pokemonList', JSON.stringify(ownedPokemon));
+        console.log("Owned Pokemon: " + ownedPokemon);
+        console.log("Local Storage: "+ localStorage.getItem('pokemonList'))
     }
 
 
