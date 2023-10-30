@@ -1,6 +1,8 @@
+import logo from '../logo.svg';
+import './Catalog.css';
 import React, {useState} from 'react';
-import { Products } from './Products';
-import {Categories} from './Categories'
+import { Products } from '../Products';
+import {Categories} from '../Categories'
 
 
 
@@ -72,7 +74,7 @@ function Catalog() {      //Need curly brackets if you export up here. Does it h
     <div className="flex fixed flex-row">
   	{console.log("Step 2 : Return App :",Products.length,ProductsCategory.length)}
       <div className="h-screen  bg-slate-800 p-3 xl:basis-1/5" style={{ minWidth: '65%' }}>
-        {/* <img className="w-full" src={logo} alt="Sunset in the mountains" /> */}
+        <img className="w-full" src={logo} alt="Sunset in the mountains" />
         <div className="px-6 py-4">
           <h1 className="text-3xl mb-2 font-bold text-white"> Product Catalog App </h1>
           <p className="text-gray-700 text-white">
