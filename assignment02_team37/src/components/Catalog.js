@@ -37,6 +37,8 @@ const render_products = (ProductsCategory) => {
             </div>
             <p className="text-sm font-medium text-green-600">${product.price}</p>
           </div>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Add to Cart</button>
+          <p className='text-sm text-grey-700 text-l'> Quantity: 0</p>
         </div>
       ))}
     </div>
