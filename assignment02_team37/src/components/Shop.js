@@ -6,13 +6,19 @@ import { Products } from "../Products";
 
 
 const Shop = () => {
+    console.log("Prod len" + Products.length);
     
-    const [cart, setCart] = useState([]);                           //Starts with an empty array of products
-    const [quantity, setQuantity] = useState([]);               //Array parallel to cart that holds the quantity of the elements in cart
-    const [cartTotal, setCartTotal] = useState(0);              //Total Cost starting at 0
+    var prodQuanArr = [];
+    for(let i=0;i<Products.length;i++) {
+        prodQuanArr.push(0);
+    }
+    console.log("ProdQuanArr: " + prodQuanArr);
+;    
+    const [cart, setCart] = useState([]);                                //Starts with an empty array of products
+    const [quantity, setQuantity] = useState(prodQuanArr);               //Array parallel to products. Should start off with all zeros
+    const [cartTotal, setCartTotal] = useState(0);                       //Total Cost starting at 0
     const [ProductsCategory, setProductsCategory] = useState(Products);
 
-    var prodIndex = 0;
 
     var [pageState, setPageState] = useState(
         [{
@@ -31,22 +37,27 @@ const Shop = () => {
     }
 
     const addToCart = (el) => {
+        console.log("EL.id: " + el.id)
         if(cart.includes(el)) {
-            console.log(el.title + " Already In Cart :)"); //Add 1 to a quantity property
-            setQuantity(quantity[cart.indexOf(el)] = quantity[cart.indexOf(el)] + 1);
+            console.log(el.title + " -- Already In Cart :)"); //Add 1 to a quantity property
+
+            // setQuantity(quantity[el.id] = quantity[el.id] + 1);
+            quantity[el.id] = quantity[el.id] + 1
 
         } else {
-            console.log(el.title + " Not in cart.");
-            console.log(cart);
-            setCart([...cart, el]);         // ... means whatever is inside the cart + el    --- i.e. +=
+
+            console.log(el.title + " Not in cart. " + "ID: " + el.id);
             console.log("Quantity: " + quantity);
-            setQuantity(...quantity, 1);
+
+            setCart([...cart, el]);         // ... means whatever is inside the cart + el    --- i.e. +=
+            // setQuantity(quantity[el.id] = 1);
+            (quantity[el.id] = 1);
         } 
     };
 
-    useEffect(() => {
-        console.log(quantity);
-      }, [quantity]);
+    // useEffect(() => {
+    //     console.log("Quantity" + quantity);
+    //   }, [quantity]);
 
     const removeFromCart = (el) => {
         let hardCopy = [...cart];
@@ -64,6 +75,7 @@ const Shop = () => {
                 ${el.price} <br />
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
+                <p>Quantity: {quantity[el.id]}</p>
             </div>
 
         </div>
@@ -80,7 +92,7 @@ const Shop = () => {
             ${el.price} <br />
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
-            <p>Quantity: {quantity[0]}</p>
+            {/* <p>Quantity: {quantity[el.id]}</p> */}
         </div>
     ));
 
@@ -105,12 +117,10 @@ const Shop = () => {
 
 
     function handleClick(tag) {
-        console.log("Step 4 : in handleClick", tag);
         let filtered = Products.filter(cat => cat.category === tag);
         // modify useState
         setProductsCategory(filtered);
         // ProductsCategory = filtered;
-        console.log("Step 5 : ", Products.length, ProductsCategory.length);
     }
     const [query, setQuery] = useState('');
 
