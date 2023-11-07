@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Catalog from "./Catalog";
 import Cart  from "./Shop";
+import Confirm from "../Confirmation"
 
 export function App() {
-  const [page, changePage] = useState("Browse");
+  const [page, changePage] = useState("Confirm");
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [productPrices, setProductPrices] = useState([]);
@@ -23,44 +24,25 @@ export function App() {
       });
   }, []);
 
-  function removeFromCart(productName) {
-    setCart((prevState) => ({
-      ...prevState,
-      [productName]: Math.max(0, cart[productName] - 1),
-    }));
+  if (page === "Catalog") {
+    return (
+      <div>
+        {Catalog()}
+      </div>
+    );
   }
-  function addToCart(productName) {
-    setCart((prevState) => ({
-      ...prevState,
-      [productName]: cart[productName] + 1,
-    }));
+  if (page === "Cart") {
+    return (
+      <div>
+        {Cart()}
+      </div>
+    );
   }
-  function resetCart(productName) {
-    setCart((prevState) => ({
-      ...prevState,
-      [productName]: 0,
-    }));
+  if (page === "Confirm") {
+    return (
+      <div>
+        {Confirm()}
+      </div>
+    );
   }
-
-  return (
-    <div className="h-screen" style={{ backgroundColor: "darkslategrey" }}>
-      <Catalog
-        isActive={page === "Catalog"}
-        changePage={changePage}
-        cart={cart}
-        removeFromCart={removeFromCart}
-        addToCart={addToCart}
-        productPrices={productPrices}
-        products={products}
-      />
-      <Cart
-        isActive={page === "Cart"}
-        changePage={changePage}
-        addToCart={addToCart}
-        resetCart={resetCart}
-        cart={cart}
-        productPrices={productPrices}
-      />
-    </div>
-  );
 }
