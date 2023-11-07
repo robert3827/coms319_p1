@@ -6,18 +6,17 @@ import { Products } from "../Products";
 
 
 const Shop = () => {
-    console.log("Prod len" + Products.length);
     
     var prodQuanArr = [];
     for(let i=0;i<Products.length;i++) {
         prodQuanArr.push(0);
     }
-    console.log("ProdQuanArr: " + prodQuanArr);
 ;    
     const [cart, setCart] = useState([]);                                //Starts with an empty array of products
-    const [quantity, setQuantity] = useState(prodQuanArr);               //Array parallel to products. Should start off with all zeros
+    var [quantity, setQuantity] = useState(prodQuanArr);               //Array parallel to products. Should start off with all zeros
     const [cartTotal, setCartTotal] = useState(0);                       //Total Cost starting at 0
     const [ProductsCategory, setProductsCategory] = useState(Products);
+    var [transaction, setTransaction] = useState(0);                                     //Current elID
 
 
     var [pageState, setPageState] = useState(
@@ -37,27 +36,27 @@ const Shop = () => {
     }
 
     const addToCart = (el) => {
-        console.log("EL.id: " + el.id)
+        var id = el.id;
+        setTransaction(transaction+=1);
+        quantity[id]+=1;
+        console.log("el.id: " + id);
         if(cart.includes(el)) {
-            console.log(el.title + " -- Already In Cart :)"); //Add 1 to a quantity property
-
-            // setQuantity(quantity[el.id] = quantity[el.id] + 1);
-            quantity[el.id] = quantity[el.id] + 1
-
+            //don't add it again
+            // setQuantity(quantity);
         } else {
-
-            console.log(el.title + " Not in cart. " + "ID: " + el.id);
-            console.log("Quantity: " + quantity);
-
             setCart([...cart, el]);         // ... means whatever is inside the cart + el    --- i.e. +=
-            // setQuantity(quantity[el.id] = 1);
-            (quantity[el.id] = 1);
         } 
     };
 
-    // useEffect(() => {
-    //     console.log("Quantity" + quantity);
-    //   }, [quantity]);
+    useEffect(()=>{
+        console.log("Transaction: " + transaction);
+        setQuantity(quantity);
+    }, [transaction]);
+
+
+    useEffect(() => {
+        console.log("Quantity" + quantity);
+      }, [quantity]);
 
     const removeFromCart = (el) => {
         let hardCopy = [...cart];
@@ -65,7 +64,7 @@ const Shop = () => {
         setCart(hardCopy);
     };
 
-    const listItems = items.map((el) => (
+    const listItems = Products.map((el) => (
         <div>
             <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
                 <img className=
