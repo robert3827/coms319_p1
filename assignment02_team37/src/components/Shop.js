@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './Catalog.css'
 import items from '../selected_products.json'
 import logo from '../logo.svg'
 import { Categories } from "../Categories";
@@ -200,102 +201,6 @@ const Shop = () => {
     }
 
     //Functions used for Confirmation 
-    const displayPayment =(() => (
-        <div>
-            <div id="liveAlertPlaceholder"></div>
-
-            <form class="row g-3" id="checkout-form">
-
-            {/* <!-- Name --> */}
-            <div class="col-md-6">
-                <label for="inputName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="inputName"></input>
-                <div class="valid-feedback">
-                Looks good!
-                </div>
-                <div class="invalid-feedback">
-                Must be like, "John Doe"
-                </div>
-            </div>
-
-            {/* <!-- Email --> */}
-            <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4"></input>
-                <div class="valid-feedback">
-                Looks good!
-                </div>
-                <div class="invalid-feedback">
-                Must be like, "abc@xyz.efg"
-                </div>
-            </div>
-
-            {/* <!-- Credit card --> */}
-            <div class="col-12">
-                <label for="inputCard" class="form-label">Card</label>
-                <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"><i class="bi-credit-card-fill"></i></span>
-                <input type="text" id="inputCard" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
-                    aria-label="Username" aria-describedby="basic-addon1"></input>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Must be like, "7777-7777-7777-7777"
-                </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"></input>
-            </div>
-            <div class="col-12">
-                <label for="inputAddress2" class="form-label">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"></input>
-            </div>
-            <div class="col-md-6">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity"></input>
-            </div>
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip"></input>
-            </div>
-            <div class="col-12">
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck"></input>
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
-                </div>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-success" onClick={(event) => {
-                        if (!validate()) {
-                        const alertPlaceholder = document.getElementById(
-                            "liveAlertPlaceholder"
-                        );
-                        alertPlaceholder.innerHTML = "";
-                        alert("Something went wrong!");
-                        event.preventDefault();
-                        event.stopPropagation();
-                        }
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }}> <i class="bi-bag-check"></i> Order</button>
-            </div>
-            </form>
-        </div>
-    ));
-
 
     const alert = (message, type) => {
         const wrapper = document.createElement('div')
@@ -451,9 +356,94 @@ const Shop = () => {
                 }
                 {/* Make this a second column */}
                 {pageState.confirmation &&
-                    <div>
-                        {displayPayment}
+                
+                    <div class="container">
+
+                    <div class="row">
+                      <div class="col-2"></div>
+                
+                
+                      <div class="col-8">
+                
+                        <h1>Javascript Form Validation</h1>
+                
+                        <div id="liveAlertPlaceholder"></div>
+                
+                        <form class="row g-3" id="checkout-form">
+                
+                          {/* <!-- Name --> */}
+                          <div class="col-md-6">
+                            <label for="inputName" class="form-label">Full Name</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputName"></input>
+                          </div>
+                
+                          {/* <!-- Email --> */}
+                          <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <br></br>
+                            <input type="email" class="form-control" id="inputEmail4"></input>
+                          </div>
+                
+                          {/* <!-- Credit card --> */}
+                          <div class="col-12">
+                            <label for="inputCard" class="form-label">Card</label>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon1"><i class="bi-credit-card-fill"></i></span>
+                              <input type="text" id="inputCard" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
+                                aria-label="Username" aria-describedby="basic-addon1"></input>
+                            </div>
+                          </div>
+                
+                          <div class="col-12">
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"></input>
+                          </div>
+                          <div class="col-12">
+                            <label for="inputAddress2" class="form-label">Address 2</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"></input>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="inputCity" class="form-label">City</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputCity"></input>
+                          </div>
+                          <div class="col-md-4">
+                            <label for="inputState" class="form-label">State</label>
+                            <br></br>
+                            <select id="inputState" class="form-select">
+                              <option selected>Choose...</option>
+                              <option>...</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Zip</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputZip"></input>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="gridCheck"></input>
+                              <label class="form-check-label" for="gridCheck">
+                                Check me out
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <button type="submit" class="btn btn-success"> <i class="bi-bag-check"></i> Order</button>
+                          </div>
+                        </form>
+                
+                      </div>
+                
+                      <div class="col-2"></div>
+                
+                
                     </div>
+                
+                  </div>
                 }
                
 
