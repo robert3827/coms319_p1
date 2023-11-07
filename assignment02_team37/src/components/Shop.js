@@ -6,16 +6,17 @@ import { Products } from "../Products";
 
 
 const Shop = () => {
-    
+
     var prodQuanArr = [];
-    for(let i=0;i<Products.length+1;i++) {
+    for (let i = 0; i < Products.length + 1; i++) {
         prodQuanArr.push(0);
-    };    
+
+    };
     const [cart, setCart] = useState([]);                                //Starts with an empty array of products
     var [quantity, setQuantity] = useState(prodQuanArr);               //Array parallel to products. Should start off with all zeros
     const [cartTotal, setCartTotal] = useState(0);                       //Total Cost starting at 0
     const [ProductsCategory, setProductsCategory] = useState(Products);
-    var [transaction, setTransaction] = useState(0);                                     //Current elID
+    var [transaction, setTransaction] = useState(0);                     
 
 
     //Constants for Confirmation
@@ -42,28 +43,61 @@ const Shop = () => {
         }]
     )
 
-    function handleOrderNow() {
-        pageState = {
-            catalog: false,
-            cart: true,
-            confirmation: false,
-        }
+    var cartPage = true;
+
+    useEffect(() => {
+        console.log("PageState Catalog: " + pageState.catalog);
+        console.log("PageState Cart: " + pageState.cart);
+        console.log("PageState Confirmation: " + pageState.confirmation);
+    }, [pageState])
+
+    function handleGoToCart() {
+
+        setPageState(
+            pageState = {
+                catalog: false,
+                cart: true,
+                confirmation: false,
+            }
+        );
     }
+    function handleGoToCatalog() {
+
+        setPageState(
+            pageState = {
+                catalog: true,
+                cart: false,
+                confirmation: false,
+            }
+        );
+    }
+    function handleGoToConfirmation() {
+
+        setPageState(
+            pageState = {
+                catalog: false,
+                cart: false,
+                confirmation: true,
+            }
+        );
+    }
+
+
 
     const addToCart = (el) => {
         var id = el.id;
-        setTransaction(transaction+=1);
-        quantity[id]+=1;
+        setTransaction(transaction += 1);
+        quantity[id] += 1;
         console.log("el.id: " + id);
-        if(cart.includes(el)) {
+        if (cart.includes(el)) {
             //don't add it again
             // setQuantity(quantity);
         } else {
             setCart([...cart, el]);         // ... means whatever is inside the cart + el    --- i.e. +=
-        } 
+        }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("Transaction: " + transaction);
         setQuantity(quantity);
         setCart(cart);
@@ -73,36 +107,36 @@ const Shop = () => {
 
     useEffect(() => {
         console.log("Quantity" + quantity);
-      }, [quantity]);
+    }, [quantity]);
 
     const removeFromCart = (el) => {
         let id = el.id;
-        setTransaction(transaction+=1);
+        setTransaction(transaction += 1);
 
-        if(quantity[id] > 1) {
-            quantity[id] -=1;
-        } else if(quantity[id] == 1) {
+        if (quantity[id] > 1) {
+            quantity[id] -= 1;
+        } else if (quantity[id] == 1) {
             quantity[id] -= 1;
             let hardCopy = [...cart];
             hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
             setCart(hardCopy);
-        } else if(quantity[id]==0) {
+        } else if (quantity[id] == 0) {
             let hardCopy = [...cart];
             hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
             setCart(hardCopy);
 
         }
-       
-           
 
-       
+
+
+
     };
 
-    const listItems = Products.map((el) => (
+    const listItems = ProductsCategory.map((el) => (
         <div>
             <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
                 <img className=
-                    "img-fluid" alt={el.title} src={el.image} width={150} maxHeight={100} /> <br />
+                    "object-cover h-40" alt={el.title} src={el.image} width={150} maxHeight={100} /> <br />
                 <strong> {el.title}</strong> <br />
                 {el.category} <br />
                 ${el.price} <br />
@@ -117,9 +151,9 @@ const Shop = () => {
 
     const cartItems = cart.map((el) => (
 
-        <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '450px' }}>
+        <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
             <img className=
-                "img-fluid" alt={el.title} src={el.image} width={150} height={100} /> <br />
+                "object-cover h-40" alt={el.title} src={el.image} width={150} height={100} /> <br />
             {el.title} <br />
             {el.category} <br />
             ${el.price} <br />
@@ -132,7 +166,7 @@ const Shop = () => {
     const total = () => {
         let totalVal = 0;
         for (let i = 0; i < cart.length; i++) {
-            totalVal += cart[i].price*quantity[cart[i].id];
+            totalVal += cart[i].price * quantity[cart[i].id];
         }
         setCartTotal(totalVal);
     };
@@ -148,8 +182,11 @@ const Shop = () => {
     }
     const [query, setQuery] = useState('');
 
+   
+
     const handleChange = (e) => {
         setQuery(e.target.value);
+        // console.log(e.target.value);
         const results = Products.filter(eachProduct => {
             if (e.target.value === "") {
                 console.log("No Entry")
@@ -158,6 +195,7 @@ const Shop = () => {
                 return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
             }
         });
+        console.log(results[0].title);
         setProductsCategory(results);
     }
 
@@ -393,33 +431,44 @@ const Shop = () => {
                     </div>
                 </div>
 
+                {/* Container with a button to go to cart */}
 
-                {/* Container holding the catalog "Inside the scrollable bar" */}
-                <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: '800px', overflowY: 'scroll' }}>
-                    {listItems}
-                </div>
+                {pageState.catalog &&
+                    <div>
+                        {/* Container holding the catalog "Inside the scrollable bar" */}
+                        <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: '800px', overflowY: 'scroll' }}>
+                            {listItems}
+                        </div>
+                    </div>
+                }
 
 
+                {pageState.cart &&
+                     <div className="h-screen p-3 xl:basis-1/5" style={{ maxHeight: '800px', overflowY: 'scroll'}}>
+                     <div >Items in Cart :</div>
+                     <div>{cartItems} </div>
+                 </div>
+                }
                 {/* Make this a second column */}
-                <div className="h-screen p-3 xl:basis-1/5" style={{ minWidth: '20%', overflowY: 'scroll' }}>
-                    <div >Items in Cart :</div>
-                    <div>{cartItems} </div>
+                {pageState.confirmation &&
+                    <div>
+                        {displayPayment}
+                    </div>
+                }
+               
 
+                {1 &&
+                    <div className="h-screen p-3 xl:basis-1/5" style={{ minWidth: '8%' }}>
+                        <h2>
+                            Total: ${cartTotal}
+                        </h2>
+                        <br />
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCart}>Cart</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCatalog}>Catalog</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToConfirmation}>Confirm Order</button>
 
-                </div>
-                {/* Confirmation page for payment */}
-                <div>
-                    {displayPayment}
-                </div>
+                    </div>}
 
-                <div className="h-screen p-3 xl:basis-1/5" style={{ minWidth: '8%' }}>
-                    <h2>
-                        Total: ${cartTotal}
-                    </h2>
-                    <br />
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleOrderNow}>Order Now</button>
-
-                </div>
 
 
             </div>
