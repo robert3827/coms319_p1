@@ -9,20 +9,6 @@ export function App() {
   const [cart, setCart] = useState([]);
   const [productPrices, setProductPrices] = useState([]);
 
-  useEffect(() => {
-    fetch("../selected_products.json")
-      .then((response) => response.json())
-      .then((json) => {
-        json = json.products;
-        setProducts(json);
-        setCart(Object.fromEntries(json.map((product) => [product.title, 0])));
-        setProductPrices(
-          Object.fromEntries(
-            json.map((product) => [product.title, product.price])
-          )
-        );
-      });
-  }, []);
 
   if (page === "Catalog") {
     return (
