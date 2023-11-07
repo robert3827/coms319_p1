@@ -4,6 +4,7 @@ import './index.css';
 import Catalog from './components/Catalog';
 import reportWebVitals from './reportWebVitals';
 import Shop from './components/Shop';
+import {App} from './components/App'
 
 import List from './components/learningUseState';
 
@@ -12,9 +13,7 @@ root.render(
   <React.StrictMode>
     <Shop />
     {/* <List /> */}
-
-
-  
+    <App />
   </React.StrictMode>
 );
 
