@@ -5,10 +5,6 @@ import Confirm from "../Confirmation"
 
 export function App() {
   const [page, changePage] = useState("Confirm");
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [productPrices, setProductPrices] = useState([]);
-
 
   if (page === "Catalog") {
     return (
