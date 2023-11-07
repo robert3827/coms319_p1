@@ -11,9 +11,9 @@ import List from './components/learningUseState';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <Shop /> */}
+    <Shop />
     {/* <List /> */}
-    <App />
+    {/* <App /> */}
   </React.StrictMode>
 );
 
