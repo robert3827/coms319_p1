@@ -14,10 +14,10 @@ export function App() {
       .then((json) => {
         json = json.products;
         setProducts(json);
-        setCart(Object.fromEntries(json.map((product) => [product.name, 0])));
+        setCart(Object.fromEntries(json.map((product) => [product.title, 0])));
         setProductPrices(
           Object.fromEntries(
-            json.map((product) => [product.name, product.price])
+            json.map((product) => [product.title, product.price])
           )
         );
       });
