@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import items from '../selected_products.json'
 import logo from '../logo.svg'
 import { Categories } from "../Categories";
 import { Products } from "../Products";
@@ -17,7 +16,7 @@ const Shop = () => {
     var [quantity, setQuantity] = useState(prodQuanArr);               //Array parallel to products. Should start off with all zeros
     const [cartTotal, setCartTotal] = useState(0);                       //Total Cost starting at 0
     const [ProductsCategory, setProductsCategory] = useState(Products);
-    var [transaction, setTransaction] = useState(0);                     
+    var [transaction, setTransaction] = useState(0);
 
 
     var [pageState, setPageState] = useState(
@@ -47,7 +46,6 @@ const Shop = () => {
         );
     }
     function handleGoToCatalog() {
-
         setPageState(
             pageState = {
                 catalog: true,
@@ -119,9 +117,9 @@ const Shop = () => {
 
     const listItems = ProductsCategory.map((el) => (
         <div>
-            <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
+            <div key={el.id} className="bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
                 <img className=
-                    "object-cover h-40" alt={el.title} src={el.image} width={150} maxHeight={100} /> <br />
+                    "object-cover h-40" alt={el.title} src={el.image}  /> <br />
                 <strong> {el.title}</strong> <br />
                 {el.category} <br />
                 ${el.price} <br />
@@ -135,16 +133,17 @@ const Shop = () => {
     ));
 
     const cartItems = cart.map((el) => (
-
-        <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
-            <img className=
-                "object-cover h-40" alt={el.title} src={el.image} width={150} height={100} /> <br />
-            {el.title} <br />
-            {el.category} <br />
-            ${el.price} <br />
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
-            <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
-            <p>Quantity: {quantity[el.id]}</p>
+        <div>
+            <div key={el.id} className="bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
+                <img className=
+                    "object-cover h-40" alt={el.title} src={el.image}  /> <br />
+                {el.title} <br />
+                {el.category} <br />
+                ${el.price} <br />
+                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
+                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
+                <p>Quantity: {quantity[el.id]}</p>
+            </div>
         </div>
     ));
 
@@ -167,7 +166,7 @@ const Shop = () => {
     }
     const [query, setQuery] = useState('');
 
-   
+
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -180,7 +179,6 @@ const Shop = () => {
                 return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
             }
         });
-        console.log(results[0].title);
         setProductsCategory(results);
     }
 
@@ -221,7 +219,7 @@ const Shop = () => {
 
                 {pageState.catalog &&
                     <div>
-                        {/* Container holding the catalog "Inside the scrollable bar" */}
+                        <div className="text-3xl">Catalog:</div>
                         <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: '800px', overflowY: 'scroll' }}>
                             {listItems}
                         </div>
@@ -230,13 +228,14 @@ const Shop = () => {
 
 
                 {pageState.cart &&
-                     <div className="h-screen p-3 xl:basis-1/5" style={{ maxHeight: '800px', overflowY: 'scroll'}}>
-                     <div >Items in Cart :</div>
-                     <div>{cartItems} </div>
-                 </div>
+                    <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: '800px', overflowY: 'scroll' }}>
+                        <div className="text-3xl">Cart:</div>
+                        <br />
+                        <div>{cartItems} </div>
+                    </div>
                 }
                 {/* Make this a second column */}
-               
+
 
                 {1 &&
 
