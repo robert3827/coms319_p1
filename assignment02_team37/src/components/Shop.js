@@ -8,7 +8,7 @@ import { Products } from "../Products";
 const Shop = () => {
     
     var prodQuanArr = [];
-    for(let i=0;i<Products.length;i++) {
+    for(let i=0;i<Products.length+1;i++) {
         prodQuanArr.push(0);
     }
 ;    
@@ -51,6 +51,8 @@ const Shop = () => {
     useEffect(()=>{
         console.log("Transaction: " + transaction);
         setQuantity(quantity);
+        setCart(cart);
+        total();
     }, [transaction]);
 
 
@@ -59,9 +61,26 @@ const Shop = () => {
       }, [quantity]);
 
     const removeFromCart = (el) => {
-        let hardCopy = [...cart];
-        hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
-        setCart(hardCopy);
+        let id = el.id;
+        setTransaction(transaction+=1);
+
+        if(quantity[id] > 1) {
+            quantity[id] -=1;
+        } else if(quantity[id] == 1) {
+            quantity[id] -= 1;
+            let hardCopy = [...cart];
+            hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
+            setCart(hardCopy);
+        } else if(quantity[id]==0) {
+            let hardCopy = [...cart];
+            hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
+            setCart(hardCopy);
+
+        }
+       
+           
+
+       
     };
 
     const listItems = Products.map((el) => (
@@ -72,8 +91,8 @@ const Shop = () => {
                 <strong> {el.title}</strong> <br />
                 {el.category} <br />
                 ${el.price} <br />
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
+                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
+                <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
                 <p>Quantity: {quantity[el.id]}</p>
             </div>
 
@@ -89,25 +108,16 @@ const Shop = () => {
             {el.title} <br />
             {el.category} <br />
             ${el.price} <br />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
-            {/* <p>Quantity: {quantity[el.id]}</p> */}
+            <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={() => removeFromCart(el)}>-</button>{" "}
+            <button className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-1" variant="light" onClick={() => addToCart(el)}> + </button>
+            <p>Quantity: {quantity[el.id]}</p>
         </div>
     ));
-
-
-
-
-
-
-    useEffect(() => {
-        total();
-    }, [cart]);
 
     const total = () => {
         let totalVal = 0;
         for (let i = 0; i < cart.length; i++) {
-            totalVal += cart[i].price;
+            totalVal += cart[i].price*quantity[cart[i].id];
         }
         setCartTotal(totalVal);
     };

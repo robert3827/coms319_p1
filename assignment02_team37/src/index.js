@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     {/* <Shop /> */}
     {/* <List /> */}
-    <App />
+    {/* <App /> */}
   </React.StrictMode>
 );
 
