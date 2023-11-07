@@ -4,7 +4,7 @@ import Cart  from "./Shop";
 import Confirm from "../Confirmation"
 
 export function App() {
-  const [page, changePage] = useState("Confirm");
+  const [page, changePage] = useState("Cart");
 
   if (page === "Catalog") {
     return (
