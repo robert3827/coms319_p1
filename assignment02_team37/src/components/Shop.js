@@ -117,7 +117,7 @@ const Shop = () => {
 
     };
 
-    const listItems = Products.map((el) => (
+    const listItems = ProductsCategory.map((el) => (
         <div>
             <div key={el.id} className="  bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none" style={{ minHeight: '500px' }}>
                 <img className=
@@ -167,8 +167,11 @@ const Shop = () => {
     }
     const [query, setQuery] = useState('');
 
+   
+
     const handleChange = (e) => {
         setQuery(e.target.value);
+        // console.log(e.target.value);
         const results = Products.filter(eachProduct => {
             if (e.target.value === "") {
                 console.log("No Entry")
@@ -177,6 +180,7 @@ const Shop = () => {
                 return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
             }
         });
+        console.log(results[0].title);
         setProductsCategory(results);
     }
 
@@ -241,8 +245,8 @@ const Shop = () => {
                             Total: ${cartTotal}
                         </h2>
                         <br />
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCart}>Go to Cart</button>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCatalog}>Back to Catalog</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCart}>Cart</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToCatalog}>Catalog</button>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1" onClick={handleGoToConfirmation}>Confirm Order</button>
 
                     </div>}
