@@ -4,8 +4,6 @@ import './index.css';
 import Catalog from './components/Catalog';
 import reportWebVitals from './reportWebVitals';
 import Shop from './components/Shop';
-import {App} from './components/App'
-
 import List from './components/learningUseState';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

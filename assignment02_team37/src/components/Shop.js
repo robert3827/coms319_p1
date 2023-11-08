@@ -457,9 +457,94 @@ const Shop = () => {
                     </div>
                 }
                 {pageState.confirmation &&
-                    <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10">
-                        {displayPayment}
+                
+                    <div class="container">
+
+                    <div class="row">
+                      <div class="col-2"></div>
+                
+                
+                      <div class="col-8">
+                
+                        <h1>Javascript Form Validation</h1>
+                
+                        <div id="liveAlertPlaceholder"></div>
+                
+                        <form class="row g-3" id="checkout-form">
+                
+                          {/* <!-- Name --> */}
+                          <div class="col-md-6">
+                            <label for="inputName" class="form-label">Full Name</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputName"></input>
+                          </div>
+                
+                          {/* <!-- Email --> */}
+                          <div class="col-md-6">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <br></br>
+                            <input type="email" class="form-control" id="inputEmail4"></input>
+                          </div>
+                
+                          {/* <!-- Credit card --> */}
+                          <div class="col-12">
+                            <label for="inputCard" class="form-label">Card</label>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon1"><i class="bi-credit-card-fill"></i></span>
+                              <input type="text" id="inputCard" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX"
+                                aria-label="Username" aria-describedby="basic-addon1"></input>
+                            </div>
+                          </div>
+                
+                          <div class="col-12">
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"></input>
+                          </div>
+                          <div class="col-12">
+                            <label for="inputAddress2" class="form-label">Address 2</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"></input>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="inputCity" class="form-label">City</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputCity"></input>
+                          </div>
+                          <div class="col-md-4">
+                            <label for="inputState" class="form-label">State</label>
+                            <br></br>
+                            <select id="inputState" class="form-select">
+                              <option selected>Choose...</option>
+                              <option>...</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <label for="inputZip" class="form-label">Zip</label>
+                            <br></br>
+                            <input type="text" class="form-control" id="inputZip"></input>
+                          </div>
+                          <div class="col-12">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="gridCheck"></input>
+                              <label class="form-check-label" for="gridCheck">
+                                Check me out
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-12">
+                            <button type="submit" class="btn btn-success"> <i class="bi-bag-check"></i> Order</button>
+                          </div>
+                        </form>
+                
+                      </div>
+                
+                      <div class="col-2"></div>
+                
+                
                     </div>
+                
+                  </div>
                 }
 
 
