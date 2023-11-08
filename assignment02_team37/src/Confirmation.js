@@ -23,12 +23,6 @@ const Confirm = () =>{
 
 
 
-    // var order = { 
-    //     name: '',
-    //     email: '',
-    //     card: '' 
-    // }
-
     const alert = (message, type) => {
         const wrapper = document.createElement('div')
         wrapper.innerHTML = [
