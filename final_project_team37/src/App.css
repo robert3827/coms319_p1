@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.bannerTitle {
+  color: white;
+  font-size: larger;
+  font-weight: bold;
+}
+.bannerText {
+  color:white;
+  font-size: large;
+}
+
+.btn-primary {
+  background: #AA0000;
+}
+
+body {
+  background-color: slategray!important;
+}
+
+.logo {
+  margin-left: 10px;
+  margin-right: 10px;
+  justify-content: left;
+}
+
+.grass {
+
+  background-color: transparent;
+  /* background-image: url("./grassBg.png")!important; */
+  /* background-repeat: no-repeat; */
+  min-width: 100%;
+  min-height: 1000px;
+  /* Contain the pokemon in this div / container */
+
+
+
+}
