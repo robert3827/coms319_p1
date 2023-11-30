@@ -100,7 +100,7 @@ function generatePokemart(){
     console.log(ownedPokemon);
 
 
-    allPokemonCard = document.getElementById("pokemartListParent");
+    var allPokemonCard = document.getElementById("pokemartListParent");
 
     for (let i = 0; i < pokemonList.length; i++) {
             
