@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="container">
+
+        <div id="button_conatiner">
+            <button id="postPokemon" onclick="postPokemon()">POST POKEMON</button>
+        </div>
+
+
+    </div>
+    <div id="showData">
+
+    </div>
+    <script>
+        async function postPokemon() {
+            for(let i = 1;i<=151;i++){
+                const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + i);
+                const data = await response.json();
+                const pokemon = loadPokemon(data);
+                fetch('http://localhost:8081/addPokemon', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify(pokemon)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    var container = document.getElementById("showData");
+                    container.innerHTML = JSON.stringify(data);
+                });
+            }
+        };
+
+
+        function loadPokemon(poke) {
+            var pokemonName = poke.name;
+            var pokemonImg = poke.sprites.front_default;
+            var pokemonImgShiny = poke.sprites.front_shiny;
+            var pokemonId = poke.id;
+
+            var pokemonTypeJson = poke.types;
+            var pokemonType1 = pokemonTypeJson[0].type.name;
+            var pokemon;
+
+            if (pokemonTypeJson.length > 1) {
+                var pokemonType2 = pokemonTypeJson[1].type.name;
+
+                pokemon = {
+                    "id": pokemonId,
+                    "name": pokemonName,
+                    "img": pokemonImg,
+                    "imgShiny": pokemonImgShiny,
+                    "type1": pokemonType1,
+                    "type2": pokemonType2
+                };
+
+            }
+            else {
+                pokemon = {
+                    "id": pokemonId,
+                    "name": pokemonName,
+                    "img": pokemonImg,
+                    "imgShiny": pokemonImgShiny,
+                    "type1": pokemonType1,
+                    "type2": null
+                };
+
+            }
+
+            return pokemon;
+
+        }
+    </script>
+</body>
+</html>
