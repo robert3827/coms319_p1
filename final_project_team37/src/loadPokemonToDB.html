@@ -12,10 +12,14 @@
         <div id="button_conatiner">
             <button id="postPokemon" onclick="postPokemon()">POST POKEMON</button>
         </div>
+        <h1>Get Pokemon</h1>
+        <input type="number" id="integerInput">
+        <button onclick="handleButtonClick()">Generate Pokemon</button>
 
 
     </div>
-    <div id="showData">
+    <h1>Output:</h1>
+    <pre id="showData"></pre>
 
     </div>
     <script>
@@ -36,6 +40,27 @@
                     container.innerHTML = JSON.stringify(data);
                 });
             }
+        };
+
+        function handleButtonClick() {
+            // Get the input element
+            var inputElement = document.getElementById('integerInput');
+            // Get the value entered by the user
+            var inputValue = inputElement.value;
+            // Convert the input value to an integer
+            var integerInput = parseInt(inputValue);
+            // Call your function with the integer parameter
+            getMethodById(integerInput);
+        };
+
+        function getMethodById(id) {
+            fetch('http://localhost:8081/pokemon/' + id)
+                .then(response => response.json())
+                .then(data => {
+                console.log(data);
+                var container = document.getElementById("showData");
+                container.innerHTML = JSON.stringify(data,undefined,2);
+                });
         };
 
 

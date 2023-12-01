@@ -43,52 +43,15 @@ app.post("/addPokemon", async (req, res) => {
     res.send(results);
 });
 
-// const numPokemon=151;
-
-// async function main(){
-//     for(let i=1;i<=numPokemon;i++){
-//         const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + i);
-//         const data = await response.json();
-//         const pokemon = loadPokemon(data);
-        
-//     }
-// }
-
-// function loadPokemon(poke) {
-//     var pokemonName = poke.name;
-//     var pokemonImg = poke.sprites.front_default;
-//     var pokemonImgShiny = poke.sprites.front_shiny;
-//     var pokemonId = poke.id;
-
-//     var pokemonTypeJson = poke.types;
-//     var pokemonType1 = pokemonTypeJson[0].type.name;
-//     var pokemon;
-
-//     if (pokemonTypeJson.length > 1) {
-//         var pokemonType2 = pokemonTypeJson[1].type.name;
-
-//         pokemon = {
-//             id: pokemonId,
-//             name: pokemonName,
-//             img: pokemonImg,
-//             imgShiny: pokemonImgShiny,
-//             type1: pokemonType1,
-//             type2: pokemonType2
-//         };
-
-//     }
-//     else {
-//         pokemon = {
-//             id: pokemonId,
-//             name: pokemonName,
-//             img: pokemonImg,
-//             imgShiny: pokemonImgShiny,
-//             type1: pokemonType1,
-//             type2: null
-//         };
-
-//     }
-
-//     return pokemon;
-
-// }
+app.get("/pokemon/:id", async (req, res) => {
+    const pokemonid = Number(req.params.id);
+    console.log("Pokemon to find :", pokemonid);
+    await client.connect();
+    console.log("Node connected successfully to GET-id MongoDB");
+    const query = {"id": pokemonid };
+    const results = await db.collection("pokemon")
+    .findOne(query);
+    console.log("Results :", results);
+    if (!results) res.send("Not Found").status(404);
+    else res.send(results).status(200);
+});
