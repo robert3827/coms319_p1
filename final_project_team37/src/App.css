@@ -52,6 +52,23 @@
 .btn-primary {
   background: #AA0000;
 }
+.btn-info {
+  background: #0d6efd;
+  color: white;
+}
+
+
+/* 
+* Change the hover color.
+
+.btn-primary:hover {
+  background: #AA0000;
+  
+}
+.btn-info:hover {
+  background: #0d6efd;
+  color: white;
+} */
 
 body {
   background-color: slategray!important;
@@ -87,9 +104,7 @@ body {
   font-size: large;
 }
 
-.btn-primary {
-  background: #AA0000;
-}
+
 
 body {
   background-color: slategray!important;

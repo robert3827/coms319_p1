@@ -11,7 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Credits from "./pages/credits";
 import YourCollection from "./pages/yourCollection";
 import Menubar from "./components/menubar";
-
+import EarnCoins from "./pages/earnCoins";
 
 
 
@@ -21,11 +21,11 @@ import Menubar from "./components/menubar";
 			<>
 				<BrowserRouter>
 					<Routes>
-							<Route path="/" element={<MainPage />} />
-							<Route path="pokemart" element={<Pokemart />} />
-							<Route path="yourCollection" element={<YourCollection />} />
-							<Route path="credits" element={<Credits />} />
-						
+						<Route path="/" element={<MainPage />} />
+						<Route path="pokemart" element={<Pokemart />} />
+						<Route path="yourCollection" element={<YourCollection />} />
+						<Route path="earnCoins" element={<EarnCoins />} />
+						<Route path="credits" element={<Credits />} />
 					</Routes>
 				</BrowserRouter>
 

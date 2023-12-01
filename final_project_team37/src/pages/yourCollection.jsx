@@ -12,9 +12,10 @@ function YourCollection() {
 
     return (
         <>
+            <Menubar />
+
 
             <Container style={myStyle }>
-            <Menubar />
 
                 <section class="py-5 text-center container banner">
                     <div class="row py-lg-5">

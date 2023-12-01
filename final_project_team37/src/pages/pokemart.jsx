@@ -11,6 +11,8 @@ import bulbasaur from '../images/bulbasaur.png';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Menubar from '../components/menubar';
+import PokemonShopInfoModal from '../components/launchModal';
+import pokeData from '../data/pokemon.json'
 
 
 
@@ -28,6 +30,17 @@ var ownedPokemon = [];
 let timerIds = [];
 
 
+function getDataFromJson(i) {
+  let pokemonName = pokemonList[i].name;
+  let pokemonId = pokemonList[i].id;
+  let pokemonImg = pokemonList[i].img;
+  let pokemonType1 = pokemonList[i].type1;
+  let pokemonType2 = null;
+  if (pokemonList[i].type2 != null) {
+    pokemonType2 = pokemonList[i].type2;
+
+  }
+}
 
 
 function sleep(ms) {
@@ -40,6 +53,8 @@ function getRandomInt(max) {
 
 
 function Pokemart() {
+  
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     console.log("PokemonList: " + pokemonList);
@@ -66,7 +81,7 @@ function Pokemart() {
       <Menubar />
       <Container id='pokemartContainer'>
 
-        <Form inline>
+        <Form >
           <Row>
             <Col>
               <Form.Control
@@ -91,7 +106,14 @@ function Pokemart() {
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
+              Learn More
+            </Button>
+            <Button variant="primary" className='ml-1'>Buy Pokemon</Button>
+            <PokemonShopInfoModal
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
           </Card.Body>
         </Card>
 
