@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { Container, Row, Col } from "react-bootstrap";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import MainPage from "./pages/mainPage";
+import Pokemart from "./pages/pokemart";
+import Carousel from 'react-bootstrap/Carousel';
+import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Credits from "./pages/credits";
+import YourCollection from "./pages/yourCollection";
+import Menubar from "./components/menubar";
+import EarnCoins from "./pages/earnCoins";
+
+
+
+
+	function App() {
+		return (
+			<>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<MainPage />} />
+						<Route path="pokemart" element={<Pokemart />} />
+						<Route path="yourCollection" element={<YourCollection />} />
+						<Route path="earnCoins" element={<EarnCoins />} />
+						<Route path="credits" element={<Credits />} />
+					</Routes>
+				</BrowserRouter>
+
+
+			</>
+
+
+		);
+	}
+
 
 export default App;
