@@ -5,7 +5,6 @@ import charmander from '../images/charmander.png';
 import squirtle from '../images/squirtle.png';
 import bulbasaur from '../images/bulbasaur.png';
 import Menubar from '../components/menubar';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 function MainPage() {

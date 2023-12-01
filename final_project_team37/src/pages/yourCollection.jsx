@@ -15,7 +15,7 @@ function YourCollection() {
             <Menubar />
 
 
-            <Container style={myStyle }>
+            <Container style={myStyle}>
 
                 <section class="py-5 text-center container banner">
                     <div class="row py-lg-5">
