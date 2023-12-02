@@ -7,6 +7,7 @@ import MainPage from "./pages/mainPage";
 import Pokemart from "./pages/pokemart";
 import Carousel from 'react-bootstrap/Carousel';
 import './App.css';
+import './Types.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Credits from "./pages/credits";
 import YourCollection from "./pages/yourCollection";

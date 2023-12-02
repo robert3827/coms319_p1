@@ -12,7 +12,11 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Menubar from '../components/menubar';
 import PokemonShopInfoModal from '../components/launchModal';
-import pokeData from '../data/pokemon.json'
+import pokeData from '../data/pokemon.json';
+import grassType from '../typeIcons/grass.svg';
+import poisonType from '../typeIcons/poison.svg';
+
+import '../Types.css';
 
 
 
@@ -28,20 +32,7 @@ var htmlCard = [];
 var ownedPokemon = [];
 
 let timerIds = [];
-
-
-function getDataFromJson(i) {
-  let pokemonName = pokemonList[i].name;
-  let pokemonId = pokemonList[i].id;
-  let pokemonImg = pokemonList[i].img;
-  let pokemonType1 = pokemonList[i].type1;
-  let pokemonType2 = null;
-  if (pokemonList[i].type2 != null) {
-    pokemonType2 = pokemonList[i].type2;
-
-  }
-}
-
+   
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -53,6 +44,16 @@ function getRandomInt(max) {
 
 
 function Pokemart() {
+
+//   function importAll(r) {
+//     let images = {};
+//     r.keys().map(item => { images[item.replace('./', '')] = r(item); });
+//     return images;
+// }
+
+// const images = importAll(require.context('./images', false, '/\.png/'));
+
+// <img src={images['0.png']} />
   
   const [modalShow, setModalShow] = useState(false);
 
@@ -75,6 +76,18 @@ function Pokemart() {
         });
     }
   }
+  // var bulbStats = {
+  //   pokemonName: pokemonList[0].name,
+  //   pokemonId: pokemonList[0].id,
+  //   pokemonImg: pokemonList[0].img,
+  //   pokemonType1: pokemonList[0].type1,
+  //   pokemonType2: null,
+  // }
+
+  // if (pokemonList[0].type2 != null) {
+  //   bulbStats.pokemonType2 = pokemonList[0].type2;
+  // }
+
 
   return (
     <>
@@ -101,10 +114,18 @@ function Pokemart() {
         <Card style={{ width: '18rem' }}>
           <Card.Img variant="top" src={diglett} />
           <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>Pokemon Name</Card.Title>
             <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              Type(s): 
+                <img src={grassType} alt="grass icon" className='icon grass'></img>
+                <img src={poisonType} alt="poison icon"className='icon poison'></img>
+              
+              
+              <br />
+              Description: 
+              <br />
+              Stats:
+              
             </Card.Text>
             <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
               Learn More
