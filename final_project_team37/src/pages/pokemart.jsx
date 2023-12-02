@@ -119,12 +119,7 @@ function Pokemart() {
               Type(s): 
                 <img src={grassType} alt="grass icon" className='icon grass'></img>
                 <img src={poisonType} alt="poison icon"className='icon poison'></img>
-              
-              
               <br />
-              Description: 
-              <br />
-              Stats:
               
             </Card.Text>
             <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
