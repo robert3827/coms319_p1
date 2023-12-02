@@ -11,7 +11,7 @@ function PokemonShopInfoModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          Pokemon Number SPACE Pokemon Name
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
