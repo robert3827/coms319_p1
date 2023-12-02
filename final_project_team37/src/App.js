@@ -13,6 +13,7 @@ import Credits from "./pages/credits";
 import YourCollection from "./pages/yourCollection";
 import Menubar from "./components/menubar";
 import EarnCoins from "./pages/earnCoins";
+import SignIn from "./pages/signIn";
 
 
 
@@ -27,6 +28,7 @@ import EarnCoins from "./pages/earnCoins";
 						<Route path="yourCollection" element={<YourCollection />} />
 						<Route path="earnCoins" element={<EarnCoins />} />
 						<Route path="credits" element={<Credits />} />
+            <Route path="signIn" element={<SignIn />} />
 					</Routes>
 				</BrowserRouter>
 

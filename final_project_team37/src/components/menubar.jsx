@@ -42,6 +42,7 @@ function Menubar() {
             <li><NavLink to="/yourCollection" className="nav-link">Your Collection</NavLink></li>
             <li><NavLink to="/earnCoins" className="nav-link">Earn Coins</NavLink></li>
             <li><NavLink to="/credits" className="nav-link">Credits</NavLink></li>
+            <li><NavLink to="/signIn" className="nav-link">Sign In</NavLink></li>
           </ul>
 
           <div className="col-md-3 text-end ">
