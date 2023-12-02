@@ -45,6 +45,24 @@ function getRandomInt(max) {
 
 function Pokemart() {
 
+  function getManyPokemon() {
+    for(let i=0;i<10;i++) {
+      console.log("getManyPokemon " + i);
+      // logMovies(i);
+    }
+  }
+
+  //This one works. 
+  async function logMovies(i) {
+    console.log("Fetch Data "+ i);
+    const response = await fetch("http://localhost:8081/pokemon/" + i);
+    const movies = await response.json();
+    console.log(movies);
+  }
+  logMovies().then(
+
+  )
+
 //   function importAll(r) {
 //     let images = {};
 //     r.keys().map(item => { images[item.replace('./', '')] = r(item); });
@@ -57,16 +75,17 @@ function Pokemart() {
   
   const [modalShow, setModalShow] = useState(false);
 
-  useEffect(() => {
-    console.log("PokemonList: " + pokemonList);
-  }, [pokemonList]);
+  // useEffect(() => {
+  //   console.log("PokemonList: " + pokemonList);
+  // }, [pokemonList]);
 
-  var [pokemonList, setPokemonList] = useState([]);
+  // var [pokemonList, setPokemonList] = useState([]);
 
+  //This one doesn't work
   function makePokemonArray() {
     console.log("Make Pokemon Array");
     for (let i = 1; i <= numPokemon; i++) {
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0" + i)
+      fetch("http://localhost:8081/pokemon/1" + i)
         .then((res) => res.json())
         .then((json) => {
           console.log("JSON: " + json.name);
