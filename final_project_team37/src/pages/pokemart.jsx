@@ -32,7 +32,7 @@ var htmlCard = [];
 var ownedPokemon = [];
 
 let timerIds = [];
-   
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -43,69 +43,25 @@ function getRandomInt(max) {
 }
 
 
+
 function Pokemart() {
 
-  function getManyPokemon() {
-    for(let i=0;i<10;i++) {
-      console.log("getManyPokemon " + i);
-      // logMovies(i);
-    }
-  }
-
-  //This one works. 
-  async function logMovies(i) {
-    console.log("Fetch Data "+ i);
-    const response = await fetch("http://localhost:8081/pokemon/" + i);
-    const movies = await response.json();
-    console.log(movies);
-  }
-  logMovies().then(
-
-  )
-
-//   function importAll(r) {
-//     let images = {};
-//     r.keys().map(item => { images[item.replace('./', '')] = r(item); });
-//     return images;
-// }
-
-// const images = importAll(require.context('./images', false, '/\.png/'));
-
-// <img src={images['0.png']} />
-  
+  /**
+   * Modal Control
+   * I'll probably need to change this to show a unique modal for each pokemon "card"
+   */
   const [modalShow, setModalShow] = useState(false);
+  const [pokemon, setPokemon] = useState([]);
 
-  // useEffect(() => {
-  //   console.log("PokemonList: " + pokemonList);
-  // }, [pokemonList]);
-
-  // var [pokemonList, setPokemonList] = useState([]);
-
-  //This one doesn't work
-  function makePokemonArray() {
-    console.log("Make Pokemon Array");
-    for (let i = 1; i <= numPokemon; i++) {
-      fetch("http://localhost:8081/pokemon/1" + i)
-        .then((res) => res.json())
-        .then((json) => {
-          console.log("JSON: " + json.name);
-          // setPokemonList(
-          //   [...pokemonList, json]
-          // );
-        });
-    }
+  function getAllProducts() {
+    fetch("http://localhost:8081/pokemon/")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Show Catalog of Products: ");
+        console.log(data);
+        setPokemon(data);
+      });
   }
-  // var bulbStats = {
-  //   pokemonName: pokemonList[0].name,
-  //   pokemonId: pokemonList[0].id,
-  //   pokemonImg: pokemonList[0].img,
-  //   pokemonType1: pokemonList[0].type1,
-  //   pokemonType2: null,
-  // }
-
-  // if (pokemonList[0].type2 != null) {
-  //   bulbStats.pokemonType2 = pokemonList[0].type2;
-  // }
 
 
   return (
@@ -135,11 +91,11 @@ function Pokemart() {
           <Card.Body>
             <Card.Title>Pokemon Name</Card.Title>
             <Card.Text>
-              Type(s): 
-                <img src={grassType} alt="grass icon" className='icon grass'></img>
-                <img src={poisonType} alt="poison icon"className='icon poison'></img>
+              Type(s):
+              <img src={grassType} alt="grass icon" className='icon grass'></img>
+              <img src={poisonType} alt="poison icon" className='icon poison'></img>
               <br />
-              
+
             </Card.Text>
             <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
               Learn More
