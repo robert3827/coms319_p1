@@ -44,6 +44,15 @@ function MainPage() {
           </Carousel.Caption>
         </Carousel.Item>
 
+        <Carousel.Item>
+          <img src={diglett} alt="Diglett Pokemon" height={400} width={400} />
+          <Carousel.Caption>
+            <h3>Sign In</h3>
+            <p>Have you signed in yet?</p>
+            <Button>Go to Sign In</Button>
+          </Carousel.Caption>
+        </Carousel.Item>
+
       </Carousel>
     </>
   );
