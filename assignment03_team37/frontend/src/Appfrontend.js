@@ -1,4 +1,13 @@
 import { useState, useEffect } from "react";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 function App() {
 
     const url = "http://localhost:8081/"
@@ -14,7 +23,7 @@ function App() {
         ,
         category: ""
         ,
-        image: "http://127.0.0.1:4000/images/",
+        image: url + "images",
         rating: 0.0,
     });
 
@@ -27,8 +36,9 @@ function App() {
     useEffect(() => {
         getAllProducts();
     }, []);
+    
     function getAllProducts() {
-        fetch(url+"get")
+        fetch(url + "get")
             .then((response) => response.json())
             .then((data) => {
                 console.log("Show Catalog of Products :");
@@ -38,20 +48,65 @@ function App() {
         setViewer1(!viewer1);
     }
 
+    function showProduct(id) {
+
+
+        return (
+            <Card style={{ width: '18rem' }} fluid key={id}>
+                <Card.Img variant="top" src={product[id].image} />
+                <Card.Body>
+                    <Card.Title>{product[id].title}</Card.Title>
+                    <Card.Text>
+                        Category:  {product[id].category} <br />
+                        Price: $ {product[id].price} <br />
+                        Rating: {product[id].rating}
+                    </Card.Text>
+                    <Button variant="primary">Dislike</Button>
+                    <Button variant="primary">Like</Button>
+                </Card.Body>
+            </Card>
+        )
+
+    }
+
+    function showProducts() {
+
+        return (
+            <Container>
+
+            </Container>
+        )
+    }
+
     const showAllItems = product.map((el) => (
-        <div key={el.id}>
-            <img src={el.image} width={30} alt="images" /> <br />
-            Title: {el.title} <br />
-            Category: {el.category} <br />
-            Price: {el.price} <br />
-            Rating :{el.rating} <br />
-        </div>
+        <Container>
+            <Row>
+                <Col sm={6} xs={8} md={4}>
+                <Card style={{ width: '18rem' }} fluid key={el.id}>
+                <Card.Img variant="top" src={el.image} />
+                <Card.Body>
+                    <Card.Title>{el.title}</Card.Title>
+                    <Card.Text>
+                        Category:  {el.category} <br />
+                        Price: $ {el.price} <br />
+                        Rating: {el.rating}
+                    </Card.Text>
+                    <Button variant="primary">Go somewhere</Button>
+                </Card.Body>
+            </Card>
+                </Col>
+
+            </Row>
+
+        </Container>
+
+
     ));
 
     function getOneProduct(id) {
         console.log(id);
         if (id >= 1 && id <= 20) {
-            fetch(url + "getById" + id)
+            fetch(url + "getById/" + id)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("Show one product :", id);
@@ -133,7 +188,7 @@ function App() {
 
     function deleteOneProduct(deleteid) {
         console.log("Product to delete :", deleteid);
-        fetch(url+"delete", {
+        fetch(url + "delete", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "id": deleteid }),
@@ -153,7 +208,7 @@ function App() {
     }
     useEffect(() => {
         getAllProducts();
-        }, [checked4]);
+    }, [checked4]);
 
 
 

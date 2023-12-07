@@ -7,6 +7,8 @@ app.use(cors());
 app.use(bodyParser.json());
 const port = "8081";
 const host = "localhost";
+app.use("/images", express.static("images"));
+
 app.listen(port, () => {
     console.log("App listening at http://%s:%s", host, port);
 });
@@ -32,7 +34,7 @@ app.get("/get", async (req, res) => {
     res.send(results);
 });
 
-app.get("/getFromId/:id", async (req, res) => {
+app.get("/getById/:id", async (req, res) => {
     const robotid = Number(req.params.id);
     console.log("Robot to find :", robotid);
     await client.connect();
