@@ -28,7 +28,7 @@ import SignIn from "./pages/signIn";
 						<Route path="yourCollection" element={<YourCollection />} />
 						<Route path="earnCoins" element={<EarnCoins />} />
 						<Route path="credits" element={<Credits />} />
-            <Route path="signIn" element={<SignIn />} />
+            			<Route path="signIn" element={<SignIn />} />
 					</Routes>
 				</BrowserRouter>
 
