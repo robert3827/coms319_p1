@@ -21,6 +21,7 @@ function Menubar() {
     pokemart: false,
     yourCollection: false,
     credits: false,
+    signIn: false
   });
 
 
@@ -46,6 +47,7 @@ function Menubar() {
           </ul>
 
           <div className="col-md-3 text-end ">
+          <h3>Username Placeholder</h3>
           <h2> <img src={pokeCoin} height={50} width={50}/> {coinsCount} </h2>
           </div>
         </header>
