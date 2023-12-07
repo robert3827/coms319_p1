@@ -11,6 +11,8 @@ function SignIn(){
 
 
     const [showSignUp, setShowSignUp] = useState(false);
+    const [signedIn, setSignedIn] = useState(false);
+    var userUsername;
 
 
     function handleSignUp() {
@@ -18,7 +20,9 @@ function SignIn(){
         var password1 = document.getElementById("inputPassword").value;
         var password2 = document.getElementById("confirmPassword").value;
         if(password1 === password2){
+            userUsername = username;
             postUser(username, password1);
+            setSignedIn(true);
         }
         else{
             console.log("Passwords do not match");
@@ -40,7 +44,9 @@ function SignIn(){
             .then(data => {
             console.log(data.password);
             if(data.password === password){
+                userUsername = username;
                 console.log("login success");
+                setSignedIn(true);
             }
             else{
                 console.log("login failure");
@@ -65,11 +71,33 @@ function SignIn(){
         })
     };
 
+    function addPokemon(username){
+        const testPokemon = { 
+            "id": 1,
+            "name": "bulbasaur",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            "imgShiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+            "type1": "grass",
+            "type2": "poison"
+        }
+
+        fetch('http://localhost:8081/addPokemon/' + 'test', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(testPokemon)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+    };
+
 
 
     return (
         <>
             <Menubar />
+            {!signedIn &&
                 <Container id='signInContainer' >
                     {!showSignUp &&
                         <p>
@@ -142,6 +170,20 @@ function SignIn(){
                     }
 
                 </Container>
+            }
+
+            {signedIn &&
+            <Container>
+                <Button type='submit' onClick={() =>{
+                    addPokemon(userUsername);
+                }}>Add Pokemon</Button>
+
+
+                <Button type='submit' onClick={()=>{
+                    setSignedIn(false);
+                }}>Sign Out</Button>
+            </Container>
+            }
 
            
         </>
