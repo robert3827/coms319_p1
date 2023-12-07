@@ -11,6 +11,12 @@
         <div id="button_conatiner">
             <button id="postProduct" onclick="postProducts()">POST Products</button>
         </div>
+        <div id="button_conatiner">
+            <button id="deleteProduct" onclick="deleteProduct()">DELETE PRODUCT 1</button>
+        </div>
+        <div id="button_conatiner">
+            <button id="updateProduct" onclick="updateProduct()">change product price</button>
+        </div>
 
 
     </div>
@@ -62,6 +68,33 @@
 
             return sortedProduct;
 
+        }
+
+        async function deleteProduct(){
+            console.log("Product to delete :"+ 2);
+
+            fetch("http://localhost:8081/deleteProduct/" + 2, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Delete a product completed : "+ 2);
+                });
+        }
+
+        async function updateProduct(){
+            console.log("Product 1 price changing to 5");
+
+            fetch("http://localhost:8081/updatePrice/" + 1, {
+                method : "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({"price" : 6})
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Updated product");
+            });
         }
     </script>
 </body>

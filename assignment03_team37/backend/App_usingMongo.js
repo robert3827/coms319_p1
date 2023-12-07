@@ -78,5 +78,39 @@ app.post("/addProduct", async (req, res) => {
     const results = await db.collection("fakestore").insertOne(productFormat);
     res.status(200);
     res.send(results);
-})
+});
+
+
+
+app.put("/updatePrice/:id", async (req, res) => {
+    const id = req.params.id;
+    const values = Object.values(req.body);
+    const priceChange = values[0];
+    console.log("Product " + id + " price changing to: " + priceChange);
+    // const productObject = await db.collection("fakestore").findOne({"id": id });
+    // console.log(productObject);
+    const results = await db.collection("fakestore").updateOne(
+        {"id" : 1},
+        {$set: {"price" : priceChange}},
+        {upsert: false}
+    );
+
+    console.log(results);
+    res.status(200);
+    res.send(results);
+});
+
+
+app.delete("/deleteProduct/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log("ID: " + id)
+    const query = {
+        "id" : id
+    }
+    const results = await db.collection("fakestore").deleteMany(query);
+    console.log(results);
+
+    res.status(200);
+    res.send(results);
+});
     
