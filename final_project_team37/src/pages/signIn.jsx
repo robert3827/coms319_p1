@@ -81,7 +81,7 @@ function SignIn(){
             "type2": "poison"
         }
 
-        fetch('http://localhost:8081/addPokemon/' + 'test', {
+        fetch('http://localhost:8081/addPokemon/' + 'breckin', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(testPokemon)

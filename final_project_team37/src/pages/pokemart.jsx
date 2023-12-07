@@ -12,7 +12,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Menubar from '../components/menubar';
 import PokemonShopInfoModal from '../components/launchModal';
-import pokeData from '../data/pokemon.json';
+// import pokeData from '../data/pokemon.json';
 import grassType from '../typeIcons/grass.svg';
 import poisonType from '../typeIcons/poison.svg';
 import Spinner from 'react-bootstrap/Spinner';
