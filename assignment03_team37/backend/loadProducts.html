@@ -89,7 +89,7 @@
             fetch("http://localhost:8081/updatePrice/" + 1, {
                 method : "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({"price" : 6})
+                body: JSON.stringify({"price" : 5})
             })
                 .then((response) => response.json())
                 .then((data) => {

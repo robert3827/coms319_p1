@@ -175,9 +175,13 @@ app.post("/addPokemon/:username", async(req, res) => {
         "currency" : userValues[4],
     }
 
+    var collection = userValues[3];
+    var updateCollection = collection.push(pokemonToBeAdded);
     console.log(updatedUser);
-    const putResult = await db.collection("users").updateOne(updatedUser);
-    // const putResult = await db.collection("users").insertOne(updatedUser);
+    const putResult = await db.collection("users").updateOne(
+        {"username" : userValues[1]},
+        {$set: {"collection" :updateCollection}}
+    );
 
     if(!putResult){
         res.send("Not Found").status(404);
