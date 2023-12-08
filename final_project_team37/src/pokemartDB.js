@@ -103,7 +103,7 @@ app.post("/users", async(req, res)=> {
     const username = values[0];
     console.log("Creating new user for: " + username);
     const password = values[1];
-    const collection = null;
+    const collection = [];
     const currency = 100;
 
     const newUser = {
@@ -118,6 +118,7 @@ app.post("/users", async(req, res)=> {
     res.send(results);
 });
 
+//Get a user from the DB based on username
 app.get("/users/:username", async(req, res) => {
     const username = String(req.params.username);
     console.log("Attempting to find: " + username);
@@ -131,5 +132,63 @@ app.get("/users/:username", async(req, res) => {
     else{
         res.send(results).status(200);
     }
+});
+
+//Add Pokemon to user object
+app.post("/addPokemon/:username", async(req, res) => {
+    //Retrieve user information
+    const username = String(req.params.username);
+    console.log("Attempting to find: " + username);
+    await client.connect();
+    const query = {"username" : username};
+    const results = await db.collection("users").findOne(query);
+    const userValues = Object.values(results);
+    console.log("userValues: "+userValues);
+
+    if(!results){
+        res.send("Not Found").status(404);
+    }
+
+    //Retrieve pokemon to be added to user collection
+    const values = Object.values(req.body);
+    const id = values[0]; // id
+    const name = values[1]; // name
+    const img = values[2]; // img
+    const imgShiny = values[3]; // imgShiny
+    const type1 = values[4]; // type1
+    const type2 = values[5]; // type2
+    const pokemonToBeAdded = {
+        "id":id,
+        "name":name,
+        "img":img,
+        "imgShiny":imgShiny,
+        "type1":type1,
+        "type2":type2
+    };
+
+
+    const updatedUser = {
+        "_id" : userValues[0],
+        "username" : userValues[1],
+        "password" : userValues[2],
+        "collection" : userValues[3],//.push(pokemonToBeAdded), //pokemonToBeAdded needs to be added to this list of objects
+        "currency" : userValues[4],
+    }
+
+    var collection = userValues[3];
+    var updateCollection = collection.push(pokemonToBeAdded);
+    console.log(updatedUser);
+    const putResult = await db.collection("users").updateOne(
+        {"username" : userValues[1]},
+        {$set: {"collection" :updateCollection}}
+    );
+
+    if(!putResult){
+        res.send("Not Found").status(404);
+    }
+    else{
+        res.send(results).status(200);
+    }
+    
 });
 
