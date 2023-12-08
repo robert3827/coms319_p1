@@ -75,7 +75,7 @@ function App() {
                             <Card.Text>
                                 Category:  {el.category} <br />
                                 Price: $ {el.price} <br />
-                                Rating: {el.rating}
+                                Rating: {el.rating.rate}
                             </Card.Text>
                             <Button variant="primary">Delete</Button>
                             <Button variant="primary">Update</Button>
