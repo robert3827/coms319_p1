@@ -20,9 +20,8 @@ function Menubar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink to="/">View Products</NavLink>
-            <NavLink to="/form">Edit</NavLink>
-            <NavLink to="/form">Create New</NavLink>
+            <NavLink className="nav-link " to="/">View Products</NavLink>
+            <NavLink className="nav-link " to="/form">Update Product</NavLink>
             
           </Nav>
         </Navbar.Collapse>
