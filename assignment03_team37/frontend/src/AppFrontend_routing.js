@@ -54,11 +54,15 @@ function App() {
     function showAllProducts() {
         console.log("Showing Prodcuts");
         return (
-            <Container>
+            <>
+            <Menubar />
+                <Container>
                 <Row>
                     {showAllItems()}
                 </Row>
             </Container>
+            </>
+            
         )
     }
     
@@ -77,8 +81,8 @@ function App() {
                                 Price: $ {el.price} <br />
                                 Rating: {el.rating.rate}
                             </Card.Text>
-                            <Button variant="primary">Delete</Button>
-                            <Button variant="primary">Update</Button>
+                            <Button variant="primary" className="mx-1">Delete</Button>
+                            <Button variant="primary" className="mx-1">Update</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -105,7 +109,7 @@ function App() {
     }
     const showOneItem = oneProduct.map((el) => (
         <Card style={{ width: '18rem' }} fluid key={el.id}>
-            <Card.Img variant="top" src={el.image} />
+            <Card.Img variant="top" src={el.image}/>
             <Card.Body>
                 <Card.Title>{el.title}</Card.Title>
                 <Card.Text>
@@ -161,6 +165,7 @@ function App() {
 
         return (
             <div>
+                <Menubar />
                 <div>
                     <h3>Add a new product :</h3>
                     <form action="">
