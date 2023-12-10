@@ -24,7 +24,15 @@ import Modal from 'react-bootstrap/Modal';
 
 function App() {
 
-    const url = "http://localhost:8081/"
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const [pageState, setPageState] = useState({
+        viewAll: true,
+        form: false
+    })
+
+    const url = "http://localhost:8081/";
+
     const [products, setProducts] = useState([]);
     const [updateProduct, setUpdateProduct] = useState(false);
     const defaultProd = {
@@ -44,12 +52,17 @@ function App() {
     // new Product
     const [addNewProduct, setAddNewProduct] = useState(defaultProd);
 
+    function setDefaultProduct() {
+        setAddNewProduct(defaultProd);
+    }
+
 
     useEffect(() => {
         getAllProducts();
-        
+
     }, []);
-    
+
+
 
     function getAllProducts() {
         fetch(url + "get")
@@ -76,17 +89,62 @@ function App() {
 
         )
     }
+    
+    // const openModal = (product) => {
+    //     setSelectedProduct(product);
+    // };
 
+    // const closeModal = () => {
+    //     setSelectedProduct(null);
+    // };
 
+    // function showItemModal() {
+        
+
+    //     return (
+    //         <>
+    //             {products.map((el) => (
+    //                 <Col sm={6} xs={8} md={4} key={el.id}>
+    //                     <Card style={{ width: '18rem', height: '100%' }} fluid className="h-100">
+    //                         {/* ... rest of your Card component */}
+    //                         <Button variant="primary" className="mx-1" onClick={() => openModal(el)}>View Details</Button>
+    //                     </Card>
+    //                 </Col>
+    //             ))}
+
+    //             <Modal show={selectedProduct !== null} onHide={closeModal}>
+    //                 {selectedProduct && (
+    //                     <>
+    //                         <Modal.Header closeButton>
+    //                             <Modal.Title>{selectedProduct.title}</Modal.Title>
+    //                         </Modal.Header>
+    //                         <Modal.Body>
+    //                             <p>Category: {selectedProduct.category}</p>
+    //                             <p>Price: $ {selectedProduct.price}</p>
+    //                             <p>Rating: {selectedProduct.rating.rate}</p>
+    //                             {/* Add other product details as needed */}
+    //                         </Modal.Body>
+    //                     </>
+    //                 )}
+    //             </Modal>
+    //         </>
+    //     );
+    // }
 
     function showAllItems() {
+
+        const truncateText = (text, maxLength) => {
+            return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+        };
+
+
         return (
             products.map((el) => (
                 <Col sm={6} xs={8} md={4}>
                     <Card style={{ width: '18rem', height: '100%' }} fluid key={el.id} className="h-100">
                         <Card.Img variant="top" src={el.image} style={{ height: '200px', objectFit: 'cover' }} />
                         <Card.Body>
-                            <Card.Title>{el.title}</Card.Title>
+                            <Card.Title>{truncateText(el.title, 25)}</Card.Title>
                             <Card.Text>
                                 Category:  {el.category} <br />
                                 Price: $ {el.price} <br />
@@ -94,7 +152,7 @@ function App() {
                             </Card.Text>
                             <Button variant="primary" className="mx-1" onClick={() => { handleDelete({ productId: el.id }) }}>Delete</Button>
                             {/* <Button variant="primary" className="mx-1" onClick={() => { handleUpdate({ product: el }) }}>Update</Button> */}
-                            <NavLink className="btn btn-primary mx-1" to="/form" onClick={() => {handleUpdate({product: el})}}>Update</NavLink>
+                            <NavLink className="btn btn-primary mx-1" to="/form" onClick={() => { handleUpdate({ product: el }) }}>Update</NavLink>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -136,8 +194,6 @@ function App() {
             })
     }
 
-    
-
 
     function postProduct(e) {
         e.preventDefault();
@@ -158,53 +214,71 @@ function App() {
             });
     }
 
-        function handleChange(evt) {
-            const value = evt.target.value;
-            if (evt.target.name === "id") {
-                setAddNewProduct({ ...addNewProduct, id: value });
-            } else if (evt.target.name === "title") {
-                setAddNewProduct({ ...addNewProduct, title: value });
-            } else if (evt.target.name === "price") {
-                setAddNewProduct({ ...addNewProduct, price: value });
-            } else if (evt.target.name === "description") {
-                setAddNewProduct({ ...addNewProduct, description: value });
-            } else if (evt.target.name === "category") {
-                setAddNewProduct({ ...addNewProduct, category: value });
-            } else if (evt.target.name === "image") {
-                setAddNewProduct({ ...addNewProduct, image: value });
-            } else if (evt.target.name === "rating") {
-                setAddNewProduct({ ...addNewProduct, rating: value });
-            }
+    function handleChange(evt) {
+        const value = evt.target.value;
+        if (evt.target.name === "id") {
+            setAddNewProduct({ ...addNewProduct, id: value });
+        } else if (evt.target.name === "title") {
+            setAddNewProduct({ ...addNewProduct, title: value });
+        } else if (evt.target.name === "price") {
+            setAddNewProduct({ ...addNewProduct, price: value });
+        } else if (evt.target.name === "description") {
+            setAddNewProduct({ ...addNewProduct, description: value });
+        } else if (evt.target.name === "category") {
+            setAddNewProduct({ ...addNewProduct, category: value });
+        } else if (evt.target.name === "image") {
+            setAddNewProduct({ ...addNewProduct, image: value });
+        } else if (evt.target.name === "rating") {
+            setAddNewProduct({ ...addNewProduct, rating: value });
         }
+    }
 
-        function showForm() {
+    function showForm() {
 
 
-            return (
-                <div>
-                    <Menubar />
-                    <div>
-                        <h3>Add a new product :</h3>
-                        <form action="">
-                            ID: <input type="number" placeholder="id?" name="id" value={addNewProduct.id}
-                                onChange={handleChange} />
-                            Title: <input type="text" placeholder="title?" name="title" value={addNewProduct.title}
-                                onChange={handleChange} />
-                            Price: <input type="number" placeholder="price?" name="price" value={addNewProduct.price}
-                                onChange={handleChange} />
-                            <br /><br />
-                            Description: <textarea type="text" placeholder="description?" name="description" value={addNewProduct.description}
-                                onChange={handleChange} />
-                            Category: <input type="text" placeholder="category?" name="category" value={addNewProduct.category}
-                                onChange={handleChange} />
-                            Image URL: <textarea type="text" placeholder="image?" name="image" value={addNewProduct.image}
-                                onChange={handleChange} />
-
-                            <br /><br />
-                            {/* Image: <input type="file" class="form-control-file" id="exampleFormControlFile1" /> */}
-                            Rating: <input type="number" placeholder="rate?" name="rating" value={addNewProduct.rating}
-                                onChange={handleChange} />
-                            {!updateProduct &&
+        return (
+            <div>
+            <Menubar setDefaultProduct={setDefaultProduct}/>
+            <Container>
+                <h3>Add a new product:</h3>
+                <form>
+                    <Row className="mb-3">
+                        <Col>
+                            <label htmlFor="id" className="form-label">ID:</label>
+                            <input type="number" className="form-control border-dark" placeholder="ID" name="id" value={addNewProduct.id} onChange={handleChange} />
+                        </Col>
+                        <Col>
+                            <label htmlFor="title" className="form-label">Title:</label>
+                            <input type="text" className="form-control border-dark" placeholder="Title" name="title" value={addNewProduct.title} onChange={handleChange} />
+                        </Col>
+                        <Col>
+                            <label htmlFor="price" className="form-label">Price:</label>
+                            <input type="number" className="form-control border-dark" placeholder="Price" name="price" value={addNewProduct.price} onChange={handleChange} />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col>
+                            <label htmlFor="category" className="form-label">Category:</label>
+                            <input type="text" className="form-control border-dark" placeholder="Category" name="category" value={addNewProduct.category} onChange={handleChange} />
+                        </Col>
+                        <Col>
+                            <label htmlFor="rating" className="form-label">Rating:</label>
+                            <input type="number" className="form-control border-dark" placeholder="Rating" name="rating" value={addNewProduct.rating} onChange={handleChange} />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col>
+                            <label htmlFor="description" className="form-label">Description:</label>
+                            <textarea className="form-control border-dark" placeholder="Description" name="description" value={addNewProduct.description} onChange={handleChange} />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Col>
+                            <label htmlFor="image" className="form-label">Image URL:</label>
+                            <textarea className="form-control border-dark" placeholder="Image URL" name="image" value={addNewProduct.image} onChange={handleChange} />
+                        </Col>
+                    </Row>
+                    {!updateProduct &&
                                 <button type="submit" onClick={postProduct}>
                                     submit
                                 </button>
@@ -214,29 +288,28 @@ function App() {
                                     submit
                                 </button>
                             }
-                        </form>
-
-
-                    </div>
-                </div>
-            )
-        }
-
-
+                </form>
+            </Container>
+        </div>
+        
+        )
+    }
 
 
 
-        return (
-            <>
 
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<div>{showAllProducts()}</div>} />
-                        <Route path="/form" element={<div>{showForm({})}</div>} />
-                    </Routes>
-                </BrowserRouter>
-            </>
 
-        ); // return end
-    } // App end
-    export default App;
+    return (
+        <>
+
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<div>{showAllProducts()}</div>} />
+                    <Route path="/form" element={<div>{showForm({})}</div>} />
+                </Routes>
+            </BrowserRouter>
+        </>
+
+    ); // return end
+} // App end
+export default App;
