@@ -113,25 +113,24 @@ function App() {
     
 
 
-        function handleOnSubmit(e) {
-            e.preventDefault();
-            console.log(e.target.value);
-            fetch(url + "create", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(addNewProduct),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log("Post a new product completed");
-                    console.log(data);
-                    if (data) {
-                        //const keys = Object.keys(data);
-                        const value = Object.values(data);
-                        alert(value);
-                    }
-                });
-        }
+    function postProduct(e) {
+        e.preventDefault();
+        console.log(e.target.value);
+        fetch(url + "addProduct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(addNewProduct),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Post a new product completed");
+                console.log(data);
+                if (data) {
+                    const value = Object.values(data);
+                    alert(value);
+                }
+            });
+    }
 
         function handleChange(evt) {
             const value = evt.target.value;
@@ -179,7 +178,7 @@ function App() {
                             {/* Image: <input type="file" class="form-control-file" id="exampleFormControlFile1" /> */}
                             Rating: <input type="number" placeholder="rate?" name="rating" value={addNewProduct.rating}
                                 onChange={handleChange} />
-                            <button type="submit" onClick={handleOnSubmit}>
+                            <button type="submit" onClick={postProduct}>
                                 submit
                             </button>
                         </form>
