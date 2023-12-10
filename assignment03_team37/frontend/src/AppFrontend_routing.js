@@ -31,7 +31,8 @@ function App() {
         form: false
     })
 
-    const url = "http://localhost:8081/"
+    const url = "http://localhost:8081/";
+
     const [products, setProducts] = useState([]);
     const defaultProd = {
         id: 0,
@@ -49,6 +50,10 @@ function App() {
 
     // new Product
     const [addNewProduct, setAddNewProduct] = useState(defaultProd);
+
+    function setDefaultProduct() {
+        setAddNewProduct(defaultProd);
+    }
 
 
     useEffect(() => {
@@ -207,7 +212,7 @@ function App() {
 
         return (
             <div>
-            <Menubar />
+            <Menubar setDefaultProduct={setDefaultProduct}/>
             <Container>
                 <h3>Add a new product:</h3>
                 <form>

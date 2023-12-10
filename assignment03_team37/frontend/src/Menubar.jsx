@@ -8,7 +8,7 @@ import { Outlet, Link, NavLink } from "react-router-dom";
 
 
 
-function Menubar() {  
+function Menubar(props) {  
 
 
   return (
@@ -21,7 +21,7 @@ function Menubar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink className="nav-link " to="/">View Products</NavLink>
-            <NavLink className="nav-link " to="/form">Update Product</NavLink>
+            <NavLink className="nav-link " to="/form" onClick={() => {props.setDefaultProduct()}}>Update Product</NavLink>
             
           </Nav>
         </Navbar.Collapse>
