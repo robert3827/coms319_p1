@@ -31,6 +31,8 @@ function App() {
         form: false
     })
 
+    const [updateProduct, setUpdateProduct] = useState(false);
+
     const url = "http://localhost:8081/";
 
     const [products, setProducts] = useState([]);
@@ -160,12 +162,37 @@ function App() {
             ));
     }
     function handleUpdate(props) {
-        console.log("Handle Update");
+        console.log("Handle Update\n\n");
         setAddNewProduct(props.product);
+        setUpdateProduct(true);
+    }
+
+    function postUpdate(e){
+        console.log("Attempting to update: \n" , addNewProduct);
+        fetch(url + "updateProduct", {
+                method : "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(addNewProduct)
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Updated product\n");
+                    console.log(data);
+            });
+        setUpdateProduct(false);
     }
 
     function handleDelete(props) {
         console.log("Delete Product: " + props.productId);
+        fetch(url+ "deleteProduct/" + props.productId, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("successfully deleted product" + props.productId);
+                console.log(data);
+            })
     }
 
 
@@ -252,9 +279,16 @@ function App() {
                             <textarea className="form-control border-dark" placeholder="Image URL" name="image" value={addNewProduct.image} onChange={handleChange} />
                         </Col>
                     </Row>
-                    <button type="submit" className="btn btn-primary" onClick={postProduct}>
-                        Submit
-                    </button>
+                    {!updateProduct &&
+                                <button type="submit" onClick={postProduct}>
+                                    submit
+                                </button>
+                            }
+                            {updateProduct &&
+                                <button type="submit" onClick={postUpdate}>
+                                    submit
+                                </button>
+                            }
                 </form>
             </Container>
         </div>
