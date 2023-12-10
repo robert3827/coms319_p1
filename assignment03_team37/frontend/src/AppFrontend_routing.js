@@ -26,6 +26,7 @@ function App() {
 
     const url = "http://localhost:8081/"
     const [products, setProducts] = useState([]);
+    const [updateProduct, setUpdateProduct] = useState(false);
     const defaultProd = {
         id: 0,
         title: ""
@@ -102,12 +103,37 @@ function App() {
             ));
     }
     function handleUpdate(props) {
-        console.log("Handle Update");
+        console.log("Handle Update\n\n");
         setAddNewProduct(props.product);
+        setUpdateProduct(true);
+    }
+
+    function postUpdate(e){
+        console.log("Attempting to update: \n" , addNewProduct);
+        fetch(url + "updateProduct", {
+                method : "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(addNewProduct)
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Updated product\n");
+                    console.log(data);
+            });
+        setUpdateProduct(false);
     }
 
     function handleDelete(props) {
         console.log("Delete Product: " + props.productId);
+        fetch(url+ "deleteProduct/" + props.productId, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("successfully deleted product" + props.productId);
+                console.log(data);
+            })
     }
 
     
@@ -178,9 +204,16 @@ function App() {
                             {/* Image: <input type="file" class="form-control-file" id="exampleFormControlFile1" /> */}
                             Rating: <input type="number" placeholder="rate?" name="rating" value={addNewProduct.rating}
                                 onChange={handleChange} />
-                            <button type="submit" onClick={postProduct}>
-                                submit
-                            </button>
+                            {!updateProduct &&
+                                <button type="submit" onClick={postProduct}>
+                                    submit
+                                </button>
+                            }
+                            {updateProduct &&
+                                <button type="submit" onClick={postUpdate}>
+                                    submit
+                                </button>
+                            }
                         </form>
 
 

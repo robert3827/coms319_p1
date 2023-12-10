@@ -29,7 +29,7 @@ app.get("/get", async (req, res) => {
         .find(query)
         .limit(100)
         .toArray();
-    console.log(results);
+    // console.log(results);
     res.status(200);
     res.send(results);
 });
@@ -84,16 +84,41 @@ app.post("/addProduct", async (req, res) => {
 
 
 
-app.put("/updatePrice/:id", async (req, res) => {
-    const id = req.params.id;
+app.put("/updateProduct", async (req, res) => {
     const values = Object.values(req.body);
-    const priceChange = values[0];
-    console.log("Product " + id + " price changing to: " + priceChange);
-    // const productObject = await db.collection("fakestore").findOne({"id": id });
-    // console.log(productObject);
+    const productId = values[1];
+    const title = values[2];
+    const price = values[3];
+    const description = values[4];
+    const category = values[5];
+    const image = values[6];
+    const ratings = values[7];
+
+    // const productUpdate = {
+    //     "_id": generatedId,
+    //     "id": productId,
+    //     "title": title,
+    //     "price": price,
+    //     "description": description,
+    //     "category": category,
+    //     "image": image,
+    //     "rating": {
+    //         "rate" : ratings,  
+    //     }
+    // }
     const results = await db.collection("fakestore").updateOne(
-        {"id" : 1},
-        {$set: {"price" : priceChange}},
+        {"id" : productId},
+        {$set: {
+            "id": productId,
+            "title": title,
+            "price": price,
+            "description": description,
+            "category": category,
+            "image": image,
+            "rating": {
+                "rate" : ratings,  
+            }
+        }},
         {upsert: false}
     );
 
@@ -109,7 +134,7 @@ app.delete("/deleteProduct/:id", async (req, res) => {
     const query = {
         "id" : id
     }
-    const results = await db.collection("fakestore").deleteMany(query);
+    const results = await db.collection("fakestore").deleteOne(query);
     console.log(results);
 
     res.status(200);
