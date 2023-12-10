@@ -36,6 +36,7 @@ function App() {
     const url = "http://localhost:8081/";
 
     const [products, setProducts] = useState([]);
+    const [updateProduct, setUpdateProduct] = useState(false);
     const defaultProd = {
         id: 0,
         title: ""
