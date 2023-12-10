@@ -24,16 +24,13 @@ function App() {
     const [oneProduct, setOneProduct] = useState([]);
     // new Product
     const [addNewProduct, setAddNewProduct] = useState({
-        id: 0,
-        title: ""
-        ,
-        price: 0.0,
-        description: ""
-        ,
-        category: ""
-        ,
-        image: url + "images",
-        rating: 0.0,
+        "id": 0,
+        "title": "",
+        "price": 0.0,
+        "description": "",
+        "category": "",
+        "image": "",
+        "rating": 0.0,
     });
 
 
@@ -122,10 +119,10 @@ function App() {
         </Card>
     ));
 
-    function handleOnSubmit(e) {
+    function postProduct(e) {
         e.preventDefault();
         console.log(e.target.value);
-        fetch(url + "create", {
+        fetch(url + "addProduct", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(addNewProduct),
@@ -135,7 +132,6 @@ function App() {
                 console.log("Post a new product completed");
                 console.log(data);
                 if (data) {
-                    //const keys = Object.keys(data);
                     const value = Object.values(data);
                     alert(value);
                 }
@@ -161,6 +157,21 @@ function App() {
         }
     }
 
+//     function uploadFile(inputElement) {
+//   var file = inputElement.files[0];
+//   var reader = new FileReader();
+//   reader.onloadend = function() {
+//     console.log('Encoded Base 64 File String:', reader.result);
+    
+//     /******************* for Binary ***********************/
+//     var data=(reader.result).split(',')[1];
+//      var binaryBlob = atob(data);
+//      addNewProduct.image(binaryBlob);
+//      console.log('Encoded Binary File String:', binaryBlob);
+//   }
+//   reader.readAsDataURL(file);
+// }
+
     function showForm() {
 
         return (
@@ -180,14 +191,14 @@ function App() {
                             onChange={handleChange} />
                         Category: <input type="text" placeholder="category?" name="category" value={addNewProduct.category}
                             onChange={handleChange} />
-                        Image URL: <textarea type="text" placeholder="image?" name="image" value={addNewProduct.image}
+                        Upload Image: <input type="file" id="image-form" name="image" accept="image/png, image/jpeg" value={addNewProduct.image}
                             onChange={handleChange} />
 
                         <br /><br />
                         {/* Image: <input type="file" class="form-control-file" id="exampleFormControlFile1" /> */}
                         Rating: <input type="number" placeholder="rate?" name="rating" value={addNewProduct.rating}
                             onChange={handleChange} />
-                        <button type="submit" onClick={handleOnSubmit}>
+                        <button type="submit" onClick={postProduct}>
                             submit
                         </button>
                     </form>
