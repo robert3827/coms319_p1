@@ -34,7 +34,9 @@ function App() {
     const url = "http://localhost:8081/";
 
     const [products, setProducts] = useState([]);
+
     const [updateProduct, setUpdateProduct] = useState(false);
+
     const defaultProd = {
         id: 0,
         title: ""
@@ -45,7 +47,7 @@ function App() {
         category: ""
         ,
         image: url + "images/diglett.png",
-        rating: 0
+        rating: 0.0
     }
 
 
@@ -122,6 +124,8 @@ function App() {
     }
     function handleUpdate(props) {
         console.log("Handle Update\n\n");
+        console.log(props.product);
+        props.product.rating = props.product.rating.rate;
         setAddNewProduct(props.product);
         setUpdateProduct(true);
     }
@@ -142,10 +146,11 @@ function App() {
     }
 
     function handleDelete(props) {
-        console.log("Delete Product: " + props.productId);
+        console.log("Delete Product: " + props._id);
         fetch(url+ "deleteProduct/" + props.productId, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({_id: props._id})
         })
             .then((response) => response.json())
             .then((data) => {
