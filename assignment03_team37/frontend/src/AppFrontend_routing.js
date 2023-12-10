@@ -31,8 +31,6 @@ function App() {
         form: false
     })
 
-    const [updateProduct, setUpdateProduct] = useState(false);
-
     const url = "http://localhost:8081/";
 
     const [products, setProducts] = useState([]);
@@ -47,7 +45,7 @@ function App() {
         category: ""
         ,
         image: url + "images/diglett.png",
-        rating: 0.0,
+        rating: 0
     }
 
 
@@ -92,46 +90,6 @@ function App() {
         )
     }
     
-    // const openModal = (product) => {
-    //     setSelectedProduct(product);
-    // };
-
-    // const closeModal = () => {
-    //     setSelectedProduct(null);
-    // };
-
-    // function showItemModal() {
-        
-
-    //     return (
-    //         <>
-    //             {products.map((el) => (
-    //                 <Col sm={6} xs={8} md={4} key={el.id}>
-    //                     <Card style={{ width: '18rem', height: '100%' }} fluid className="h-100">
-    //                         {/* ... rest of your Card component */}
-    //                         <Button variant="primary" className="mx-1" onClick={() => openModal(el)}>View Details</Button>
-    //                     </Card>
-    //                 </Col>
-    //             ))}
-
-    //             <Modal show={selectedProduct !== null} onHide={closeModal}>
-    //                 {selectedProduct && (
-    //                     <>
-    //                         <Modal.Header closeButton>
-    //                             <Modal.Title>{selectedProduct.title}</Modal.Title>
-    //                         </Modal.Header>
-    //                         <Modal.Body>
-    //                             <p>Category: {selectedProduct.category}</p>
-    //                             <p>Price: $ {selectedProduct.price}</p>
-    //                             <p>Rating: {selectedProduct.rating.rate}</p>
-    //                             {/* Add other product details as needed */}
-    //                         </Modal.Body>
-    //                     </>
-    //                 )}
-    //             </Modal>
-    //         </>
-    //     );
-    // }
 
     function showAllItems() {
 
@@ -211,7 +169,7 @@ function App() {
                 console.log(data);
                 if (data) {
                     const value = Object.values(data);
-                    alert(value);
+                    // alert(value);
                 }
             });
     }
@@ -240,7 +198,7 @@ function App() {
 
         return (
             <div>
-            <Menubar setDefaultProduct={setDefaultProduct}/>
+            <Menubar setDefaultProduct={setDefaultProduct} getAllProducts={getAllProducts}/>
             <Container>
                 <h3>Add a new product:</h3>
                 <form>
@@ -281,15 +239,15 @@ function App() {
                         </Col>
                     </Row>
                     {!updateProduct &&
-                                <button type="submit" onClick={postProduct}>
-                                    submit
-                                </button>
-                            }
-                            {updateProduct &&
-                                <button type="submit" onClick={postUpdate}>
-                                    submit
-                                </button>
-                            }
+                        <NavLink to="/" className="btn btn-primary" type="submit" onClick={postProduct}>
+                            Submit
+                        </NavLink>
+                    }
+                    {updateProduct &&
+                        <NavLink to="/" className="btn btn-primary" type="submit" onClick={postUpdate}>
+                            Submit
+                        </NavLink>
+                    }
                 </form>
             </Container>
         </div>
