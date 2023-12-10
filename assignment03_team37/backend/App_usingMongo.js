@@ -51,20 +51,16 @@ app.post("/addProduct", async (req, res) => {
     console.log("Adding a product");
     await client.connect();
     const values = Object.values(req.body);
-    const id = values[0]; //ID
+    const id = parseInt(values[0]); //ID
     const title = values[1]; //TITLE
     const price = values[2];
     const description = values[3];
     const category = values[4];
     const image = values[5]; //Maybe change this to reference the locally stored image
-    const rating = values[6]; //ratings object
-    const ratingsValues = Object.values(rating);
-    const rate = ratingsValues[0];
-    const count = ratingsValues[1];
+    const rate = values[6]; //rate
 
     const ratings = {
-        "rate" : rate,
-        "count" : count
+        "rate" : rate
     }
 
     const productFormat = {
@@ -129,15 +125,16 @@ app.put("/updateProduct", async (req, res) => {
 
 
 app.delete("/deleteProduct/:id", async (req, res) => {
-    const id = req.params.id;
-    console.log("ID: " + id)
+    const id = parseInt(req.params.id);
+    console.log("ID: " + id);
     const query = {
         "id" : id
     }
-    const results = await db.collection("fakestore").deleteOne(query);
-    console.log(results);
-
+    const deleteResults = await db.collection("fakestore").deleteOne(query);
+    console.log(deleteResults);
     res.status(200);
-    res.send(results);
+    res.send(deleteResults);
+    
+
 });
     

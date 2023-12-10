@@ -47,7 +47,7 @@ function App() {
         category: ""
         ,
         image: url + "images/diglett.png",
-        rating: 0.0,
+        rating: 0.0
     }
 
 
@@ -186,10 +186,11 @@ function App() {
     }
 
     function handleDelete(props) {
-        console.log("Delete Product: " + props.productId);
+        console.log("Delete Product: " + props._id);
         fetch(url+ "deleteProduct/" + props.productId, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({_id: props._id})
         })
             .then((response) => response.json())
             .then((data) => {
