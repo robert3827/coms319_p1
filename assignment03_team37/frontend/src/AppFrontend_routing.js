@@ -26,10 +26,7 @@ function App() {
 
     const url = "http://localhost:8081/"
     const [products, setProducts] = useState([]);
-
-
-    // new Product
-    const [addNewProduct, setAddNewProduct] = useState({
+    const defaultProd = {
         id: 0,
         title: ""
         ,
@@ -40,12 +37,18 @@ function App() {
         ,
         image: url + "images/diglett.png",
         rating: 0.0,
-    });
+    }
+
+
+    // new Product
+    const [addNewProduct, setAddNewProduct] = useState(defaultProd);
 
 
     useEffect(() => {
         getAllProducts();
+        
     }, []);
+    
 
     function getAllProducts() {
         fetch(url + "get")
