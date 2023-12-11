@@ -85,8 +85,8 @@ function SignIn(){
             "type2": "poison"
         }
 
-        fetch('http://localhost:8081/addPokemon/' + 'breckin', {
-            method: 'POST',
+        fetch('http://localhost:8081/addPokemon/' + signInUsername, {
+            method: 'PUT',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(testPokemon)
         })
@@ -179,7 +179,7 @@ function SignIn(){
             {signedIn &&
             <Container>
                 <Button type='submit' onClick={() =>{
-                    addPokemon(retrieveUsername);
+                    addPokemon(retrieveUsername());
                 }}>Add Pokemon</Button>
 
 

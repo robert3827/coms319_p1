@@ -135,7 +135,7 @@ app.get("/users/:username", async(req, res) => {
 });
 
 //Add Pokemon to user object
-app.post("/addPokemon/:username", async(req, res) => {
+app.put("/addPokemon/:username", async(req, res) => {
     //Retrieve user information
     const username = String(req.params.username);
     console.log("Attempting to find: " + username);
