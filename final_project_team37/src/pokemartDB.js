@@ -104,13 +104,13 @@ app.post("/users", async(req, res)=> {
     console.log("Creating new user for: " + username);
     const password = values[1];
     const collection = [];
-    const currency = 100;
+    const coins = 100;
 
     const newUser = {
         "username" : username,
         "password" : password,
         "collection" : collection,
-        "currency" : currency
+        "coins" : coins
     };
 
     const results = await db.collection("users").insertOne(newUser);
@@ -172,12 +172,13 @@ app.post("/addPokemon/:username", async(req, res) => {
         "username" : userValues[1],
         "password" : userValues[2],
         "collection" : userValues[3],//.push(pokemonToBeAdded), //pokemonToBeAdded needs to be added to this list of objects
-        "currency" : userValues[4],
+        "coins" : userValues[4],
     }
 
     var collection = userValues[3];
-    var updateCollection = collection.push(pokemonToBeAdded);
-    console.log(updatedUser);
+    // console.log(collection);
+    var updateCollection = collection.concat(pokemonToBeAdded);
+    // console.log(updateCollection);
     const putResult = await db.collection("users").updateOne(
         {"username" : userValues[1]},
         {$set: {"collection" :updateCollection}}

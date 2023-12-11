@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import Menubar from "../components/menubar";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "../components/userInfo"
 import InputGroup from 'react-bootstrap/InputGroup';
 
+// var username;
 
 function SignIn(){
 
@@ -12,16 +14,18 @@ function SignIn(){
 
     const [showSignUp, setShowSignUp] = useState(false);
     const [signedIn, setSignedIn] = useState(false);
-    var userUsername;
+    // var userUsername;
 
 
     function handleSignUp() {
-        var username = document.getElementById("inputUsername").value;
+        var signInUsername = document.getElementById("inputUsername").value;
         var password1 = document.getElementById("inputPassword").value;
         var password2 = document.getElementById("confirmPassword").value;
         if(password1 === password2){
-            userUsername = username;
-            postUser(username, password1);
+            changeUsername(signInUsername);
+            // username = signInUsername;
+            postUser(signInUsername, password1);
+            changeCoins(100);
             setSignedIn(true);
         }
         else{
@@ -32,19 +36,19 @@ function SignIn(){
     };
 
     function handleSignIn() {
-        var username = document.getElementById("inputUsername").value;
+        var signInUsername = document.getElementById("inputUsername").value;
         var password = document.getElementById("inputPassword").value;
 
-        getUser(username, password);
+        getUser(signInUsername, password);
     };
 
-    function getUser(username, password){
-        fetch('http://localhost:8081/users/' + username)
+    function getUser(signInUsername, password){
+        fetch('http://localhost:8081/users/' + signInUsername)
             .then(response => response.json())
             .then(data => {
-            console.log(data.password);
             if(data.password === password){
-                userUsername = username;
+                changeUsername(signInUsername);
+                changeCoins(data.coins);
                 console.log("login success");
                 setSignedIn(true);
             }
@@ -54,10 +58,10 @@ function SignIn(){
             });
     };
 
-    function postUser(username, password){
+    function postUser(signInUsername, password){
         
         const newRequest = {
-            "username" : username,
+            "signInUsername" : signInUsername,
             "password" : password
         }
         fetch('http://localhost:8081/users', {
@@ -71,7 +75,7 @@ function SignIn(){
         })
     };
 
-    function addPokemon(username){
+    function addPokemon(signInUsername){
         const testPokemon = { 
             "id": 1,
             "name": "bulbasaur",
@@ -175,7 +179,7 @@ function SignIn(){
             {signedIn &&
             <Container>
                 <Button type='submit' onClick={() =>{
-                    addPokemon(userUsername);
+                    addPokemon(retrieveUsername);
                 }}>Add Pokemon</Button>
 
 

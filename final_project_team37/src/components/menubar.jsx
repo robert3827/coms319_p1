@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Outlet, Link, NavLink } from "react-router-dom";
 import {useState, useEffect} from 'react';
+import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "./userInfo"
 
 
 
@@ -14,7 +15,7 @@ import {useState, useEffect} from 'react';
 
 function Menubar() {
 
-  var coinsCount = 69;
+  var coinsCount = retrieveCoins();
   
   var [pageState, setPageState] = useState({
     home: true,
@@ -47,8 +48,8 @@ function Menubar() {
           </ul>
 
           <div className="col-md-3 text-end ">
-          <h3>Username Placeholder</h3>
-          <h2> <img src={pokeCoin} height={50} width={50}/> {coinsCount} </h2>
+          <h3>{retrieveUsername()}</h3>
+          <h2> <img src={pokeCoin} height={50} width={50}/> {retrieveCoins()} </h2>
           </div>
         </header>
       </div>
