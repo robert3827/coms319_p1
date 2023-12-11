@@ -20,8 +20,8 @@ function Menubar(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink className="nav-link " to="/">View Products</NavLink>
-            <NavLink className="nav-link " to="/form" onClick={() => {props.setDefaultProduct()}}>Update Product</NavLink>
+            <NavLink className="nav-link " to="/" onClick={() => {props.getAllProducts()}}>View Products</NavLink>
+            <NavLink className="nav-link " to="/form" onClick={() => {props.setDefaultProduct()}}>Add Product</NavLink>
             
           </Nav>
         </Navbar.Collapse>
