@@ -3,19 +3,23 @@ import { useState, useEffect } from 'react';
 import Menubar from "../components/menubar";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "../components/userInfo"
+import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn, setSignedIn} from "../components/userInfo"
 import InputGroup from 'react-bootstrap/InputGroup';
+import { ToastContainer, toast } from 'react-toastify';
 
-// var username;
 
 function SignIn(){
 
 
 
     const [showSignUp, setShowSignUp] = useState(false);
-    const [signedIn, setSignedIn] = useState(false);
-    // var userUsername;
+    const [signedInForm, setSignedInForm] = useState(isSignedIn());
 
+    const showToastMessage = () =>{
+        toast.failure("Incorrect Password", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      };
 
     function handleSignUp() {
         var signInUsername = document.getElementById("inputUsername").value;
@@ -23,10 +27,10 @@ function SignIn(){
         var password2 = document.getElementById("confirmPassword").value;
         if(password1 === password2){
             changeUsername(signInUsername);
-            // username = signInUsername;
             postUser(signInUsername, password1);
             changeCoins(100);
             setSignedIn(true);
+            setSignedInForm(true);
         }
         else{
             console.log("Passwords do not match");
@@ -39,7 +43,7 @@ function SignIn(){
         var signInUsername = document.getElementById("inputUsername").value;
         var password = document.getElementById("inputPassword").value;
 
-        getUser(signInUsername, password);
+        getUser(signInUsername, password);        
     };
 
     function getUser(signInUsername, password){
@@ -51,9 +55,11 @@ function SignIn(){
                 changeCoins(data.coins);
                 console.log("login success");
                 setSignedIn(true);
+                setSignedInForm(true);
             }
             else{
                 console.log("login failure");
+                showToastMessage();
             }
             });
     };
@@ -75,33 +81,33 @@ function SignIn(){
         })
     };
 
-    function addPokemon(signInUsername){
-        const testPokemon = { 
-            "id": 1,
-            "name": "bulbasaur",
-            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-            "imgShiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
-            "type1": "grass",
-            "type2": "poison"
-        }
+    // function addPokemon(signInUsername){
+    //     const testPokemon = { 
+    //         "id": 1,
+    //         "name": "bulbasaur",
+    //         "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    //         "imgShiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+    //         "type1": "grass",
+    //         "type2": "poison"
+    //     }
 
-        fetch('http://localhost:8081/addPokemon/' + signInUsername, {
-            method: 'PUT',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(testPokemon)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-    };
+    //     fetch('http://localhost:8081/addPokemon/' + signInUsername, {
+    //         method: 'PUT',
+    //         headers: { 'content-type': 'application/json' },
+    //         body: JSON.stringify(testPokemon)
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data);
+    //     })
+    // };
 
 
 
     return (
         <>
             <Menubar />
-            {!signedIn &&
+            {!signedInForm &&
                 <Container id='signInContainer' >
                     {!showSignUp &&
                         <p>
@@ -163,9 +169,13 @@ function SignIn(){
                         </Form>
                     }
                     {!showSignUp &&
-                        <Button type="submit" variant="success" onClick={()=>{
-                            handleSignIn();
-                        }}>Sign In</Button>
+                        <div>
+                            <Button type="submit" variant="success" onClick={()=>{
+                                handleSignIn();
+                            }}>Sign In</Button>
+                            {/* <button onClick={showToastMessage}>Notify</button>
+                            <ToastContainer /> */}
+                        </div>
                     }
                     {showSignUp &&
                         <Button type="submit" variant="success" onClick={()=>{
@@ -176,15 +186,18 @@ function SignIn(){
                 </Container>
             }
 
-            {signedIn &&
+            {signedInForm &&
             <Container>
-                <Button type='submit' onClick={() =>{
+                {/* <Button type='submit' onClick={() =>{
                     addPokemon(retrieveUsername());
-                }}>Add Pokemon</Button>
+                }}>Add Pokemon</Button> */}
 
 
                 <Button type='submit' onClick={()=>{
                     setSignedIn(false);
+                    setSignedInForm(false);
+                    changeUsername("");
+                    changeCoins();
                 }}>Sign Out</Button>
             </Container>
             }
