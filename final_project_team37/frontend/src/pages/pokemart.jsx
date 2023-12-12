@@ -15,118 +15,85 @@ import PokemonShopInfoModal from '../components/launchModal';
 import grassType from '../typeIcons/grass.svg';
 import poisonType from '../typeIcons/poison.svg';
 import Spinner from 'react-bootstrap/Spinner';
-import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "../components/userInfo"
+import { retrieveUsername, retrieveCoins, changeUsername, changeCoins } from "../components/userInfo"
+import '../stylesheets/Types.css';
+import '../stylesheets/Cards.css'
 
-
-
-import '../Types.css';
-
-// import { useFetch } from './useFetch'
 const url = `http://localhost:8081/`
 
 function Pokemart() {
 
-  const [modalShow, setModalShow] = useState(false);
-  var [pokemon, setPokemon] = useState([]);
-  const [APILoaded, setAPILoaded] = useState(false);
-  var [pokemonCards, setPokemonCards] = useState([]);
+  var [allPokemon, setAllPokemon] = useState([]); //Array holding all the pokemon to be generated
+  const [modalShow, setModalShow] = useState(null);
 
-  // const { data, error } = useFetch(url);
-
-  console.log("got here!");
-  // if (error) {
-  //   console.log( "<p>There is an error.</p>" );
-  // }
-  // if (!data) {
-  //    console.log("<p>Loading...</p>")
-  // }
-  // else { 
-  //   console.log("<p>{data[0].title}</p>")
-  // }
+  useEffect(() => { //Called on first render
+    loadPokemart();
+}, []);
 
 
-  /**
-   * Modal Control
-   * I'll probably need to change this to show a unique modal for each pokemon "card"
-   */
-
-
-
-  function getAllPokemon() {
-    fetch(url+"pokemon/")
+  function loadPokemart() {
+    fetch(url + 'pokemon/')
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data: ")
-        console.log(data);
-        setPokemon(data);
-        setAPILoaded(true);
+        setAllPokemon(data);
       });
   }
 
-  /**
-   * When Pokemon Changes I want to render this.
-   */
-  useEffect(() => {
-    console.log("In useEffect: Pokemon");
-  }, [pokemon]);
 
-
-
-  /**
-   * On Every page reload
-   */
-  useEffect(() => {
-    console.log("Page Reload:");
-    getAllPokemon();
-  }, []);
-
-  function generatePokemonCards()  {
-    
-   setPokemonCards( ...pokemonCards, 
-        < Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={pokemon[0].img} />
-        <Card.Body>
-          <Card.Title>#{pokemon[0].id}: {pokemon[0].name}</Card.Title>
-          <Card.Text>
-            Type(s): {pokemon[0].type1}, {pokemon[0].type2 != null && pokemon[0].type2}
-            {/* <img src={grassType} alt="grass icon" className='icon grass'></img>
-                  <img src={poisonType} alt="poison icon" className='icon poison'></img> */}
-            <br />
-
-          </Card.Text>
-          <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
-            Learn More
-          </Button>
-          <Button variant="primary" className='ml-1'>Buy Pokemon</Button>
-          <PokemonShopInfoModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-        </Card.Body>
-      </Card >
-      
-    )
+  function capitalize(input) {
+    return input.charAt(0).toUpperCase() + input.slice(1);
   }
 
-  function buyPokemon(pokemon){
+  function buyPokemon(pokemon) {
 
-    if(retrieveUsername() === null || retrieveUsername() === ""){
+    if (retrieveUsername() === null || retrieveUsername() === "") {
       console.log("not signed in");
       return;
     }
     //Get pokemon info here.
 
-
     fetch(url + 'addPokemon/' + retrieveUsername(), {
-            method: 'PUT',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(pokemon)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        });
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(pokemon)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
   }
+
+  function generatePokemonCards() {
+
+    return (
+
+      allPokemon.map((pokemon) => (
+        <Col key={pokemon.id}>
+          < Card style={{ width: '18rem' }}  className="h-100 card">
+            <Card.Img variant="top" src={pokemon.img} style={{ height: '200px', objectFit: 'contain' }}/>
+            <Card.Body>
+              <div className='pokemonId'>#{pokemon.id}:</div>
+              <Card.Title> {capitalize(pokemon.name)}</Card.Title>
+              <Card.Text>
+                <div className={pokemon.type1 + ' typeCommon'}>{capitalize(pokemon.type1)} </div> <div className={pokemon.type2 + ' typeCommon'}>{pokemon.type2 ? capitalize(pokemon.type2) : ''}</div>
+                
+                <br />
+
+              </Card.Text>
+              <Button variant="info" onClick={() => setModalShow(pokemon)} className='mr-2'>
+                Learn More
+              </Button>
+              <Button variant="primary" className='ml-4'>Buy Pokemon</Button>
+              
+            </Card.Body>
+          </Card >
+        </Col>
+      ))
+
+
+    )
+  }
+
 
 
 
@@ -135,57 +102,15 @@ function Pokemart() {
     <>
       <Menubar />
       <Container id='pokemartContainer'>
-
-        <Form >
-          <Row>
-            <Col>
-              <Form.Control
-                type="text"
-                placeholder="Search"
-                className=" mr-sm-2"
-              />
-            </Col>
-            <Col >
-              <Button type="submit">Submit</Button>
-            </Col>
-          </Row>
-        </Form>
-
-        <hr color='white'></hr>
-        {APILoaded &&
-        <Container > 
-            <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={pokemon[0].img} />
-            <Card.Body>
-              <Card.Title>#{pokemon[0].id}: {pokemon[0].name}</Card.Title>
-              <Card.Text>
-                Type(s): {pokemon[0].type1}, {pokemon[0].type2 != null && pokemon[0].type2}
-                {/* <img src={grassType} alt="grass icon" className='icon grass'></img>
-                  <img src={poisonType} alt="poison icon" className='icon poison'></img> */}
-                <br />
-
-              </Card.Text>
-              <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
-                Learn More
-              </Button>
-              <Button variant="primary" className='ml-1'>Buy Pokemon</Button>
-              <PokemonShopInfoModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-              />
-            </Card.Body>
-          </Card >
-        </Container>
-          }
-          {APILoaded && pokemonCards}
-
-
-
-
-
-
-
+        <Row className="g-4">
+          {generatePokemonCards()}
+        </Row>
       </Container>
+      <PokemonShopInfoModal
+            pokemon={modalShow} //Value for props.pokemon
+            show={modalShow !== null} //argument passed in through onClickMethod for Modals
+            onHide={() => setModalShow(null)} //When the modal sees null it will hide itself
+      />
     </>
 
   );
