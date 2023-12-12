@@ -151,12 +151,12 @@ app.put("/addPokemon/:username", async(req, res) => {
 
     //Retrieve pokemon to be added to user collection
     const values = Object.values(req.body);
-    const id = values[0]; // id
-    const name = values[1]; // name
-    const img = values[2]; // img
-    const imgShiny = values[3]; // imgShiny
-    const type1 = values[4]; // type1
-    const type2 = values[5]; // type2
+    const id = values[1]; // id
+    const name = values[2]; // name
+    const img = values[3]; // img
+    const imgShiny = values[4]; // imgShiny
+    const type1 = values[5]; // type1
+    const type2 = values[6]; // type2
     const pokemonToBeAdded = {
         "id":id,
         "name":name,

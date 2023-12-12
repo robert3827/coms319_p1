@@ -15,12 +15,14 @@ import PokemonShopInfoModal from '../components/launchModal';
 import grassType from '../typeIcons/grass.svg';
 import poisonType from '../typeIcons/poison.svg';
 import Spinner from 'react-bootstrap/Spinner';
+import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "../components/userInfo"
+
 
 
 import '../Types.css';
 
 // import { useFetch } from './useFetch'
-const url = `http://localhost:8081/pokemon/`
+const url = `http://localhost:8081/`
 
 function Pokemart() {
 
@@ -51,7 +53,7 @@ function Pokemart() {
 
 
   function getAllPokemon() {
-    fetch("http://localhost:8081/pokemon/")
+    fetch(url+"pokemon/")
       .then((response) => response.json())
       .then((data) => {
         console.log("Data: ")
@@ -106,6 +108,25 @@ function Pokemart() {
     )
   }
 
+  function buyPokemon(pokemon){
+
+    if(retrieveUsername() === null || retrieveUsername() === ""){
+      console.log("not signed in");
+      return;
+    }
+    //Get pokemon info here.
+
+
+    fetch(url + 'addPokemon/' + retrieveUsername(), {
+            method: 'PUT',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(pokemon)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
+  }
 
 
 
@@ -147,7 +168,7 @@ function Pokemart() {
               <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
                 Learn More
               </Button>
-              <Button variant="primary" className='ml-1'>Buy Pokemon</Button>
+              <Button variant="primary" className='ml-1' onClick={buyPokemon(pokemon[0])}>Buy Pokemon</Button>
               <PokemonShopInfoModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

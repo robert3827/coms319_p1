@@ -1,11 +1,15 @@
 var username;
 var coins;
+var signedIn;
 
 function retrieveUsername(){
     return username;
 }
 function retrieveCoins(){
     return coins;
+}
+function isSignedIn(){
+    return signedIn;
 }
 function changeUsername(editUsername){
     // console.log("got into change username ");
@@ -16,4 +20,7 @@ function changeCoins(editCoins){
     coins = editCoins;
     console.log("coins to: ", coins)
 }
-export {retrieveUsername, retrieveCoins, changeUsername, changeCoins};
+function setSignedIn(signedInStatus){
+    signedIn = signedInStatus;
+}
+export {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn, setSignedIn};
