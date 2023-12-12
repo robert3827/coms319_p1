@@ -138,7 +138,7 @@ app.get("/users/:username", async(req, res) => {
 app.put("/addPokemon/:username", async(req, res) => {
     //Retrieve user information
     const username = String(req.params.username);
-    console.log("Attempting to find: " + username);
+    // console.log("Attempting to find: " + username);
     await client.connect();
     const query = {"username" : username};
     const results = await db.collection("users").findOne(query);
@@ -193,3 +193,25 @@ app.put("/addPokemon/:username", async(req, res) => {
     
 });
 
+app.put("/incrementCoins/:username", async(req, res) =>{
+    const username = String(req.params.username);
+    await client.connect();
+    const query = {"username" : username};
+    // console.log("incrementCoins username: ", username);
+    const results = await db.collection("users").findOne(query);
+    const userValues = Object.values(results);
+    const coins = userValues[4];
+    // console.log("incrementCoins coin count: ", coins);
+
+    const addCoins = await db.collection("users").updateOne(
+        {"username" : username},
+        {$set: {"coins" : parseInt(coins)+1}}
+    );
+
+    if(!addCoins){
+        res.send("Not Found").status(404);
+    }
+    else{
+        res.send(results).status(200);
+    }
+})
