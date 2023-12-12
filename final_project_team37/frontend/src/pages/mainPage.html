@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemart</title>
+
+
+    <link rel="shortcut icon" type="image/x-icon" sizes="32x32" href="./favicon.ico?" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link href="carousel.css" rel="stylesheet">
+    <link rel="stylesheet" href="./main.css">`
+ 
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a href="./index.html" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img src="./pokeball.png" alt="pokeball image links to home" height="50px" width="50px" class="logo">
+
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav nav-pills">
+        <li><a href="./index.html" class="nav-link active">Home</a></li>
+        <li><a href="./pokemart.html" class="nav-link ">Pokemart</a></li>
+        <li><a href="./yourCollection.html" class="nav-link">Your Collection</a></li>
+        <li><a href="./credits.html" class="nav-link">Credits</a></li>
+        <li><a href="./signIn.html" class="nav-link">Sign In</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+        
+      </div>
+    </header>
+  </div>
+
+    <main>
+        <!-- Carousel Object  -->
+        <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+
+              <div class="carousel-item active" style="background-color: transparent;">
+                <div class="container">
+                  <img id="charPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" height="400px" width="400px" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>
+                  <div class="carousel-caption">
+                    <h1>Purchase a Pokemon</h1>
+                    <p class="opacity-75">Visit the Pokemart to buy a new pokemon today!</p>
+                    <p><a class="btn btn-lg btn-primary" href="./pokemart.html">Visit the Pokemart</a></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Each Carousel Item -->
+              <div class="carousel-item" id = "squirtlePicture">
+                <div class="container">
+                  <img id="squirtPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"  height="400px" width="400px" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>
+                  <div class="carousel-caption">
+                    <h1>View Your Collection</h1>
+                    <p>View the pokemon you bought and watch them play!</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">View Your Pokemon</a></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Each Carousel Item -->
+              <div class="carousel-item" id = "bulbasaurPicture ">
+                <div class="container">
+                  <img id="bulbPic"src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"  height="400px" width="400px" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>
+                  <div class="carousel-caption">
+                    <h1>Visit the Credits Page</h1>
+                    <p>For more information about the authors and their contact information.</p>
+                    <p><a class="btn btn-lg btn-primary" href="./credits.html">Learn About the Authors</a></p>
+                  </div>
+                </div>
+              </div>
+
+               <!-- Each Carousel Item -->
+               <div class="carousel-item" id = "diglettPicture">
+                <div class="container">
+                  <img id="diglettPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png"  height="400px" width="400px" class="bd-placeholder-img" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" /></svg>
+                  <div class="carousel-caption">
+                    <h1>Sign In</h1>
+                    <p>Have you signed in yet?</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Go to Sign In</a></p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </main>
+
+
+
+
+
+
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
