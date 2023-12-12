@@ -168,7 +168,7 @@ function Pokemart() {
               <Button variant="info" onClick={() => setModalShow(true)} className='mr-1'>
                 Learn More
               </Button>
-              <Button variant="primary" className='ml-1' onClick={buyPokemon(pokemon[0])}>Buy Pokemon</Button>
+              <Button variant="primary" className='ml-1'>Buy Pokemon</Button>
               <PokemonShopInfoModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}

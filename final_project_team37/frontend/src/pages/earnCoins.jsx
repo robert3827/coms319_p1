@@ -2,6 +2,8 @@ import pokeCoin from '../images/pokeCoin.png'
 import Container from 'react-bootstrap/Container'
 import Menubar from '../components/menubar';
 import { useState, useEffect } from 'react';
+import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn, setSignedIn} from "../components/userInfo"
+
 
 
 
@@ -9,8 +11,16 @@ function EarnCoins() {
     var [numCoins, setNumCoins] = useState(0);
     
     function handleCoinClick() {
-        setNumCoins(numCoins +=1);
-        console.log("Num Coins: " + numCoins);
+        // setNumCoins(numCoins +=1);
+        addCoins();
+        changeCoins(retrieveCoins()+1);
+    }
+
+    function addCoins(){
+        fetch('http://localhost:8081/incrementCoins/'+ retrieveUsername(), {
+            method: 'PUT',
+            headers: { 'content-type': 'application/json' }
+        });
     }
 
     return (
