@@ -4,6 +4,7 @@ import diglett from '../images/diglett.png';
 import charmander from '../images/charmander.png';
 import squirtle from '../images/squirtle.png';
 import bulbasaur from '../images/bulbasaur.png';
+import ditto from '../images/ditto.png'
 import Menubar from '../components/menubar';
 
 
@@ -17,7 +18,7 @@ function MainPage() {
     <>
       <Carousel>
       <Carousel.Item>
-          <img src={diglett} alt="Diglett Pokemon" height={400} width={400} />
+          <img src={ditto} alt="Diglett Pokemon" height={400} width={400} />
           <Carousel.Caption>
             <h3>Sign In</h3>
             <p>Have you signed in yet?</p>
