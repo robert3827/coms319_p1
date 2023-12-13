@@ -27,17 +27,28 @@ function App() {
 
 	var [numCoins, setNumCoins] = useState(0);
 
+	function addCoin() {
+		setNumCoins (numCoins+1);
+		console.log("App: " + numCoins);
+	}
+
+	
+    useEffect(() => {
+        console.log("App_useEff: " + numCoins);
+
+    }, [numCoins]);
+
 	return (
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<Layout />}>
+					<Route path="/" element={<Layout numCoins={numCoins}/>}>
 						<Route index element={<MainPage />} />
 						<Route path="pokemart" element={<Pokemart />} />
 						<Route path="yourCollection" element={<YourCollection />} />
-						<Route path="earnCoins" element={<EarnCoins />} />
+						<Route path="earnCoins" element={<EarnCoins setNumCoins={setNumCoins}/>} />
 						<Route path="credits" element={<Credits />} />
-						<Route path="signIn" element={<SignIn />} />
+						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins}/>} />
 					</Route>
 
 

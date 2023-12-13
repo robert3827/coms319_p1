@@ -97,3 +97,11 @@ body {
   margin-right: 10px;
   justify-content: left;
 }
+
+
+.carousel-img {
+  height: 400px;
+  width: 400px;
+  display: block; /* Ensures proper alignment */
+  margin-left: 30%;
+}

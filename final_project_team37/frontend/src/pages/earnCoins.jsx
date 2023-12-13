@@ -8,26 +8,29 @@ import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn
 
 
 function EarnCoins(props) {
-    var [numCoins, setNumCoins] = useState(0);
-    
-    function handleCoinClick() {
-        // setNumCoins(numCoins +=1);
-        addCoins();
-        changeCoins(retrieveCoins()+1);
-    }
 
-    function addCoins(){
-        fetch('http://localhost:8081/incrementCoins/'+ retrieveUsername(), {
-            method: 'PUT',
-            headers: { 'content-type': 'application/json' }
-        });
+    const [numCoins, setNumCoins] = useState(0);
+
+    function addCoins() {
+        setNumCoins(numCoins+1);
+        props.setNumCoins(numCoins+1);
+        console.log("earnCoins: " + numCoins);
     }
+    
+    
+
+    // function addCoins(){
+    //     fetch('http://localhost:8081/incrementCoins/'+ retrieveUsername(), {
+    //         method: 'PUT',
+    //         headers: { 'content-type': 'application/json' }
+    //     });
+    // }
 
     return (
         <> 
             <Container>
                 <center>
-                <img src={pokeCoin}  height={"40%"} width={"40%"} onClick={handleCoinClick}
+                <img src={pokeCoin}  height={"40%"} width={"40%"} onClick={() => {addCoins()}}
                 style={{alignItems:"center", alignSelf:"center", marginTop:"15%", minHeight:"400px", minWidth:"400px"}}
                 alt="Click the coin to gain coins."/>
 

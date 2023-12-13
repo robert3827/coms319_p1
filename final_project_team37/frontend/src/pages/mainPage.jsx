@@ -18,7 +18,7 @@ function MainPage() {
     <>
       <Carousel>
       <Carousel.Item>
-          <img src={ditto} alt="Diglett Pokemon" height={400} width={400} />
+          <img src={ditto} alt="Diglett Pokemon" className='carousel-img'/>
           <Carousel.Caption>
             <h3>Sign In</h3>
             <p>Have you signed in yet?</p>
@@ -26,7 +26,7 @@ function MainPage() {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img src={bulbasaur} alt="Bulbasaur Pokemon" height={400} width={400} />
+          <img src={bulbasaur} alt="Bulbasaur Pokemon" className='carousel-img'/>
           <Carousel.Caption>
             <h3>Purchase a Pokemon</h3>
             <p>Visit the Pokemart to buy a new Pokemon today!</p>
@@ -35,7 +35,7 @@ function MainPage() {
         </Carousel.Item>
 
         <Carousel.Item>
-          <img src={charmander} alt="Charmander Pokemon" height={400} width={400} />
+          <img src={charmander} alt="Charmander Pokemon" className='carousel-img' />
           <Carousel.Caption>
             <h3>View Your Collection</h3>
             <p>View the Pokemon you bought and watch them play!</p>
@@ -44,7 +44,7 @@ function MainPage() {
         </Carousel.Item>
 
         <Carousel.Item>
-          <img src={squirtle} alt="Squirtle Pokemon" height={400} width={400} />
+          <img src={squirtle} alt="Squirtle Pokemon" className='carousel-img' />
           <Carousel.Caption>
             <h3>Purchase a Pokemon</h3>
             <p>Visit the Pokemart to buy a new Pokemon today!</p>

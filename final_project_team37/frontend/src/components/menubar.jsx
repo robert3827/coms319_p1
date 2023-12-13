@@ -15,8 +15,6 @@ import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "./us
 
 function Menubar(props) {
 
-  // var coinsCount = retrieveCoins();
-  var [coinsCount, setCoinsCount] = useState(props.coinsCount);
   var [pageState, setPageState] = useState({
     home: true,
     pokemart: false,
@@ -48,7 +46,7 @@ function Menubar(props) {
 
           <div className="col-md-3 text-end ">
           <h3>{retrieveUsername()}</h3>
-          <h2> <img src={pokeCoin} height={50} width={50}/> {coinsCount} </h2>
+          <h2> <img src={pokeCoin} height={50} width={50}/> {props.numCoins} </h2>
           </div>
         </header>
       </Container>

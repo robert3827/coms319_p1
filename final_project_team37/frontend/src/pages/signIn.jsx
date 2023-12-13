@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { ToastContainer, toast } from 'react-toastify';
 
 
-function SignIn() {
+function SignIn(props) {
 
 
 
@@ -52,7 +52,8 @@ function SignIn() {
             .then(data => {
                 if (data.password === password) {
                     changeUsername(signInUsername);
-                    changeCoins(data.coins);
+                    // changeCoins(data.coins);
+                    props.setNumCoins(data.coins);
                     console.log("login success");
                     setSignedIn(true);
                     setSignedInForm(true);
