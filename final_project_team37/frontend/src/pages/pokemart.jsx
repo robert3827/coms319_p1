@@ -88,6 +88,20 @@ function Pokemart(props) {
     // subtractCoins(pokemon.cost);
   }
 
+  function removePokemon(pokemon){
+    const id = pokemon.id;
+    fetch(url + 'removePokemon/' + retrieveUsername(), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({"id":id})
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
+
+  }
+
   function generatePokemonCards() {
 
     return (
