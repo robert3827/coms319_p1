@@ -5,7 +5,6 @@ import Menubar from "../components/menubar";
 function Credits() {
   return (
     <>
-      <Menubar />
       <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
           <h1>ComS319 Project Team 37</h1>

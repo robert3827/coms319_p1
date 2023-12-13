@@ -7,7 +7,7 @@ import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn
 
 
 
-function EarnCoins() {
+function EarnCoins(props) {
     var [numCoins, setNumCoins] = useState(0);
     
     function handleCoinClick() {
@@ -25,7 +25,6 @@ function EarnCoins() {
 
     return (
         <> 
-            <Menubar />
             <Container>
                 <center>
                 <img src={pokeCoin}  height={"40%"} width={"40%"} onClick={handleCoinClick}

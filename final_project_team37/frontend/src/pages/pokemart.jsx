@@ -46,7 +46,7 @@ function Pokemart() {
 
   function buyPokemon(pokemon) {
 
-    if (retrieveUsername() == null || retrieveUsername() == "") {
+    if (retrieveUsername() === null || retrieveUsername() === "") {
       console.log("not signed in");
       return;
     }
@@ -80,10 +80,10 @@ function Pokemart() {
                 <br />
 
               </Card.Text>
-              <Button variant="info" onClick={() => setModalShow(pokemon)} className='mr-2'>
+              <Button variant="info" onClick={() => {setModalShow(pokemon) }} className='mr-2'>
                 Learn More
               </Button>
-              <Button variant="primary" className='ml-4' onClick={() => {buyPokemon(pokemon)}}>Buy Pokemon</Button>
+              <Button variant="primary" className='ml-4'>Buy Pokemon</Button>
               
             </Card.Body>
           </Card >
@@ -100,7 +100,6 @@ function Pokemart() {
 
   return (
     <>
-      <Menubar />
       <Container id='pokemartContainer'>
         <Row className="g-4">
           {generatePokemonCards()}

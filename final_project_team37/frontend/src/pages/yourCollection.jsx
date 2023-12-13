@@ -100,7 +100,6 @@ function YourCollection() {
 
     return (
         <>
-            <Menubar />
             
 
             <Container fluid style={myStyle}>

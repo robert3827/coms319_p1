@@ -113,40 +113,6 @@
     width: 48%; /* Adjust the width as needed */
 }
 
-.pokemonId {
-    color:grey
-}
 
-.card:hover {
-    animation: moveUpDown 0.5s ease-in-out infinite;
-  }
-  
-  @keyframes wiggle {
-    0% {
-      transform: tral(0deg);
-    }
-    25% {
-      transform: rotateZ(-5deg);
-    }
-    75% {
-      transform: rotateZ(5deg);
-    }
-    100% {
-      transform: rotateZ(0deg);
-    }
-    
-  }
-  @keyframes moveUpDown {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-}
-  
 
   

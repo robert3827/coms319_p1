@@ -13,10 +13,10 @@ import {retrieveUsername, retrieveCoins, changeUsername, changeCoins} from "./us
 
 
 
-function Menubar() {
+function Menubar(props) {
 
   // var coinsCount = retrieveCoins();
-  var [coinsCount, setCoinsCount] = useState(retrieveCoins());
+  var [coinsCount, setCoinsCount] = useState(props.coinsCount);
   var [pageState, setPageState] = useState({
     home: true,
     pokemart: false,
@@ -28,8 +28,7 @@ function Menubar() {
 
   return (
     
-    <>
-      <div className="container">
+      <Container>
         <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
           <div className="col-md-3 mb-2 mb-md-0">
             <Link to="/" className="d-inline-flex link-body-emphasis text-decoration-none">
@@ -52,8 +51,7 @@ function Menubar() {
           <h2> <img src={pokeCoin} height={50} width={50}/> {coinsCount} </h2>
           </div>
         </header>
-      </div>
+      </Container>
 
-    </>
   );
 } export default Menubar;

@@ -15,7 +15,6 @@ function MainPage() {
 
   return (
     <>
-      <Menubar />
       <Carousel>
       <Carousel.Item>
           <img src={diglett} alt="Diglett Pokemon" height={400} width={400} />

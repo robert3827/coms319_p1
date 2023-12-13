@@ -16,29 +16,40 @@ import Menubar from "./components/menubar";
 import EarnCoins from "./pages/earnCoins";
 import SignIn from "./pages/signIn";
 
+import { useState, useEffect } from "react";
+import Layout from "./pages/Layout";
 
 
 
-	function App() {
-		return (
-			<>
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" element={<MainPage />} />
+
+
+function App() {
+
+	var [numCoins, setNumCoins] = useState(0);
+
+	return (
+		<>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Layout />}>
+						<Route index element={<MainPage />} />
 						<Route path="pokemart" element={<Pokemart />} />
 						<Route path="yourCollection" element={<YourCollection />} />
 						<Route path="earnCoins" element={<EarnCoins />} />
 						<Route path="credits" element={<Credits />} />
-            			<Route path="signIn" element={<SignIn />} />
-					</Routes>
-				</BrowserRouter>
+						<Route path="signIn" element={<SignIn />} />
+					</Route>
 
 
-			</>
+				</Routes>
+			</BrowserRouter>
 
 
-		);
-	}
+		</>
+
+
+	);
+}
 
 
 export default App;
