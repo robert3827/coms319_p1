@@ -9,7 +9,7 @@ import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn
 
 function EarnCoins(props) {
 
-    const [numCoins, setNumCoins] = useState(0);
+    const [numCoins, setNumCoins] = useState(props.numCoins);
 
     function addCoins() {
         setNumCoins(numCoins+1);
