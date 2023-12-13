@@ -2,6 +2,9 @@ import Menubar from "../components/menubar";
 import Container from "react-bootstrap/Container";
 import GrassBg from "../images/grassBg.png";
 import { useState, useEffect } from 'react';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 import {retrieveUsername, retrieveCoins, changeUsername, changeCoins, isSignedIn, setSignedIn} from "../components/userInfo"
 
 
@@ -21,7 +24,6 @@ function YourCollection() {
 
     const xBound = 1500;
     const yBound = 750;
-    var collectionSize=0;
     let timerIds = [];
 
 
@@ -45,19 +47,16 @@ function YourCollection() {
         await fetch(url+"users/"+retrieveUsername())
             .then((response) => response.json())
             .then((data) => {
-                collectionPokemon = data.collection;
-                collectionSize = collectionPokemon.length;
-                console.log("COLLECTION: ", collectionPokemon, " COLLECTION SIZE: ", collectionSize);
+                setCollectionPokemon(data.collection);
             });
     }
 
     function generateImages(){
-        console.log("generate images called");
     
         let yourCollection = document.getElementById("yourCollectionListParent");
     
-        console.log(collectionSize);
-        for(let i =0;i<collectionSize;i++){                         
+        console.log(collectionPokemon.length);
+        for(let i =0;i<collectionPokemon.length;i++){                         
             const moveId = "collectionPokemon"+ i;
             let collectionCard = document.createElement("div");
             collectionCard.innerHTML = `<div class="container">
@@ -77,7 +76,7 @@ function YourCollection() {
     
     function startAnimation() {  
         console.log("startAnimationCalled");
-        for(let i =0;i<=collectionSize;i++){
+        for(let i =0;i<=collectionPokemon.length;i++){
             let randX = getRandomInt(xBound);
             let randY = getRandomInt(yBound);
             if(timerIds[i] !== null){
@@ -137,15 +136,28 @@ function YourCollection() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+
+    function generateImages2(){
+
+        return (
+            collectionPokemon.map((pokemon) =>(
+                <Col key={pokemon.id}>
+                    <Card.Img variant="top" src={pokemon.img} style={{ height: '200px', objectFit: 'contain' }}/>
+                </Col>
+                // <Image src={pokemon.img} fluid></Image>
+            ))
+        )
+    }
     
 
     return (
         <>
             
 
-            <Container fluid style={myStyle}>
+            <Container id ="yourCollectionListParent" fluid style={myStyle}>
+                {generateImages2()}
 
-                <section class="py-5 text-center container banner">
+                {/* <section class="py-5 text-center container banner">
                     <div class="row py-lg-5">
                         <div class="col-lg-6 col-md-8 mx-auto">
                             <h1 class="fw-light">Your Collection</h1>
@@ -157,9 +169,9 @@ function YourCollection() {
                 <div id="yourCollectionListParent">
 
                 </div>
-                {(collectionSize !==0) &&
+                {
                     startCollectionMovement()
-                }
+                } */}
             </Container>
 
         </>

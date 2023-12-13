@@ -65,10 +65,12 @@ function Pokemart(props) {
 
   function buyPokemon(pokemon) {
 
+    //Maybe do something noticable here to let the user know to sign in.
     if (retrieveUsername() === null || retrieveUsername() === "") {
       console.log("not signed in");
       return;
     }
+    //Maybe do something here to let the user know thwy dont have enough coins.
     if((numCoins-pokemon.cost)<0){
       console.log("insufficient number of coins");
       return;
