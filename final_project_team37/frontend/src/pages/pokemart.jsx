@@ -21,10 +21,29 @@ import '../stylesheets/Cards.css'
 
 const url = `http://localhost:8081/`
 
-function Pokemart() {
+function Pokemart(props) {
 
   var [allPokemon, setAllPokemon] = useState([]); //Array holding all the pokemon to be generated
   const [modalShow, setModalShow] = useState(null);
+  const [numCoins, setNumCoins] = useState(props.numCoins);
+
+  function subtractCoins(coinsToSub) {
+      setNumCoins(numCoins-coinsToSub);
+      props.setNumCoins(numCoins-coinsToSub);
+      // console.log("earnCoins: " + numCoins);
+      console.log("number of coins that should now be in the db ",numCoins);
+      updateCoins(numCoins);
+  }
+
+  function updateCoins(coinsToUpdate){
+    fetch(url+'updateCoins/' + retrieveUsername(), {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({"coins": coinsToUpdate})
+    })
+
+  }
+
 
   useEffect(() => { //Called on first render
     loadPokemart();
@@ -50,6 +69,10 @@ function Pokemart() {
       console.log("not signed in");
       return;
     }
+    if((props.numCoins-pokemon.coins)<0){
+      console.log("insufficient number of coins");
+      return;
+    }
     //Get pokemon info here.
 
     fetch(url + 'addPokemon/' + retrieveUsername(), {
@@ -61,6 +84,8 @@ function Pokemart() {
       .then(data => {
         console.log(data);
       });
+
+    // subtractCoins(pokemon.cost);
   }
 
   function generatePokemonCards() {
@@ -70,6 +95,7 @@ function Pokemart() {
       allPokemon.map((pokemon) => (
         <Col key={pokemon.id}>
           < Card style={{ width: '18rem' }}  className="h-100 card">
+            <Card.Header>Cost: {pokemon.cost}</Card.Header>
             <Card.Img variant="top" src={pokemon.img} style={{ height: '200px', objectFit: 'contain' }}/>
             <Card.Body>
               <div className='pokemonId'>#{pokemon.id}:</div>
@@ -83,9 +109,10 @@ function Pokemart() {
               <Button variant="info" onClick={() => {setModalShow(pokemon) }} className='mr-2'>
                 Learn More
               </Button>
-              <Button variant="primary" className='ml-4'>Buy Pokemon</Button>
+              <Button variant="primary" className='ml-4' onClick={()=>buyPokemon(pokemon)}>Buy Pokemon</Button>
               
             </Card.Body>
+            {/* <Card.Footer>Cost: {pokemon.cost}</Card.Footer> */}
           </Card >
         </Col>
       ))
