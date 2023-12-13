@@ -31,8 +31,8 @@ function Pokemart(props) {
       setNumCoins(numCoins-coinsToSub);
       props.setNumCoins(numCoins-coinsToSub);
       // console.log("earnCoins: " + numCoins);
-      console.log("number of coins that should now be in the db ",numCoins);
-      updateCoins(numCoins);
+      console.log("number of coins that should now be in the db ",numCoins-coinsToSub);
+      updateCoins(numCoins-coinsToSub);
   }
 
   function updateCoins(coinsToUpdate){
@@ -69,7 +69,7 @@ function Pokemart(props) {
       console.log("not signed in");
       return;
     }
-    if((props.numCoins-pokemon.coins)<0){
+    if((numCoins-pokemon.cost)<0){
       console.log("insufficient number of coins");
       return;
     }
@@ -85,7 +85,7 @@ function Pokemart(props) {
         console.log(data);
       });
 
-    // subtractCoins(pokemon.cost);
+    subtractCoins(pokemon.cost);
   }
 
   function removePokemon(pokemon){
