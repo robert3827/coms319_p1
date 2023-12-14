@@ -34,11 +34,6 @@ function SignIn(props) {
     });
     
 
-    
-    useEffect(() => {
-        setTexts();
-    }, [inputsValid]);
-
     // function setTexts() {
     //     var userNameText = document.getElementById("userNameFeedback");
     //     var userNameText = document.getElementById("passwordFeedback");
@@ -68,7 +63,7 @@ function SignIn(props) {
         }
         else {
             console.log("Passwords do not match");
-            document.getElementById("confirmPasswordFeedback").className = "d-block";
+
         }
 
 
@@ -94,7 +89,11 @@ function SignIn(props) {
                 }
                 else {
                     //Invalid Sign in. Display Bootstrap Sign In validation
-                    document.getElementById("userNameFeedback").className = "d-block";
+                    console.log("Invalid User/Pass")
+                    // setInputsValid(prevState => ({
+                    //     ...prevState,
+                    //     userNameValid: false
+                    // }));
 
                 }
             });
@@ -149,7 +148,7 @@ function SignIn(props) {
                         id="inputUsername"
                     />
                     <Form.Control.Feedback type="invalid" id='userNameFeedback' className='d-block'>
-                        Incorrect Username
+                        {!inputsValid.userNameValid && InputState.userNameInvalid}
                     </Form.Control.Feedback>
                     
 
@@ -165,7 +164,7 @@ function SignIn(props) {
                         id="inputPassword"
                     />
                     <Form.Control.Feedback type="invalid" id='passwordFeedback' className='d-block'>
-                        Incorrect Password
+                        {!inputsValid.passwordValid && InputState.passwordInvalid}
                     </Form.Control.Feedback>
                 </Form.Group>
 
@@ -222,7 +221,7 @@ function SignIn(props) {
                             id="confirmPassword"
                         />
                         <Form.Control.Feedback id="confirmPasswordFeedback" type="invalid" className='d-block'>
-                            
+                            {!inputsValid.passowordConfirmValid && InputState.confirmPasswordFeedback}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Form>
