@@ -26,6 +26,10 @@ app.listen(port, () => {
  */
 //This should be run once, for all 151 pokemon to populate the database.
 app.post("/addPokemon", async (req, res) => {
+    const cost20=[1,4,7,10,13,16,19,21,23,25,27,29,32,35,37,39,41,43,46,48,50,52,54,56,58,60,63,66,69,72,74,77,79,81,84,86,88,90,92,96,98,100,102,104,109,111,116,118,120,129,133,138,140,147];
+    const cost50=[2,5,8,11,14,17,20,22,24,26,28,30,33,36,38,40,42,44,47,49,51,53,55,57,59,61,64,67,70,73,75,78,80,82,83,85,87,89,91,93,95,97,99,101,103,105,106,107,108,110,112,113,114,115,117,119,121,122,123,124,125,126,127,128,132,137,139,141,148];
+    const cost100=[3,6,9,12,15,18,31,34,45,62,65,68,71,76,94,130,131,134,135,136,142,143,149];
+    const cost200=[144,145,146,150,151];
     await client.connect();
     const keys = Object.keys(req.body);
     const values = Object.values(req.body);
@@ -35,14 +39,40 @@ app.post("/addPokemon", async (req, res) => {
     const imgShiny = values[3]; // imgShiny
     const type1 = values[4]; // type1
     const type2 = values[5]; // type2
-    // console.log(id, name, price, description, imageUrl);
+    var cost;
+    //Find cost of pokemon
+    //check cost20
+    for(let i=0;i<cost20.length;i++){
+        if(cost20[i] === id){
+            cost=20;
+        }
+    }
+    //check cost50
+    for(let i=0;i<cost50.length;i++){
+        if(cost50[i] === id){
+            cost=50;
+        }
+    }
+    //check cost100
+    for(let i=0;i<cost100.length;i++){
+        if(cost100[i] === id){
+            cost=100;
+        }
+    }
+    //check cost200
+    for(let i=0;i<cost200.length;i++){
+        if(cost200[i] === id){
+            cost=200;
+        }
+    }
     const newDocument = {
         "id":id,
         "name":name,
         "img":img,
         "imgShiny":imgShiny,
         "type1":type1,
-        "type2":type2
+        "type2":type2,
+        "cost": cost
     };
     const results = await db.collection("pokemon").insertOne(newDocument);
     res.status(200);
@@ -212,6 +242,60 @@ app.put("/incrementCoins/:username", async(req, res) =>{
         res.send("Not Found").status(404);
     }
     else{
-        res.send(results).status(200);
+        res.send(addCoins).status(200);
+    }
+});
+
+app.put("/updateCoins/:username", async(req,res) => {
+    const username = String(req.params.username);
+    await client.connect();
+    const query = {"username" : username};
+    //Expecting this body format: {"coins":coinValue}
+    const values = Object.values(req.body);
+    const coinsToUpdate = parseInt(values[0]);
+    const addCoins = await db.collection("users").updateOne(
+        {"username" : username},
+        {$set: {"coins" : coinsToUpdate}}
+    );
+
+    if(!addCoins){
+        res.send("Not Found").status(404);
+    }
+    else{
+        res.send(addCoins).status(200);
     }
 })
+
+
+app.put("/removePokemon/:username", async(req, res) =>{
+    const username = String(req.params.username);
+    await client.connect();
+    const query = {"username" : username};
+    // console.log("incrementCoins username: ", username);
+    const results = await db.collection("users").findOne(query);
+    const userValues = Object.values(results);
+
+    var collection = userValues[3];
+
+    //Expected body from frontend: {"id": idNum}
+    const values = Object.values(req.body);
+    const id = values[0];
+    for(let i=0;i<collection.length;i++){
+        if(collection[i].id === id){
+            collection.splice(i, 1);
+            break;
+        }
+    }
+
+    const removePokemon = await db.collection("users").updateOne(
+        {"username": username},
+        {$set: {"collection": collection}}
+    )
+
+    if(!removePokemon){
+        res.send("Not Found").status(404);
+    }
+    else{
+        res.send(removePokemon).status(200);
+    }
+});
