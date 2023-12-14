@@ -93,7 +93,7 @@ app.get("/pokemon/:id", async (req, res) => {
 
 //Retrieving all pokemon on DB
 app.get("/pokemon", async(req, res)=> {
-    console.log("Retrieving all pokemon");
+    // console.log("Retrieving all pokemon");
     await client.connect();
     const query = {};
     const results = await db
@@ -276,10 +276,13 @@ app.put("/removePokemon/:username", async(req, res) =>{
     const userValues = Object.values(results);
 
     var collection = userValues[3];
+    var coins = userValues[4];
 
-    //Expected body from frontend: {"id": idNum}
+    //Expected body from frontend: {"id": idNum}, {"coins": numCoins}
     const values = Object.values(req.body);
     const id = values[0];
+    const coinsAdded = parseInt(values[1]);
+    console.log("COINS PASSED IN: ". coinsAdded);
     for(let i=0;i<collection.length;i++){
         if(collection[i].id === id){
             collection.splice(i, 1);
@@ -287,9 +290,15 @@ app.put("/removePokemon/:username", async(req, res) =>{
         }
     }
 
+    const newCoins = coins+coinsAdded
+    console.log(newCoins);
     const removePokemon = await db.collection("users").updateOne(
         {"username": username},
         {$set: {"collection": collection}}
+    )
+    const addCoins = await db.collection("users").updateOne(
+        {"username": username},
+        {$set: {"coins": newCoins}}
     )
 
     if(!removePokemon){
