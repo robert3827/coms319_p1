@@ -21,9 +21,12 @@ const url = `http://localhost:8081/`
 function Pokemart(props) {
 
   var [allPokemon, setAllPokemon] = useState([]); //Array holding all the pokemon to be generated
-  const [modalShow, setModalShow] = useState(null);
+  const [modalShow, setModalShow] = useState({
+    pokemon: null,
+    inCollection: false
+  });
   const [numCoins, setNumCoins] = useState(props.numCoins);
-  var [collectionIds, setCollectionIds] = useState([]);
+  var [yourCollection, setYourCollection] = useState([]);
   
 
   function subtractCoins(coinsToSub) {
@@ -109,21 +112,30 @@ function Pokemart(props) {
         console.log(data);
       });
 
-    setModalShow(null)
+    setModalShow({
+      pokemon: null,
+      inCollection: false
+    })
     addCoins(coinsToAdd);
   }
 
   function getCollection(){
-    var ids =[];
     fetch(url+"users/"+props.userName)
         .then((response) => response.json())
         .then((data) => {
-          for(let i=0;i<data.collection.length;i++){
-            ids.concat(data.collection[i].id);
-          }
+          setYourCollection(data.collection);
         });
 
-    setCollectionIds(ids);
+  }
+
+  function checkIfInCollection(pokemon){
+    for(let i=0;i<yourCollection.length;i++){
+      // console.log(pokemon.id);
+      if(yourCollection[i].id === pokemon.id){
+        return true;
+      }
+    }
+    return false;
   }
 
   function generatePokemonCards() {
@@ -144,7 +156,13 @@ function Pokemart(props) {
                 <br />
 
               </Card.Text>
-              <Button variant="primary" onClick={() => {setModalShow(pokemon) }} className='mr-2'>
+              <Button variant="primary" onClick={() => {
+                setModalShow({
+                  pokemon: pokemon,
+                  inCollection: checkIfInCollection(pokemon)
+                });
+
+                }} className='mr-2'>
                 Sell Pokemon
               </Button>
               <Button variant="info" className='ml-4' onClick={()=>buyPokemon(pokemon)}>Buy Pokemon</Button>
@@ -171,11 +189,11 @@ function Pokemart(props) {
         </Row>
       </Container>
       <PokemonShopInfoModal
-            pokemon={modalShow} //Value for props.pokemon
-            show={modalShow !== null} //argument passed in through onClickMethod for Modals
-            onHide={() => setModalShow(null)} //When the modal sees null it will hide itself
-            sellPokemon={()=> removePokemon(modalShow)} //lets modal have access to sell
-            // collectionIds={collectionIds}
+            pokemon={modalShow.pokemon} //Value for props.pokemon
+            show={modalShow.pokemon !== null} //argument passed in through onClickMethod for Modals
+            onHide={() => setModalShow({pokemon:null, inCollection:false})} //When the modal sees null it will hide itself
+            sellPokemon={()=> removePokemon(modalShow.pokemon)} //lets modal have access to sell
+            inCollection={modalShow.inCollection}
       />
     </>
 

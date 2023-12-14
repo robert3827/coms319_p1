@@ -5,6 +5,7 @@ import { useState} from 'react';
 
 function PokemonShopInfoModal(props) {
   var pokemon = props.pokemon;
+  var inCollection = props.inCollection;
   // const ids = props.collectionIds;
   // var [inCollection, setInCollection] = useState(true);
 
@@ -18,19 +19,30 @@ function PokemonShopInfoModal(props) {
 
 
 
-  if (!pokemon) { //You should never see this but anyways
+  if (!inCollection) { //You should never see this but anyways
     return (
-      <Modal {...props} onHide={props.onHide}>
-        <Modal.Header closeButton>
-          <Modal.Title>Pokemon Information Unavailable</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>No Pokemon details available.</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <Modal
+      {...props}
+      onHide={props.onHide}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Cannot sell pokemon
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {/* <h4>Would you like to sell this pokemon for {pokemon.cost/2} coins?</h4> */}
+        <p>
+          Try purchasing pokemon first
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
     );
   } 
 
