@@ -4,10 +4,7 @@ import Col from 'react-bootstrap/Col';
 import { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import diglett from '../images/diglett.png';
-import charmander from '../images/charmander.png';
-import squirtle from '../images/squirtle.png';
-import bulbasaur from '../images/bulbasaur.png';
+import pokeCoin from '../images/pokeCoin.png';
 import Form from 'react-bootstrap/Form';
 import Menubar from '../components/menubar';
 import PokemonShopInfoModal from '../components/launchModal';
@@ -26,6 +23,8 @@ function Pokemart(props) {
   var [allPokemon, setAllPokemon] = useState([]); //Array holding all the pokemon to be generated
   const [modalShow, setModalShow] = useState(null);
   const [numCoins, setNumCoins] = useState(props.numCoins);
+  var [collectionIds, setCollectionIds] = useState([]);
+  
 
   function subtractCoins(coinsToSub) {
       setNumCoins(numCoins-coinsToSub);
@@ -33,6 +32,11 @@ function Pokemart(props) {
       // console.log("earnCoins: " + numCoins);
       console.log("number of coins that should now be in the db ",numCoins-coinsToSub);
       updateCoins(numCoins-coinsToSub);
+  }
+
+  function addCoins(coinsToAdd){
+    setNumCoins(numCoins+coinsToAdd);
+    props.setNumCoins(numCoins+coinsToAdd);
   }
 
   function updateCoins(coinsToUpdate){
@@ -47,6 +51,7 @@ function Pokemart(props) {
 
   useEffect(() => { //Called on first render
     loadPokemart();
+    getCollection();
 }, []);
 
 
@@ -92,16 +97,33 @@ function Pokemart(props) {
 
   function removePokemon(pokemon){
     const id = pokemon.id;
+    const coinsToAdd = pokemon.cost/2;
+    console.log(coinsToAdd);
     fetch(url + 'removePokemon/' + props.userName, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({"id":id})
+      body: JSON.stringify({"id":id, "coins": coinsToAdd})
     })
       .then(response => response.json())
       .then(data => {
         console.log(data);
       });
 
+    setModalShow(null)
+    addCoins(coinsToAdd);
+  }
+
+  function getCollection(){
+    var ids =[];
+    fetch(url+"users/"+props.userName)
+        .then((response) => response.json())
+        .then((data) => {
+          for(let i=0;i<data.collection.length;i++){
+            ids.concat(data.collection[i].id);
+          }
+        });
+
+    setCollectionIds(ids);
   }
 
   function generatePokemonCards() {
@@ -111,7 +133,7 @@ function Pokemart(props) {
       allPokemon.map((pokemon) => (
         <Col key={pokemon.id}>
           < Card style={{ width: '18rem' }}  className="h-100 card">
-            <Card.Header>Cost: {pokemon.cost}</Card.Header>
+            {/* <Card.Header>Cost: {pokemon.cost}</Card.Header> */}
             <Card.Img variant="top" src={pokemon.img} style={{ height: '200px', objectFit: 'contain' }}/>
             <Card.Body>
               <div className='pokemonId'>#{pokemon.id}:</div>
@@ -122,13 +144,13 @@ function Pokemart(props) {
                 <br />
 
               </Card.Text>
-              <Button variant="info" onClick={() => {setModalShow(pokemon) }} className='mr-2'>
-                Learn More
+              <Button variant="primary" onClick={() => {setModalShow(pokemon) }} className='mr-2'>
+                Sell Pokemon
               </Button>
-              <Button variant="primary" className='ml-4' onClick={()=>buyPokemon(pokemon)}>Buy Pokemon</Button>
+              <Button variant="info" className='ml-4' onClick={()=>buyPokemon(pokemon)}>Buy Pokemon</Button>
               
             </Card.Body>
-            {/* <Card.Footer>Cost: {pokemon.cost}</Card.Footer> */}
+            <Card.Footer><img src={pokeCoin} width="20" height="20"></img>{pokemon.cost}</Card.Footer>
           </Card >
         </Col>
       ))
@@ -152,6 +174,8 @@ function Pokemart(props) {
             pokemon={modalShow} //Value for props.pokemon
             show={modalShow !== null} //argument passed in through onClickMethod for Modals
             onHide={() => setModalShow(null)} //When the modal sees null it will hide itself
+            sellPokemon={()=> removePokemon(modalShow)} //lets modal have access to sell
+            // collectionIds={collectionIds}
       />
     </>
 

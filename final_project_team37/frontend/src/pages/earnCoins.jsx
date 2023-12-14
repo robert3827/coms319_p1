@@ -33,9 +33,9 @@ function EarnCoins(props) {
         <> 
             <Container>
                 <center>
-                <h1>Click the coin to earn yourself coins!</h1>
-                <img src={pokeCoin}  height={"40%"} width={"40%"} onClick={() => {addCoins()}}
-                style={{alignItems:"center", alignSelf:"center", marginTop:"15%", minHeight:"400px", minWidth:"400px"}}
+                <h1>Click to earn coins!</h1>
+                <img src={pokeCoin}  height={"25%"} width={"25%"} onClick={() => {addCoins()}}
+                style={{alignItems:"center", alignSelf:"center", marginTop:"10%", minHeight:"400px", minWidth:"400px"}}
                 alt="Click the coin to gain coins."/>
 
                 </center>

@@ -81,7 +81,7 @@ function YourCollection(props) {
                 // <Col key={pokemon.id}>
                 //     <Card.Img variant="top" src={pokemon.img} style={{ height: '200px', objectFit: 'contain' }}/>
                 // </Col>
-                <Image src={pokemon.img} fluid style={{ height: '110px', width: '93px', objectFit: 'contain' }}></Image>
+                <Image src={pokemon.img} fluid style={{ height: '115px', width: '93px', objectFit: 'contain' }}></Image>
             ))
         )
     }

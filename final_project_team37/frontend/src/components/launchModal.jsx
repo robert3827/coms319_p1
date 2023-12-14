@@ -1,9 +1,22 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useState} from 'react';
+
 
 function PokemonShopInfoModal(props) {
-  
   var pokemon = props.pokemon;
+  // const ids = props.collectionIds;
+  // var [inCollection, setInCollection] = useState(true);
+
+  // for(let i=0;i<ids.length;i++){
+  //   console.log("got into this for loop");
+  //   if(ids[i] === pokemon.id){
+  //     setInCollection(true);
+  //   }
+  // }
+
+
+
 
   if (!pokemon) { //You should never see this but anyways
     return (
@@ -34,15 +47,14 @@ function PokemonShopInfoModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
+        {/* <h4>Would you like to sell this pokemon for {pokemon.cost/2} coins?</h4> */}
         <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
+          Would you like to sell {pokemon.name} for {pokemon.cost/2} coins?
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={props.sellPokemon}>Confirm</Button>
+        <Button variant="secondary" onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );

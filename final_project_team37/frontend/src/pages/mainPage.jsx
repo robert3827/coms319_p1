@@ -64,7 +64,6 @@ function MainPage() {
           <img src={squirtle} alt="Squirtle Pokemon" className='carousel-img' />
           <Carousel.Caption>
             <h3>Want to earn some coins?</h3>
-            <p>Click on the big coin to earn yourself coins</p>
             <Button onClick={()=>handleEarnCoinsClick()}>Earn coins!</Button>
           </Carousel.Caption>
         </Carousel.Item>
