@@ -26,7 +26,7 @@ function SignIn(props) {
         passwordConfirmInvalid: 'Passwords do not match'
 
     }
-    var [pageState, setPageState] = useState(PageState.signIn)
+    var [pageState, setPageState] = useState(props.signInStatus)
     const [inputsValid, setInputsValid] = useState({
         userNameValid: true,
         passwordValid: true,
@@ -60,6 +60,7 @@ function SignIn(props) {
             postUser(signInUsername, password1);
             props.setNumCoins(100);
             setPageState(PageState.account);
+            props.setSignInStatus("account");
         }
         else {
             console.log("Passwords do not match");
@@ -86,6 +87,7 @@ function SignIn(props) {
                     props.setNumCoins(data.coins);
                     console.log("login success");
                     setPageState(PageState.account);
+                    props.setSignInStatus("account");
                 }
                 else {
                     //Invalid Sign in. Display Bootstrap Sign In validation
@@ -130,6 +132,7 @@ function SignIn(props) {
                     setPageState(PageState.signIn);
                     props.setUserName("");
                     props.setNumCoins(0);
+                    props.setSignInStatus("signIn");
                 }}>Sign Out</Button>
             </Container>
         );

@@ -14,7 +14,7 @@ function EarnCoins(props) {
     function addCoins() {
         setNumCoins(numCoins+1);
         props.setNumCoins(numCoins+1);
-        console.log("earnCoins: " + numCoins);
+        console.log("username: " + props.userName);
         updateDb();
     }
 
@@ -23,7 +23,7 @@ function EarnCoins(props) {
     
     //TODO make this a function that updates the database? is it
     function updateDb(){
-        fetch('http://localhost:8081/incrementCoins/'+ retrieveUsername(), {
+        fetch('http://localhost:8081/incrementCoins/'+ props.userName, {
             method: 'PUT',
             headers: { 'content-type': 'application/json' }
         });

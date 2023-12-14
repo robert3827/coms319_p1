@@ -27,6 +27,7 @@ function App() {
 
 	var [numCoins, setNumCoins] = useState(0);
 	var [userName, setUserName] = useState("")
+	var [signInStatus, setSignInStatus] = useState("signIn");
 
 	function addCoin() {
 		setNumCoins (numCoins+1);
@@ -45,11 +46,11 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Layout numCoins={numCoins} userName={userName}/>}>
 						<Route index element={<MainPage />} />
-						<Route path="pokemart" element={<Pokemart setNumCoins={setNumCoins} numCoins={numCoins}/>} />
+						<Route path="pokemart" element={<Pokemart setNumCoins={setNumCoins} numCoins={numCoins}  userName={userName}/>} />
 						<Route path="yourCollection" element={<YourCollection />} />
-						<Route path="earnCoins" element={<EarnCoins setNumCoins={setNumCoins} numCoins={numCoins}/>} />
+						<Route path="earnCoins" element={<EarnCoins setNumCoins={setNumCoins} numCoins={numCoins} userName={userName}/>} />
 						<Route path="credits" element={<Credits />} />
-						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins} setUserName={setUserName} userName={userName}/>} />
+						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins} setUserName={setUserName} userName={userName} setSignInStatus={setSignInStatus} signInStatus={signInStatus}/>} />
 					</Route>
 
 

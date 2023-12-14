@@ -36,7 +36,7 @@ function Pokemart(props) {
   }
 
   function updateCoins(coinsToUpdate){
-    fetch(url+'updateCoins/' + retrieveUsername(), {
+    fetch(url+'updateCoins/' + props.userName, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({"coins": coinsToUpdate})
@@ -66,7 +66,7 @@ function Pokemart(props) {
   function buyPokemon(pokemon) {
 
     //Maybe do something noticable here to let the user know to sign in.
-    if (retrieveUsername() === null || retrieveUsername() === "") {
+    if (props.userName === null || props.userName === "") {
       console.log("not signed in");
       return;
     }
@@ -77,7 +77,7 @@ function Pokemart(props) {
     }
     //Get pokemon info here.
 
-    fetch(url + 'addPokemon/' + retrieveUsername(), {
+    fetch(url + 'addPokemon/' + props.userName, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(pokemon)
@@ -92,7 +92,7 @@ function Pokemart(props) {
 
   function removePokemon(pokemon){
     const id = pokemon.id;
-    fetch(url + 'removePokemon/' + retrieveUsername(), {
+    fetch(url + 'removePokemon/' + props.userName, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({"id":id})
