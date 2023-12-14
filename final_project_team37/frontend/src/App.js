@@ -47,7 +47,7 @@ function App() {
 					<Route path="/" element={<Layout numCoins={numCoins} userName={userName}/>}>
 						<Route index element={<MainPage />} />
 						<Route path="pokemart" element={<Pokemart setNumCoins={setNumCoins} numCoins={numCoins}  userName={userName}/>} />
-						<Route path="yourCollection" element={<YourCollection />} />
+						<Route path="yourCollection" element={<YourCollection userName={userName} signInStatus={signInStatus}/>} />
 						<Route path="earnCoins" element={<EarnCoins setNumCoins={setNumCoins} numCoins={numCoins} userName={userName}/>} />
 						<Route path="credits" element={<Credits />} />
 						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins} setUserName={setUserName} userName={userName} setSignInStatus={setSignInStatus} signInStatus={signInStatus}/>} />

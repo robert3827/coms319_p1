@@ -6,12 +6,29 @@ import squirtle from '../images/squirtle.png';
 import bulbasaur from '../images/bulbasaur.png';
 import ditto from '../images/ditto.png'
 import Menubar from '../components/menubar';
+import {useNavigate} from "react-router-dom";
+
 
 
 function MainPage() {
 
-  function handleClick() {
+  const navigate = useNavigate();
 
+  function handleSignInClick() {
+    // console.log("got into signinclick");
+    navigate("/signIn");
+  }
+
+  function handlePokemartClick(){
+    navigate("/pokemart");
+  }
+
+  function handleYourCollectionClick(){
+    navigate("/yourCollection");
+  }
+
+  function handleEarnCoinsClick(){
+    navigate("/earnCoins");
   }
 
   return (
@@ -22,7 +39,7 @@ function MainPage() {
           <Carousel.Caption>
             <h3>Sign In</h3>
             <p>Have you signed in yet?</p>
-            <Button>Go to Sign In</Button>
+            <Button onClick={()=>handleSignInClick()}>Go to Sign In</Button>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -30,7 +47,7 @@ function MainPage() {
           <Carousel.Caption>
             <h3>Purchase a Pokemon</h3>
             <p>Visit the Pokemart to buy a new Pokemon today!</p>
-            <Button>Visit the Pokemart</Button>
+            <Button onClick={()=>handlePokemartClick()}>Visit the Pokemart</Button>
           </Carousel.Caption>
         </Carousel.Item>
 
@@ -39,16 +56,16 @@ function MainPage() {
           <Carousel.Caption>
             <h3>View Your Collection</h3>
             <p>View the Pokemon you bought and watch them play!</p>
-            <Button>View Your Pokemon</Button>
+            <Button onClick={()=>handleYourCollectionClick()}>View Your Pokemon</Button>
           </Carousel.Caption>
         </Carousel.Item>
 
         <Carousel.Item>
           <img src={squirtle} alt="Squirtle Pokemon" className='carousel-img' />
           <Carousel.Caption>
-            <h3>Purchase a Pokemon</h3>
-            <p>Visit the Pokemart to buy a new Pokemon today!</p>
-            <Button>Visit the Pokemart</Button>
+            <h3>Want to earn some coins?</h3>
+            <p>Click on the big coin to earn yourself coins</p>
+            <Button onClick={()=>handleEarnCoinsClick()}>Earn coins!</Button>
           </Carousel.Caption>
         </Carousel.Item>
 
