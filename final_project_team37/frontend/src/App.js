@@ -26,6 +26,7 @@ import Layout from "./pages/Layout";
 function App() {
 
 	var [numCoins, setNumCoins] = useState(0);
+	var [userName, setUserName] = useState("")
 
 	function addCoin() {
 		setNumCoins (numCoins+1);
@@ -42,13 +43,13 @@ function App() {
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route path="/" element={<Layout numCoins={numCoins}/>}>
+					<Route path="/" element={<Layout numCoins={numCoins} userName={userName}/>}>
 						<Route index element={<MainPage />} />
 						<Route path="pokemart" element={<Pokemart />} />
 						<Route path="yourCollection" element={<YourCollection />} />
 						<Route path="earnCoins" element={<EarnCoins setNumCoins={setNumCoins} numCoins={numCoins}/>} />
 						<Route path="credits" element={<Credits />} />
-						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins}/>} />
+						<Route path="signIn" element={<SignIn setNumCoins={setNumCoins} setUserName={setUserName} userName={userName}/>} />
 					</Route>
 
 

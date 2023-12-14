@@ -8,32 +8,67 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { ToastContainer, toast } from 'react-toastify';
 
 
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+
 function SignIn(props) {
 
+    const PageState = {
+        signIn: 'signIn',
+        signUp: 'signUp',
+        account: 'account'
+    }
+    const InputState = {
+        userNameInvalid: 'User Name is Invalid',
+        passwordInvalid: 'Password is invalid',
+        passwordConfirmInvalid: 'Passwords do not match'
 
+    }
+    var [pageState, setPageState] = useState(PageState.signIn)
+    const [inputsValid, setInputsValid] = useState({
+        userNameValid: true,
+        passwordValid: true,
+        passowordConfirmValid: true
+    });
+    
 
-    const [showSignUp, setShowSignUp] = useState(false);
-    const [signedInForm, setSignedInForm] = useState(isSignedIn());
+    
+    useEffect(() => {
+        setTexts();
+    }, [inputsValid]);
 
-    const showToastMessage = () => {
-        toast.failure("Incorrect Password", {
-            position: toast.POSITION.TOP_RIGHT,
-        });
-    };
+    // function setTexts() {
+    //     var userNameText = document.getElementById("userNameFeedback");
+    //     var userNameText = document.getElementById("passwordFeedback");
+    //     var userNameText = document.getElementById("confirmPasswordFeedback");
+        
+    //     if(!inputsValid.userNameValid) {
+    //         userNameText.innerText = "d-block"
+    //     } else {
+    //         userNameText = "d-none"
+    //     }
+    // }
+
+    
+
 
     function handleSignUp() {
         var signInUsername = document.getElementById("inputUsername").value;
         var password1 = document.getElementById("inputPassword").value;
         var password2 = document.getElementById("confirmPassword").value;
+
+
         if (password1 === password2) {
-            changeUsername(signInUsername);
+            props.setUserName(signInUsername);
             postUser(signInUsername, password1);
-            changeCoins(100);
-            setSignedIn(true);
-            setSignedInForm(true);
+            props.setNumCoins(100);
+            setPageState(PageState.account);
         }
         else {
             console.log("Passwords do not match");
+            document.getElementById("confirmPasswordFeedback").className = "d-block";
         }
 
 
@@ -51,16 +86,16 @@ function SignIn(props) {
             .then(response => response.json())
             .then(data => {
                 if (data.password === password) {
-                    changeUsername(signInUsername);
-                    // changeCoins(data.coins);
+                    console.log(signInUsername);
+                    props.setUserName(signInUsername);
                     props.setNumCoins(data.coins);
                     console.log("login success");
-                    setSignedIn(true);
-                    setSignedInForm(true);
+                    setPageState(PageState.account);
                 }
                 else {
-                    console.log("login failure");
-                    showToastMessage();
+                    //Invalid Sign in. Display Bootstrap Sign In validation
+                    document.getElementById("userNameFeedback").className = "d-block";
+
                 }
             });
     };
@@ -82,45 +117,135 @@ function SignIn(props) {
             })
     };
 
-    // function addPokemon(signInUsername){
-    //     const testPokemon = { 
-    //         "id": 1,
-    //         "name": "bulbasaur",
-    //         "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-    //         "imgShiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
-    //         "type1": "grass",
-    //         "type2": "poison"
-    //     }
+    function ShowAccountPage() {
+        return (
+            <Container>
 
-    //     fetch('http://localhost:8081/addPokemon/' + signInUsername, {
-    //         method: 'PUT',
-    //         headers: { 'content-type': 'application/json' },
-    //         body: JSON.stringify(testPokemon)
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data);
-    //     })
-    // };
+                <h1>
+                    You're signed in!
+                </h1>
+                <h2>
+                    Welcome to Team 37's Coms 319 Final Project
+                </h2>
+                <Button type='submit' onClick={() => {
+                    setPageState(PageState.signIn);
+                    props.setUserName("");
+                    props.setNumCoins(0);
+                }}>Sign Out</Button>
+            </Container>
+        );
+    }
+
+    function CommonForm(props) {
+        return (
+            <>
+                <Form.Group className="mb-3" >
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="text"
+                        placeholder="username"
+                        className="inputUsername"
+                        id="inputUsername"
+                    />
+                    <Form.Control.Feedback type="invalid" id='userNameFeedback' className='d-block'>
+                        Incorrect Username
+                    </Form.Control.Feedback>
+                    
+
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        size="lg"
+                        type="password"
+                        placeholder="password"
+                        className="inputPassword"
+                        id="inputPassword"
+                    />
+                    <Form.Control.Feedback type="invalid" id='passwordFeedback' className='d-block'>
+                        Incorrect Password
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+            </>
+        )
+
+    }
 
 
-    // function SignInForm() {
-    //     const [showSignUp, setShowSignUp] = useState(false);
-      
-    //     return (
-    //       <Container>
-           
-    //       </Container>
-    //     );
-    //   }
+    function ShowSignInForm() {
 
-    //   function SignedInView() {
-    //     return (
-    //       <Container>
-            
-    //       </Container>
-    //     );
-    //   }
+        return (
+            <Container>
+                <Form>
+                    <CommonForm />
+                    <br></br>
+
+                </Form>
+
+                <Button type="submit" variant="success" onClick={() => {
+                    handleSignIn();
+                }}>Sign In</Button>
+
+                <p>
+                    Haven't signed up yet?
+                    <Button type="button" variant="link" onClick={() => {
+                        console.log("SignUp Button Pushed");
+                        setPageState(PageState.signUp);
+                    }}>Sign Up</Button>
+                </p>
+                <br />
+
+            </Container>
+        );
+    }
+
+
+    function ShowSignUpForm() {
+
+        return (
+            <Container>
+
+                <Form>
+                    <CommonForm />
+
+
+                    <Form.Group controlId='signUp' className="mb-3" >
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                            size="lg"
+                            type="password"
+                            placeholder="confirm password"
+                            className="confirmPassword"
+                            id="confirmPassword"
+                        />
+                        <Form.Control.Feedback id="confirmPasswordFeedback" type="invalid" className='d-block'>
+                            
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                </Form>
+
+
+                <Button type="submit" variant="success" onClick={() => {
+                    handleSignUp();
+                }}>Sign Up</Button>
+
+                <p>
+                    Already have an account?
+                    <Button type="button" variant="link" onClick={() => {
+                        console.log("SignIn Button Pushed");
+                        setPageState(PageState.signIn);
+                    }}>Sign In</Button>
+                </p>
+                <br />
+
+            </Container>
+
+        )
+
+    }
 
 
 
@@ -128,100 +253,9 @@ function SignIn(props) {
     return (
         <>
             <Container>
-                {!signedInForm &&
-                    <Container>
-                        {!showSignUp &&
-                            <p>
-                                Haven't signed up yet?
-                                <Button type="button" variant="link" onClick={() => {
-                                    console.log("SignUp Button Pushed");
-                                    setShowSignUp(true);
-                                }}>Sign Up</Button>
-                            </p>
-                        }
-                        {showSignUp &&
-                            <p>
-                                Already have an account?
-                                <Button type="button" variant="link" onClick={() => {
-                                    console.log("SignIn Button Pushed");
-                                    setShowSignUp(false);
-                                }}>Sign In</Button>
-                            </p>
-                        }
-                        <Form>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control
-                                    size="lg"
-                                    type="text"
-                                    placeholder="username"
-                                    className="inputUsername"
-                                    id="inputUsername"
-                                />
-                            </Form.Group>
-                        </Form>
-                        <br></br>
-                        <Form>
-                            <Form.Group className="mb-3" >
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    size="lg"
-                                    type="password"
-                                    placeholder="password"
-                                    className="inputPassword"
-                                    id="inputPassword"
-                                />
-                            </Form.Group>
-                        </Form>
-
-                        <br></br>
-                        {showSignUp &&
-                            <Form>
-                                <Form.Group className="mb-3" >
-                                    <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control
-                                        size="lg"
-                                        type="password"
-                                        placeholder="confirm password"
-                                        className="confirmPassword"
-                                        id="confirmPassword"
-                                    />
-                                </Form.Group>
-                            </Form>
-                        }
-                        {!showSignUp &&
-                            <div>
-                                <Button type="submit" variant="success" onClick={() => {
-                                    handleSignIn();
-                                }}>Sign In</Button>
-                                {/* <button onClick={showToastMessage}>Notify</button>
-                            <ToastContainer /> */}
-                            </div>
-                        }
-                        {showSignUp &&
-                            <Button type="submit" variant="success" onClick={() => {
-                                handleSignUp();
-                            }}>Sign Up</Button>
-                        }
-
-                    </Container>
-                }
-
-                {signedInForm &&
-                    <Container>
-                        {/* <Button type='submit' onClick={() =>{
-                    addPokemon(retrieveUsername());
-                }}>Add Pokemon</Button> */}
-
-
-                        <Button type='submit' onClick={() => {
-                            setSignedIn(false);
-                            setSignedInForm(false);
-                            changeUsername("");
-                            changeCoins();
-                        }}>Sign Out</Button>
-                    </Container>
-                }
+                {pageState === PageState.signIn && <ShowSignInForm />}
+                {pageState === PageState.signUp && <ShowSignUpForm />}
+                {pageState === PageState.account && <ShowAccountPage />}
             </Container>
 
 

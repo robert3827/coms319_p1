@@ -45,7 +45,7 @@ function Menubar(props) {
           </ul>
 
           <div className="col-md-3 text-end ">
-          <h3>{retrieveUsername()}</h3>
+          <h3>{props.userName}</h3>
           <h2> <img src={pokeCoin} height={50} width={50}/> {props.numCoins} </h2>
           </div>
         </header>

@@ -8,7 +8,7 @@ function Layout(props) {
     return (
         <>
         
-            <Menubar numCoins={props.numCoins}/>
+            <Menubar numCoins={props.numCoins} userName={props.userName}/>
 
             <Outlet />
         </>
